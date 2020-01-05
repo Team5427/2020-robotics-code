@@ -7,10 +7,14 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.TestSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
@@ -19,8 +23,12 @@ import edu.wpi.first.wpilibj2.command.Command;
  * periodic methods (other than the scheduler calls).  Instead, the structure of the robot
  * (including subsystems, commands, and button mappings) should be declared here.
  */
-public class RobotContainer {
+public class RobotContainer 
+{
   // The robot's subsystems and commands are defined here...
+  private final SpeedController testMotor1;
+  private final SpeedController testMotor2;
+  private final TestSubsystem testSub; 
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
@@ -30,7 +38,11 @@ public class RobotContainer {
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
-  public RobotContainer() {
+  public RobotContainer() 
+  {
+    testMotor1 = new WPI_VictorSPX(0);
+    testMotor2 = new WPI_VictorSPX(0);
+    testSub = new TestSubsystem(testMotor1, testMotor2);
     // Configure the button bindings
     configureButtonBindings();
   }
