@@ -17,9 +17,12 @@ package frc.robot;
  */
 public final class Constants 
 {
+    //We need to measure these too
     public static final double MAX_VELOCITY = 5.0;
-    
     public static final double MAX_ACCELERATION = 5.0;
+
+    // (% Voltage [-1,1])/(Speed in meters per second) [basically we have to measure this]
+    public static final double KV = 0;
 
     public static final double KP = 0;
     public static final double KD = 0;

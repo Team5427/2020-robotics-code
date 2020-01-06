@@ -32,9 +32,10 @@ public class MotionProfile extends CommandBase
     private AHRS ahrs;
     private Encoder encLeft;
     private Encoder encRight;
-    private double kp = Constants.KP;
-    private double kd = Constants.KD;
-    private double ktheta = Constants.K_THETA;
+    private final double kv = Constants.KV;
+    private final double kp = Constants.KP;
+    private final double kd = Constants.KD;
+    private final double ktheta = Constants.K_THETA;
     
     public MotionProfile(final Pose2d start, final Pose2d end, final ArrayList<Translation2d> waypoints) {
         driveTrain = RobotContainer.getDriveTrain();
@@ -85,11 +86,17 @@ public class MotionProfile extends CommandBase
         
         //calculates speed using P heading controller and PD position controllers
         //angle decreases left speed magnitude while increases right speed magnitude - makes sense if trying to turn
-        leftSpeed = -currentState.velocityMetersPerSecond - 
-            currentState.accelerationMetersPerSecondSq - (kp * positionError) - (kd * derivativeError) + (ktheta * trackError);
+        leftSpeed = kv * -currentState.velocityMetersPerSecond
+         - kv * currentState.accelerationMetersPerSecondSq
+         - (kp * positionError)
+         - (kd * derivativeError)
+         + (ktheta * trackError);
 
-        rightSpeed = currentState.velocityMetersPerSecond +
-            currentState.accelerationMetersPerSecondSq + (kp * positionError) + (kd * derivativeError) + (ktheta * trackError);
+        rightSpeed = kv * currentState.velocityMetersPerSecond
+         + kv * currentState.accelerationMetersPerSecondSq
+         + (kp * positionError)
+         + (kd * derivativeError)
+         + (ktheta * trackError);
         
         driveTrain.tankDrive(leftSpeed, rightSpeed);
 
