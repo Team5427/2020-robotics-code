@@ -8,7 +8,9 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedController;
@@ -17,6 +19,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.SPI;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -27,66 +31,81 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class RobotContainer 
 {
   // The robot's subsystems and commands are defined here...
-  private SpeedController frontLeft, middleLeft, rearLeft, frontRight, middleRight, rearRight;
-
-  private SpeedControllerGroup left, right;
-
-  private DifferentialDrive driveBase;
+  private static Joystick joy;
+  private final SpeedController frontLeft, middleLeft, rearLeft;
+  private final SpeedController frontRight, middleRight, rearRight;
+  private static SpeedControllerGroup leftDrive;
+  private static SpeedControllerGroup rightDrive;
+  private static DifferentialDrive drive;
 
   private static DriveTrain driveTrain;
 
-  private static Joystick joy;
+  private static AHRS ahrs;
+  private static Encoder encLeft;
+  private static Encoder encRight;
 
   /**
-   * The container for the robot. Contains subsystems, OI devices, and commands.
+   * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
-  public RobotContainer() {
-    frontLeft = new WPI_VictorSPX(0);
-    middleLeft = new WPI_VictorSPX(0);
-    rearLeft = new WPI_VictorSPX(0);
+  public RobotContainer() 
+  {
+    frontLeft = new WPI_VictorSPX(Constants.LEFT_TOP_MOTOR);
+    middleLeft = new WPI_VictorSPX(Constants.LEFT_MIDDLE_MOTOR);
+    rearLeft = new WPI_VictorSPX(Constants.LEFT_BOTTOM_MOTOR);
+    leftDrive = new SpeedControllerGroup(frontLeft, middleLeft, rearLeft);
+    
+    frontRight = new WPI_VictorSPX(Constants.RIGHT_TOP_MOTOR);
+    middleRight = new WPI_VictorSPX(Constants.RIGHT_MIDDLE_MOTOR);
+    rearRight = new WPI_VictorSPX(Constants.RIGHT_BOTTOM_MOTOR);
+    rightDrive = new SpeedControllerGroup(frontRight, middleRight, rearRight);
 
-    frontRight = new WPI_VictorSPX(0);
-    middleRight = new WPI_VictorSPX(0);
-    rearRight = new WPI_VictorSPX(0);
+    drive = new DifferentialDrive(leftDrive, rightDrive);
 
-    left = new SpeedControllerGroup(frontLeft, middleLeft, rearLeft);
-    right = new SpeedControllerGroup(frontRight, middleRight, rearRight);
+    driveTrain = new DriveTrain(leftDrive, rightDrive, drive);
 
-    driveBase = new DifferentialDrive(left, right);
+    ahrs = new AHRS(SPI.Port.kMXP);
 
-    driveTrain = new DriveTrain(left, right, driveBase);
+    //encoders have 1440 as PPR and 360 CPR
+    encRight = new Encoder(Constants.ENCODER_RIGHT_PORT_1, Constants.ENCODER_RIGHT_PORT_2);
+    encRight.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
+    encLeft = new Encoder(Constants.ENCODER_LEFT_PORT_1, Constants.ENCODER_LEFT_PORT_2);
+    encLeft.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
+
 
     // Configure the button bindings
     configureButtonBindings();
   }
 
   /**
-   * Use this method to define your button->command mappings. Buttons can be
-   * created by instantiating a {@link GenericHID} or one of its subclasses
-   * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
-   * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+   * Use this method to define your button->command mappings.  Buttons can be created by
+   * instantiating a {@link GenericHID} or one of its subclasses ({@link
+   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
+   * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {
+  private void configureButtonBindings() 
+  {
     joy = new Joystick(0);
   }
+
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
+  public Command getAutonomousCommand()
+  {
     // An ExampleCommand will run in autonomous
     return null;
   }
 
-  public static DriveTrain getDriveTrain() {
-    return driveTrain;
-  }
-
-  public static Joystick getJoy()
-  {
-    return joy;
-  }
-
+  //just some Accessors that take up space
+  public static DriveTrain getDriveTrain(){return driveTrain;}
+  public static SpeedControllerGroup getLeftSCG(){return leftDrive;}
+  public static SpeedControllerGroup getRightSCG(){return rightDrive;}
+  public static DifferentialDrive getDiffDrive(){return drive;}
+  public static AHRS getAHRS(){return ahrs;}
+  public static Encoder getEncLeft(){return encLeft;}
+  public static Encoder getEncRight(){return encRight;}
+  public static Joystick getJoy(){return joy;}
 }
