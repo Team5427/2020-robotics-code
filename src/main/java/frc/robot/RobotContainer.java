@@ -9,6 +9,7 @@ package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedController;
@@ -16,6 +17,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
@@ -35,12 +37,19 @@ public class RobotContainer
 
   private static DriveTrain driveTrain;
 
+  private Encoder shooterEncoder;
+
+  public SpeedController shooterMotor;
+
+  public Shooter shooter;
+
   private static Joystick joy;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
-  public RobotContainer() {
+  public RobotContainer() 
+  {
     frontLeft = new WPI_VictorSPX(0);
     middleLeft = new WPI_VictorSPX(0);
     rearLeft = new WPI_VictorSPX(0);
@@ -53,8 +62,14 @@ public class RobotContainer
     right = new SpeedControllerGroup(frontRight, middleRight, rearRight);
 
     driveBase = new DifferentialDrive(left, right);
-
     driveTrain = new DriveTrain(left, right, driveBase);
+
+    shooterMotor = new WPI_VictorSPX(Constants.SHOOTER_MOTOR);
+
+    shooterEncoder = new Encoder(Constants.SHOOTER_ENC_CHANNEL_A, Constants.SHOOTER_ENC_CHANNEL_B);
+    shooterEncoder.setDistancePerPulse((Math.PI * Constants.SHOOTER_WHEEL_DIAMETER) / Constants.SHOOTER_ENC_PPR);
+
+    shooter = new Shooter(shooterMotor, shooterEncoder);
 
     // Configure the button bindings
     configureButtonBindings();
@@ -66,7 +81,8 @@ public class RobotContainer
    * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {
+  private void configureButtonBindings() 
+  {
     joy = new Joystick(0);
   }
 
@@ -75,12 +91,14 @@ public class RobotContainer
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
+  public Command getAutonomousCommand() 
+  {
     // An ExampleCommand will run in autonomous
     return null;
   }
 
-  public static DriveTrain getDriveTrain() {
+  public static DriveTrain getDriveTrain() 
+  {
     return driveTrain;
   }
 
