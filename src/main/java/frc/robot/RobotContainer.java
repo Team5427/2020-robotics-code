@@ -10,6 +10,7 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -21,6 +22,7 @@ import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.TestSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.SPI;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -39,14 +41,16 @@ public class RobotContainer
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
   private final SpeedController frontLeft, middleLeft, rearLeft;
+  private final SpeedController frontRight, middleRight, rearRight;
   private static SpeedControllerGroup leftDrive;
   private static SpeedControllerGroup rightDrive;
-  private final SpeedController frontRight, middleRight, rearRight;
   private static DifferentialDrive drive;
 
   private static DriveTrain driveTrain;
 
   private static AHRS ahrs;
+  private static Encoder encLeft;
+  private static Encoder encRight;
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -73,6 +77,13 @@ public class RobotContainer
 
     ahrs = new AHRS(SPI.Port.kMXP);
 
+    //encoders have 1440 as PPR and 360 CPR
+    encRight = new Encoder(Constants.ENCODER_RIGHT_PORT_1, Constants.ENCODER_RIGHT_PORT_2);
+    encRight.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
+    encLeft = new Encoder(Constants.ENCODER_LEFT_PORT_1, Constants.ENCODER_LEFT_PORT_2);
+    encLeft.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
+
+
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -97,24 +108,12 @@ public class RobotContainer
     return m_autoCommand;
   }
 
-  public static DriveTrain getDriveTrain()
-  {
-    return driveTrain;
-  }
-
-  public static SpeedControllerGroup getLeftSCG(){
-    return leftDrive;
-  }
-
-  public static SpeedControllerGroup getRightSCG(){
-    return rightDrive;
-  }
-
-  public static DifferentialDrive getDiffDrive(){
-    return drive;
-  }
-
-  public static AHRS getAHRS(){
-    return ahrs;
-  }
+  //just some Accessors that take up space
+  public static DriveTrain getDriveTrain(){return driveTrain;}
+  public static SpeedControllerGroup getLeftSCG(){return leftDrive;}
+  public static SpeedControllerGroup getRightSCG(){return rightDrive;}
+  public static DifferentialDrive getDiffDrive(){return drive;}
+  public static AHRS getAHRS(){return ahrs;}
+  public static Encoder getEncLeft(){return encLeft;}
+  public static Encoder getEncRight(){return encRight;}
 }

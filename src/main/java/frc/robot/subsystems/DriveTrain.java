@@ -42,11 +42,6 @@ public class DriveTrain extends SubsystemBase {
 	public void takeJoystickInputs(Joystick joy) {
 		drive.arcadeDrive(joy.getY(), -joy.getZ() * Constants.Z_ROT_DAMPENING);
 	}
-
-  /**Toggle for low low gear */
-	public static void flipLowLowGear() {
-		lowlowgear = !lowlowgear;
-  }
   
   /** Sets DriveTrain Speed */
 	public void tankDrive(double leftSpeed, double rightSpeed)
