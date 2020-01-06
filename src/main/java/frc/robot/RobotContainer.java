@@ -10,11 +10,12 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.TestSubsystem;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /**
@@ -26,36 +27,48 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class RobotContainer 
 {
   // The robot's subsystems and commands are defined here...
-  private final SpeedController testMotor1;
-  private final SpeedController testMotor2;
-  private final TestSubsystem testSub; 
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  private SpeedController frontLeft, middleLeft, rearLeft, frontRight, middleRight, rearRight;
 
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  private SpeedControllerGroup left, right;
 
+  private DifferentialDrive driveBase;
 
+  private static DriveTrain driveTrain;
+
+  private static Joystick joy;
 
   /**
-   * The container for the robot.  Contains subsystems, OI devices, and commands.
+   * The container for the robot. Contains subsystems, OI devices, and commands.
    */
-  public RobotContainer() 
-  {
-    testMotor1 = new WPI_VictorSPX(0);
-    testMotor2 = new WPI_VictorSPX(0);
-    testSub = new TestSubsystem(testMotor1, testMotor2);
+  public RobotContainer() {
+    frontLeft = new WPI_VictorSPX(0);
+    middleLeft = new WPI_VictorSPX(0);
+    rearLeft = new WPI_VictorSPX(0);
+
+    frontRight = new WPI_VictorSPX(0);
+    middleRight = new WPI_VictorSPX(0);
+    rearRight = new WPI_VictorSPX(0);
+
+    left = new SpeedControllerGroup(frontLeft, middleLeft, rearLeft);
+    right = new SpeedControllerGroup(frontRight, middleRight, rearRight);
+
+    driveBase = new DifferentialDrive(left, right);
+
+    driveTrain = new DriveTrain(left, right, driveBase);
+
     // Configure the button bindings
     configureButtonBindings();
   }
 
   /**
-   * Use this method to define your button->command mappings.  Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
-   * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+   * Use this method to define your button->command mappings. Buttons can be
+   * created by instantiating a {@link GenericHID} or one of its subclasses
+   * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
+   * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    joy = new Joystick(0);
   }
-
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -64,6 +77,16 @@ public class RobotContainer
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return null;
   }
+
+  public static DriveTrain getDriveTrain() {
+    return driveTrain;
+  }
+
+  public static Joystick getJoy()
+  {
+    return joy;
+  }
+
 }
