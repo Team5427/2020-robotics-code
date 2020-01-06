@@ -61,14 +61,14 @@ public class RobotContainer
     testMotor2 = new WPI_VictorSPX(0);
     testSub = new TestSubsystem(testMotor1, testMotor2);
 
-    frontLeft = new WPI_VictorSPX(0);
-    middleLeft = new WPI_VictorSPX(0);
-    rearLeft = new WPI_VictorSPX(0);
+    frontLeft = new WPI_VictorSPX(Constants.LEFT_TOP_MOTOR);
+    middleLeft = new WPI_VictorSPX(Constants.LEFT_MIDDLE_MOTOR);
+    rearLeft = new WPI_VictorSPX(Constants.LEFT_BOTTOM_MOTOR);
     leftDrive = new SpeedControllerGroup(frontLeft, middleLeft, rearLeft);
     
-    frontRight = new WPI_VictorSPX(0);
-    middleRight = new WPI_VictorSPX(0);
-    rearRight = new WPI_VictorSPX(0);
+    frontRight = new WPI_VictorSPX(Constants.RIGHT_TOP_MOTOR);
+    middleRight = new WPI_VictorSPX(Constants.RIGHT_MIDDLE_MOTOR);
+    rearRight = new WPI_VictorSPX(Constants.RIGHT_BOTTOM_MOTOR);
     rightDrive = new SpeedControllerGroup(frontRight, middleRight, rearRight);
 
     drive = new DifferentialDrive(leftDrive, rightDrive);

@@ -34,6 +34,14 @@ public final class Constants
     public static final double ENCODER_PPR = 1440;
     public static final double DISTANCE_PER_PULSE = DRIVETRAIN_WHEEL_RADIUS * Math.PI / ENCODER_PPR;
 
+    /*CAN Port VALUES*/
+	public static final int LEFT_TOP_MOTOR = 10; //? why 10
+	public static final int LEFT_MIDDLE_MOTOR = 10;
+	public static final int LEFT_BOTTOM_MOTOR = 11;
+	public static final int RIGHT_TOP_MOTOR = 6;
+	public static final int RIGHT_MIDDLE_MOTOR = 7;
+	public static final int RIGHT_BOTTOM_MOTOR = 8;
+
     /*Encoder Ports */
 	public static final int ENCODER_LEFT_PORT_1 = 4;
 	public static final int ENCODER_LEFT_PORT_2 = 5; 
