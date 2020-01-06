@@ -40,7 +40,7 @@ public class MotionProfile extends CommandBase
         final double timeDiff = curTime - initTime;
         State currentState = trajectory.sample(timeDiff);
         RobotContainer.getDriveTrain().tankDrive(currentState.velocityMetersPerSecond, currentState.velocityMetersPerSecond);
-        trackError = currentState.poseMeters.getRotation().getDegrees() - Robot.ahrs.getAngle();
+        trackError = currentState.poseMeters.getRotation().getDegrees() - RobotContainer.getAHRS().getAngle();
         double kp = Constants.KP;
         double kd = Constants.KD;
         double ktheta = Constants.K_THETA;

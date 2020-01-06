@@ -8,11 +8,15 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.TestSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -34,7 +38,15 @@ public class RobotContainer
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
+  private final SpeedController frontLeft, middleLeft, rearLeft;
+  private static SpeedControllerGroup leftDrive;
+  private static SpeedControllerGroup rightDrive;
+  private final SpeedController frontRight, middleRight, rearRight;
+  private static DifferentialDrive drive;
 
+  private static DriveTrain driveTrain;
+
+  private static AHRS ahrs;
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -44,6 +56,23 @@ public class RobotContainer
     testMotor1 = new WPI_VictorSPX(0);
     testMotor2 = new WPI_VictorSPX(0);
     testSub = new TestSubsystem(testMotor1, testMotor2);
+
+    frontLeft = new WPI_VictorSPX(0);
+    middleLeft = new WPI_VictorSPX(0);
+    rearLeft = new WPI_VictorSPX(0);
+    leftDrive = new SpeedControllerGroup(frontLeft, middleLeft, rearLeft);
+    
+    frontRight = new WPI_VictorSPX(0);
+    middleRight = new WPI_VictorSPX(0);
+    rearRight = new WPI_VictorSPX(0);
+    rightDrive = new SpeedControllerGroup(frontRight, middleRight, rearRight);
+
+    drive = new DifferentialDrive(leftDrive, rightDrive);
+
+    driveTrain = new DriveTrain();
+
+    ahrs = new AHRS(SPI.Port.kMXP);
+
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -68,8 +97,24 @@ public class RobotContainer
     return m_autoCommand;
   }
 
-  public static TestSubsystem getDriveTrain()
+  public static DriveTrain getDriveTrain()
   {
-    return testSub;
+    return driveTrain;
+  }
+
+  public static SpeedControllerGroup getLeftSCG(){
+    return leftDrive;
+  }
+
+  public static SpeedControllerGroup getRightSCG(){
+    return rightDrive;
+  }
+
+  public static DifferentialDrive getDiffDrive(){
+    return drive;
+  }
+
+  public static AHRS getAHRS(){
+    return ahrs;
   }
 }

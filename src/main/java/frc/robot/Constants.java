@@ -20,4 +20,10 @@ public final class Constants
     public static final double MAX_VELOCITY = 5.0;
     
     public static final double MAX_ACCELERATION = 5.0;
+
+    public static final double KP = 0;
+    public static final double KD = 0;
+    public static final double K_THETA = 0;
+
+	public static final double Z_ROT_DAMPENING = 0.75;
 }
