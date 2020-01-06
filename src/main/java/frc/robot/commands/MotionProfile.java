@@ -82,7 +82,8 @@ public class MotionProfile extends CommandBase
 
         //finds error in robot distance for PD controller
         positionError = cummulativeDistance - currentDistance;
-        derivativeError = positionError - lastPositionError;
+        double delta_time = timeDiff - lastTimeDiff;
+        derivativeError = (positionError - lastPositionError)/(delta_time);
         
         //calculates speed using P heading controller and PD position controllers
         //angle decreases left speed magnitude while increases right speed magnitude - makes sense if trying to turn
