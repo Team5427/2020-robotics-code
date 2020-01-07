@@ -52,6 +52,11 @@ public class DriveTrain extends SubsystemBase
         return (RobotContainer.getEncLeft().getDistance() + RobotContainer.getEncRight().getDistance()) / 2;
     }
 
+    public double getAvgRate()
+    {
+        return (RobotContainer.getEncLeft().getRate() + RobotContainer.getEncRight().getRate()) / 2;
+    }
+
     @Override
     public void periodic()
     {}

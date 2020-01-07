@@ -60,6 +60,7 @@ public class RobotContainer
     rightDrive = new SpeedControllerGroup(frontRight, middleRight, rearRight);
 
     drive = new DifferentialDrive(leftDrive, rightDrive);
+    drive.setSafetyEnabled(false);
 
     driveTrain = new DriveTrain(leftDrive, rightDrive, drive);
 

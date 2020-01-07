@@ -52,12 +52,12 @@ public class Robot extends TimedRobot
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    SmartDashboard.putNumber("Left Encoder Speed", RobotContainer.getEncLeft().getRate());
-    SmartDashboard.putNumber("Right Encoder Speed", RobotContainer.getEncRight().getRate());
+    SmartDashboard.putNumber("Average velocity", RobotContainer.getDriveTrain().getAvgRate());
     SmartDashboard.putNumber("AHRS X Speed", RobotContainer.getAHRS().getVelocityX());
     SmartDashboard.putNumber("AHRS Y Speed", RobotContainer.getAHRS().getVelocityY());
     SmartDashboard.putNumber("Left Encoder Distance", RobotContainer.getEncLeft().getDistance());
     SmartDashboard.putNumber("Right Encoder Distance", RobotContainer.getEncRight().getDistance());
+    SmartDashboard.putNumber("Average Distance", RobotContainer.getDriveTrain().getAvgDistance());
   }
 
   /**
@@ -83,7 +83,7 @@ public class Robot extends TimedRobot
       m_autonomousCommand.schedule();
     }
 
-    new MoveStraight(3.0);
+    new MoveStraight(2.0);
   }
 
   /**

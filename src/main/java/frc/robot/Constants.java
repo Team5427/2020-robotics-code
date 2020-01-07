@@ -30,9 +30,12 @@ public final class Constants
 
     public static final double Z_ROT_DAMPENING = 0.75;
     
-    public static final double DRIVETRAIN_WHEEL_RADIUS = 0.1524;
-    public static final double ENCODER_PPR = 1440;
-    public static final double DISTANCE_PER_PULSE = DRIVETRAIN_WHEEL_RADIUS * Math.PI / ENCODER_PPR;
+    /**
+     * Diameter of the drive wheel in meters.
+     */
+    public static final double DRIVETRAIN_WHEEL_DIAMETER = .1524;
+    public static final double ENCODER_PPR = 691.907;
+    public static final double DISTANCE_PER_PULSE = 0.0000367;
 
     /*CAN Port VALUES*/
 	public static final int LEFT_TOP_MOTOR = 10; //? why 10
@@ -43,8 +46,8 @@ public final class Constants
 	public static final int RIGHT_BOTTOM_MOTOR = 8;
 
     /*Encoder Ports */
-	public static final int ENCODER_LEFT_PORT_1 = 4;
-	public static final int ENCODER_LEFT_PORT_2 = 5; 
+	public static final int ENCODER_LEFT_PORT_1 = 3;
+	public static final int ENCODER_LEFT_PORT_2 = 4;
 	public static final int ENCODER_RIGHT_PORT_1 = 6; 
 	public static final int ENCODER_RIGHT_PORT_2 = 7;
 	
