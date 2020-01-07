@@ -8,8 +8,10 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.MoveStraight;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -50,6 +52,12 @@ public class Robot extends TimedRobot
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+    SmartDashboard.putNumber("Left Encoder Speed", RobotContainer.getEncLeft().getRate());
+    SmartDashboard.putNumber("Right Encoder Speed", RobotContainer.getEncRight().getRate());
+    SmartDashboard.putNumber("AHRS X Speed", RobotContainer.getAHRS().getVelocityX());
+    SmartDashboard.putNumber("AHRS Y Speed", RobotContainer.getAHRS().getVelocityY());
+    SmartDashboard.putNumber("Left Encoder Distance", RobotContainer.getEncLeft().getDistance());
+    SmartDashboard.putNumber("Right Encoder Distance", RobotContainer.getEncRight().getDistance());
   }
 
   /**
@@ -74,6 +82,8 @@ public class Robot extends TimedRobot
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
+
+    new MoveStraight(3.0);
   }
 
   /**
