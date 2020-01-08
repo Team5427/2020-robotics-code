@@ -17,10 +17,12 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.SPI;
+import com.revrobotics.ColorSensorV3;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -34,6 +36,7 @@ public class RobotContainer
   private static Joystick joy;
   private final SpeedController frontLeft, middleLeft, rearLeft;
   private final SpeedController frontRight, middleRight, rearRight;
+  public final SpeedController colorMotor;
   private static SpeedControllerGroup leftDrive;
   private static SpeedControllerGroup rightDrive;
   private static DifferentialDrive drive;
@@ -43,12 +46,14 @@ public class RobotContainer
   private static AHRS ahrs;
   private static Encoder encLeft;
   private static Encoder encRight;
+ private static ColorSensorV3 colorSensor;
 
-  /**
+    /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() 
   {
+
     frontLeft = new WPI_VictorSPX(Constants.LEFT_TOP_MOTOR);
     middleLeft = new WPI_VictorSPX(Constants.LEFT_MIDDLE_MOTOR);
     rearLeft = new WPI_VictorSPX(Constants.LEFT_BOTTOM_MOTOR);
@@ -71,7 +76,7 @@ public class RobotContainer
     encRight.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
     encLeft = new Encoder(Constants.ENCODER_LEFT_PORT_1, Constants.ENCODER_LEFT_PORT_2);
     encLeft.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
-
+    colorSensor = new ColorSensor(colorMotor, colorSensor);
 
     // Configure the button bindings
     configureButtonBindings();
