@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import frc.robot.subsystems.ColorSensor;
+import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -36,7 +36,6 @@ public class RobotContainer
   private static Joystick joy;
   private final SpeedController frontLeft, middleLeft, rearLeft;
   private final SpeedController frontRight, middleRight, rearRight;
-  public final SpeedController colorMotor;
   private static SpeedControllerGroup leftDrive;
   private static SpeedControllerGroup rightDrive;
   private static DifferentialDrive drive;
@@ -46,7 +45,10 @@ public class RobotContainer
   private static AHRS ahrs;
   private static Encoder encLeft;
   private static Encoder encRight;
- private static ColorSensorV3 colorSensor;
+
+  private SpeedController colorMotor;
+  private ColorSensorV3 colorSensor;
+  private ControlPanel controlPanel;
 
     /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -76,7 +78,10 @@ public class RobotContainer
     encRight.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
     encLeft = new Encoder(Constants.ENCODER_LEFT_PORT_1, Constants.ENCODER_LEFT_PORT_2);
     encLeft.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
-    colorSensor = new ColorSensor(colorMotor, colorSensor);
+    
+    colorMotor = new WPI_VictorSPX(0); //need to change channel
+    colorSensor = new ControlPanel(colorMotor, colorSensor);
+    controlPanel = new ControlPanel(colorMotor, colorSensor);
 
     // Configure the button bindings
     configureButtonBindings();
