@@ -80,7 +80,7 @@ public class RobotContainer
     encLeft.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
     
     colorMotor = new WPI_VictorSPX(0); //need to change channel
-    colorSensor = new ControlPanel(colorMotor, colorSensor);
+    //colorSensor = new ColorSensorV3(__); // need to change port
     controlPanel = new ControlPanel(colorMotor, colorSensor);
 
     // Configure the button bindings

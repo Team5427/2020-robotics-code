@@ -30,8 +30,6 @@ public class ControlPanel extends SubsystemBase
     {
         this.colorMotor = colorMotor;
         this.colorSensor = colorSensor;
-        this.colorSensor.configureColorSensor(0,0,0);
-
     }
 
     public Color getColor()
