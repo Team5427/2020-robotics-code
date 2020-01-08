@@ -7,11 +7,13 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.MoveStraight;
+import frc.robot.subsystems.ControlPanel;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -26,6 +28,8 @@ public class Robot extends TimedRobot
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+
+  private String gameData;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -58,6 +62,29 @@ public class Robot extends TimedRobot
     SmartDashboard.putNumber("Left Encoder Distance", RobotContainer.getEncLeft().getDistance());
     SmartDashboard.putNumber("Right Encoder Distance", RobotContainer.getEncRight().getDistance());
     SmartDashboard.putNumber("Average Distance", RobotContainer.getDriveTrain().getAvgDistance());
+
+    gameData = DriverStation.getInstance().getGameSpecificMessage();
+    if(gameData.length() > 0)
+    {
+      switch(gameData.charAt(0))
+      {
+        case 'B':
+          ControlPanel.color = 'R';
+          break;
+        case 'Y':
+          ControlPanel.color = 'G';
+          break;
+        case 'R':
+          ControlPanel.color = 'B';
+          break;
+        case 'G':
+          ControlPanel.color = 'Y';
+          break;
+        default:
+          SmartDashboard.putString("Error", "Corrupted data");
+          break;
+      }
+    }
   }
 
   /**

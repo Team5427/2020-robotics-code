@@ -20,6 +20,8 @@ import com.revrobotics.ColorSensorV3;
 
 public class ControlPanel extends SubsystemBase
 {
+    public static char color;
+    
     SpeedController colorMotor;
 
     ColorSensorV3 colorSensor;
