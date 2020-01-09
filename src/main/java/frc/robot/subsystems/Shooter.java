@@ -14,6 +14,7 @@ public class Shooter extends PIDSubsystem
     private SpeedController shooterMotor;
 
     private Encoder shooterEncoder;
+    //comment
 
     private SimpleMotorFeedforward feedForward;
 
