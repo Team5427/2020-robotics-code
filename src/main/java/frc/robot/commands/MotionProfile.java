@@ -33,6 +33,7 @@ public class MotionProfile extends CommandBase
     private Encoder encLeft;
     private Encoder encRight;
     private final double kv = Constants.KV;
+    private final double ka = Constants.KA;
     private final double kp = Constants.KP;
     private final double kd = Constants.KD;
     private final double ktheta = Constants.K_THETA;
@@ -88,13 +89,13 @@ public class MotionProfile extends CommandBase
         //calculates speed using P heading controller and PD position controllers
         //angle decreases left speed magnitude while increases right speed magnitude - makes sense if trying to turn
         leftSpeed = kv * -currentState.velocityMetersPerSecond
-         - kv * currentState.accelerationMetersPerSecondSq
+         - ka * currentState.accelerationMetersPerSecondSq
          - (kp * positionError)
          - (kd * derivativeError)
          + (ktheta * trackError);
 
         rightSpeed = kv * currentState.velocityMetersPerSecond
-         + kv * currentState.accelerationMetersPerSecondSq
+         + ka * currentState.accelerationMetersPerSecondSq
          + (kp * positionError)
          + (kd * derivativeError)
          + (ktheta * trackError);
