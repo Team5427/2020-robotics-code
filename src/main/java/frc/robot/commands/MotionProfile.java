@@ -38,7 +38,7 @@ public class MotionProfile extends CommandBase
     private final double kd = Constants.KD;
     private final double ktheta = Constants.K_THETA;
     
-    public MotionProfile(final Pose2d start, final Pose2d end, final ArrayList<Translation2d> waypoints) {
+    public MotionProfile( Pose2d start,  Pose2d end,  ArrayList<Translation2d> waypoints) {
         driveTrain = RobotContainer.getDriveTrain();
         ahrs = RobotContainer.getAHRS();
         encLeft = RobotContainer.getEncLeft();

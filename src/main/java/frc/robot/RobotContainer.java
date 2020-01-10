@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import java.util.ArrayList;
+
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 
@@ -18,6 +20,10 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
+import frc.robot.commands.MotionProfile;
 import frc.robot.commands.MoveStraight;
 import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -44,6 +50,8 @@ public class RobotContainer
   private static AHRS ahrs;
   private static Encoder encLeft;
   private static Encoder encRight;
+  
+  private static Command motion;
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -71,11 +79,14 @@ public class RobotContainer
     ahrs = new AHRS(SPI.Port.kMXP);
 
     //encoders have 1440 as PPR and 360 CPR
-    encRight = new Encoder(4,3);
+    encRight = new Encoder(9,8);
     encRight.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
-    encLeft = new Encoder(9,8);
+    encRight.setReverseDirection(true);
+    encLeft = new Encoder(4,3);
     encLeft.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
 
+    //creating a profile
+    motion = new MotionProfile(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(0, 1, new Rotation2d(0)), new ArrayList<Translation2d>());
 
     // Configure the button bindings
     configureButtonBindings();
@@ -100,8 +111,7 @@ public class RobotContainer
    */
   public Command getAutonomousCommand()
   {
-    // An ExampleCommand will run in autonomous
-    return new MoveStraight(1.2);
+    return motion;
   }
 
   //just some Accessors that take up space
