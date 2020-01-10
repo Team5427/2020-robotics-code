@@ -25,7 +25,7 @@ public final class Constants
     public static final double KV = .3030303;
 
     //influence of acceleration on velocity, just a bias which can be further tested.
-    public static final double KA = 0;
+    public static final double KA = 0.05;
 
     public static final double KP = 0;
     public static final double KD = 0;

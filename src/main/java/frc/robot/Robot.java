@@ -55,11 +55,11 @@ public class Robot extends TimedRobot
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
     SmartDashboard.putNumber("Average velocity", RobotContainer.getDriveTrain().getAvgRate());
-    SmartDashboard.putNumber("Average LEFT VELOCITY", -RobotContainer.getEncLeft().getRate());
+    SmartDashboard.putNumber("Average LEFT VELOCITY", RobotContainer.getEncLeft().getRate());
     SmartDashboard.putNumber("Average RIGHT VELOCITY", RobotContainer.getEncRight().getRate());
     SmartDashboard.putNumber("AHRS X Speed", RobotContainer.getAHRS().getVelocityX());
     SmartDashboard.putNumber("AHRS Y Speed", RobotContainer.getAHRS().getVelocityY());
-    SmartDashboard.putNumber("Left Encoder Distance", -RobotContainer.getEncLeft().getDistance());
+    SmartDashboard.putNumber("Left Encoder Distance", RobotContainer.getEncLeft().getDistance());
     SmartDashboard.putNumber("Right Encoder Distance", RobotContainer.getEncRight().getDistance());
     SmartDashboard.putNumber("Average Distance", RobotContainer.getDriveTrain().getAvgDistance());
   }

@@ -83,16 +83,17 @@ public class MotionProfile extends CommandBase
 
         //finds error in robot distance for PD controller
         positionError = cummulativeDistance - currentDistance;
+        System.out.println(cummulativeDistance+ " "+ currentDistance+ " "+encLeft.getRate());
         double delta_time = timeDiff - lastTimeDiff;
         derivativeError = (positionError - lastPositionError)/(delta_time);
         
         //calculates speed using P heading controller and PD position controllers
         //angle decreases left speed magnitude while increases right speed magnitude - makes sense if trying to turn
-        leftSpeed = kv * -currentState.velocityMetersPerSecond
-         - ka * currentState.accelerationMetersPerSecondSq
-         - (kp * positionError)
-         - (kd * derivativeError)
-         + (ktheta * trackError);
+        leftSpeed = kv * currentState.velocityMetersPerSecond
+         + ka * currentState.accelerationMetersPerSecondSq
+         + (kp * positionError)
+         + (kd * derivativeError)
+         - (ktheta * trackError);
 
         rightSpeed = kv * currentState.velocityMetersPerSecond
          + ka * currentState.accelerationMetersPerSecondSq
