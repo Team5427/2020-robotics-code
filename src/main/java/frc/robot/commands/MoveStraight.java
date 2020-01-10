@@ -23,6 +23,8 @@ public class MoveStraight extends CommandBase {
   public MoveStraight(double time) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.time = time;
+    addRequirements(RobotContainer.getDriveTrain());
+    //initialize();
   }
 
   // Called when the command is initially scheduled.
@@ -32,11 +34,15 @@ public class MoveStraight extends CommandBase {
     RobotContainer.getEncLeft().reset();
     RobotContainer.getEncRight().reset();
     startTime = Timer.getFPGATimestamp();
+    //System.out.println("SAD;LFKJAS;LDFKJ");
+    //execute();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    double timediff = Timer.getFPGATimestamp() - startTime;
+    System.out.println(RobotContainer.getEncLeft().getRate()+ ": "+ timediff);
     driveTrain.tankDrive(1.0, 1.0);
   }
 
@@ -52,4 +58,5 @@ public class MoveStraight extends CommandBase {
   public boolean isFinished() {
     return Timer.getFPGATimestamp() - startTime > time;
   }
+
 }

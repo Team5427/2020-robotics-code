@@ -18,11 +18,11 @@ package frc.robot;
 public final class Constants 
 {
     //We need to measure these too
-    public static final double MAX_VELOCITY = 5.0;
-    public static final double MAX_ACCELERATION = 5.0;
+    public static final double MAX_VELOCITY = 3.3;
+    public static final double MAX_ACCELERATION = 3.21333863;
 
     // (% Voltage [-1,1])/(Speed in meters per second) [basically we have to measure this]
-    public static final double KV = 0;
+    public static final double KV = 3.3;
 
     public static final double KP = 0;
     public static final double KD = 0;
@@ -31,11 +31,11 @@ public final class Constants
     public static final double Z_ROT_DAMPENING = 0.75;
     
     /**
-     * Diameter of the drive wheel in meters.
+     * Diameter of the drive wheel in meters. AKA 6 inches.
      */
     public static final double DRIVETRAIN_WHEEL_DIAMETER = .1524;
-    public static final double ENCODER_PPR = 691.907;
-    public static final double DISTANCE_PER_PULSE = 0.0000367;
+    //public static final double ENCODER_PPR = 691.907;
+    public static final double DISTANCE_PER_PULSE = Math.PI * DRIVETRAIN_WHEEL_DIAMETER/360;
 
     /*CAN Port VALUES*/
 	public static final int LEFT_TOP_MOTOR = 10; //? why 10
