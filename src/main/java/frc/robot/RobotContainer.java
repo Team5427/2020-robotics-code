@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj.CANTalon;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -64,7 +65,7 @@ public class RobotContainer
     driveBase = new DifferentialDrive(left, right);
     driveTrain = new DriveTrain(left, right, driveBase);
 
-    shooterMotor = new WPI_VictorSPX(Constants.SHOOTER_MOTOR);
+    shooterMotor = new CANTalon(Constants.SHOOTER_MOTOR);
 
     shooterEncoder = new Encoder(Constants.SHOOTER_ENC_CHANNEL_A, Constants.SHOOTER_ENC_CHANNEL_B);
     shooterEncoder.setDistancePerPulse((Math.PI * Constants.SHOOTER_WHEEL_DIAMETER) / Constants.SHOOTER_ENC_PPR);

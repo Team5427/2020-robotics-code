@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.Constants;
 
-public class Shooter extends PIDSubsystem 
+public class Shooter
 {
     private SpeedController shooterMotor;
 
@@ -19,23 +19,23 @@ public class Shooter extends PIDSubsystem
 
     public Shooter(SpeedController shooterMotor, Encoder shooterEncoder) 
     {
-        super(new PIDController(Constants.kP_SHOOTER, Constants.kI_SHOOTER, 
-            Constants.kD_SHOOTER, Constants.SHOOTER_PERIOD));
+        
         this.shooterMotor = shooterMotor;
         this.shooterEncoder = shooterEncoder;
-        getController().setTolerance(Constants.SHOOTER_TOLERANCE);
-        setSetpoint(Constants.TARGET_SHOOTER_RPM);
         feedForward = new SimpleMotorFeedforward(Constants.kS_SHOOTER, Constants.kV_SHOOTER);
+        shooterMotor.setPID(Constants.kP_SHOOTER, Constants.kI_SHOOTER, Constants.kD_SHOOTER);
+        shooterMotor.setF(feedForward);
+        shooterMotor.setSetpoint(Constants.TARGET_SHOOTER_RPM);
+
     }
 
-    @Override
     protected void useOutput(double output, double setpoint) 
     {
         //shooterMotor.setVoltage(getController().calculate(shooterEncoder.getRate(), setpoint));
-        shooterMotor.setVoltage(feedForward.calculate(setpoint) + output);
+        shooterMotor.setVoltageCompensationRampRate(feedForward.calculate(setpoint) + output);
     }
 
-    @Override
+
     protected double getMeasurement() 
     {
         return shooterEncoder.getRate();
@@ -43,6 +43,8 @@ public class Shooter extends PIDSubsystem
 
     public boolean atSetpoint()
     {
-        return getController().atSetpoint();
+        if((shooterMotor.getPosition() + Constants.SHOOTER_TOLERANCE > shooterMotor.getSetpoint()) && (shooterMotor.getPosition() - Constants.SHOOTER_TOLERANCE < shooterMotor.getSetpoint()))
+            return true;
+        return false;
     }
 }
