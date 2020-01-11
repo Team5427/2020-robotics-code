@@ -14,6 +14,7 @@ public class Shooter
     private SpeedController shooterMotor;
 
     private Encoder shooterEncoder;
+    //comment
 
     private SimpleMotorFeedforward feedForward;
 
