@@ -25,6 +25,7 @@ public class MotionProfile extends CommandBase
     private double cummulativeDistance;
     private double currentDistance;
     private double lastPositionError;
+    private double cummulativeError;
     public double trackError, positionError, derivativeError;
     private double leftSpeed, rightSpeed;
     private Trajectory trajectory;
@@ -35,6 +36,7 @@ public class MotionProfile extends CommandBase
     private final double kv = Constants.KV;
     private final double ka = Constants.KA;
     private final double kp = Constants.KP;
+    private final double ki = Constants.KI;
     private final double kd = Constants.KD;
     private final double ktheta = Constants.K_THETA;
     
@@ -55,6 +57,7 @@ public class MotionProfile extends CommandBase
         initTime = Timer.getFPGATimestamp();
         lastTimeDiff = 0;
         cummulativeDistance = 0;
+        cummulativeError = 0;
         lastPositionError = 0;
     }
 
@@ -81,9 +84,15 @@ public class MotionProfile extends CommandBase
         //calculates current distance traveled by the robot
         currentDistance = (encLeft.getDistance() + encRight.getDistance())/2;
 
+        //System.out.println("D: "+ currentDistance+" "+ cummulativeDistance);
+        //System.out.println("V: "+ encLeft.getRate()+" "+ currentState.velocityMetersPerSecond);
+
         //finds error in robot distance for PD controller
         positionError = cummulativeDistance - currentDistance;
-        System.out.println(cummulativeDistance+ " "+ currentDistance+ " "+encLeft.getRate());
+       
+
+        cummulativeError += positionError;
+
         double delta_time = timeDiff - lastTimeDiff;
         derivativeError = (positionError - lastPositionError)/(delta_time);
         
@@ -93,12 +102,14 @@ public class MotionProfile extends CommandBase
          + ka * currentState.accelerationMetersPerSecondSq
          + (kp * positionError)
          + (kd * derivativeError)
+         + (ki * cummulativeError)
          - (ktheta * trackError);
 
         rightSpeed = kv * currentState.velocityMetersPerSecond
          + ka * currentState.accelerationMetersPerSecondSq
          + (kp * positionError)
          + (kd * derivativeError)
+         + (ki * cummulativeError)
          + (ktheta * trackError);
         
         driveTrain.tankDrive(leftSpeed, rightSpeed);
@@ -112,7 +123,7 @@ public class MotionProfile extends CommandBase
     public boolean isFinished(){
         //finishes if time taken exceeds trajectory's time
         double timeDiff = curTime - initTime;
-        return timeDiff > trajectory.getTotalTimeSeconds();
+        return timeDiff > 2*trajectory.getTotalTimeSeconds();
     }
  
     // Called once after isFinished returns true
