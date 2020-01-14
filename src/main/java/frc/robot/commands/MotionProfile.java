@@ -35,9 +35,12 @@ public class MotionProfile extends CommandBase
     private Encoder encRight;
     private final double kv = Constants.KV;
     private final double ka = Constants.KA;
-    private final double kp = Constants.KP;
-    private final double ki = Constants.KI;
-    private final double kd = Constants.KD;
+    private final double kpLeft = Constants.KP_left;
+    private final double kiLeft = Constants.KI_left;
+    private final double kdLeft = Constants.KD_left;
+    private final double kpRight = Constants.KP_right;
+    private final double kiRight = Constants.KI_right;
+    private final double kdRight = Constants.KD_right;
     private final double ktheta = Constants.K_THETA;
     
     public MotionProfile( Pose2d start,  Pose2d end,  ArrayList<Translation2d> waypoints) {
@@ -100,16 +103,16 @@ public class MotionProfile extends CommandBase
         //angle decreases left speed magnitude while increases right speed magnitude - makes sense if trying to turn
         leftSpeed = kv * currentState.velocityMetersPerSecond
          + ka * currentState.accelerationMetersPerSecondSq
-         + (kp * positionError)
-         + (kd * derivativeError)
-         + (ki * cummulativeError)
+         + (kpLeft * positionError)
+         + (kdLeft * derivativeError)
+         + (kiLeft * cummulativeError)
          - (ktheta * trackError);
 
         rightSpeed = kv * currentState.velocityMetersPerSecond
          + ka * currentState.accelerationMetersPerSecondSq
-         + (kp * positionError)
-         + (kd * derivativeError)
-         + (ki * cummulativeError)
+         + (kpRight * positionError)
+         + (kdRight * derivativeError)
+         + (kiRight * cummulativeError)
          + (ktheta * trackError);
         
         driveTrain.tankDrive(leftSpeed, rightSpeed);
