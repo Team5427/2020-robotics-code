@@ -76,7 +76,7 @@ public class MotionProfile extends CommandBase
         State lastState = trajectory.sample(lastTimeDiff);
         
         //finds error in robot orientation for P controller
-        trackError = currentState.poseMeters.getRotation().getDegrees() - ahrs.getAngle();
+        // trackError = currentState.poseMeters.getRotation().getDegrees() - ahrs.getAngle();
 
         //calculates expected distance traveled by the robot
         Translation2d newPt = currentState.poseMeters.getTranslation();
@@ -88,7 +88,7 @@ public class MotionProfile extends CommandBase
         currentDistance = (encLeft.getDistance() + encRight.getDistance())/2;
 
         //System.out.println("D: "+ currentDistance+" "+ cummulativeDistance);
-        //System.out.println("V: "+ encLeft.getRate()+" "+ currentState.velocityMetersPerSecond);
+        System.out.println("V: "+ encLeft.getRate()+" "+ currentState.velocityMetersPerSecond);
 
         //finds error in robot distance for PD controller
         positionError = cummulativeDistance - currentDistance;
@@ -105,15 +105,15 @@ public class MotionProfile extends CommandBase
          + ka * currentState.accelerationMetersPerSecondSq
          + (kpLeft * positionError)
          + (kdLeft * derivativeError)
-         + (kiLeft * cummulativeError)
-         - (ktheta * trackError);
+         + (kiLeft * cummulativeError);
+        //  - (ktheta * trackError);
 
         rightSpeed = kv * currentState.velocityMetersPerSecond
          + ka * currentState.accelerationMetersPerSecondSq
          + (kpRight * positionError)
          + (kdRight * derivativeError)
-         + (kiRight * cummulativeError)
-         + (ktheta * trackError);
+         + (kiRight * cummulativeError);
+        //  + (ktheta * trackError);
         
         driveTrain.tankDrive(leftSpeed, rightSpeed);
 
@@ -126,7 +126,7 @@ public class MotionProfile extends CommandBase
     public boolean isFinished(){
         //finishes if time taken exceeds trajectory's time
         double timeDiff = curTime - initTime;
-        return timeDiff > 2*trajectory.getTotalTimeSeconds();
+        return timeDiff > trajectory.getTotalTimeSeconds();
     }
  
     // Called once after isFinished returns true
