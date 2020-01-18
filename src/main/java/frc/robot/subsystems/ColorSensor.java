@@ -10,10 +10,14 @@
 
 package frc.robot.subsystems;
 
+
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.util.Color;
+
 import com.revrobotics.ColorSensorV3;
+
 
 
 public class ColorSensor extends SubsystemBase
@@ -21,7 +25,9 @@ public class ColorSensor extends SubsystemBase
     SpeedController colorMotor;
 
     ColorSensorV3 colorSensor;
+    
 
+    
     public ColorSensor(SpeedController colorMotor, ColorSensorV3 colorSensor)
     {
         this.colorMotor = colorMotor;
@@ -33,6 +39,12 @@ public class ColorSensor extends SubsystemBase
     public Color getColor()
     {
         return colorSensor.getColor();
+    }
+
+    public Proximity getProximity()
+    {
+        int proximity = colorSensor.getProximity();
+        SmartDashboard.putNumber("Proximity", proximity);
     }
 
     @Override
