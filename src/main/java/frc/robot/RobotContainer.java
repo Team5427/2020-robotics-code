@@ -46,7 +46,8 @@ public class RobotContainer
   private static AHRS ahrs;
   private static Encoder encLeft;
   private static Encoder encRight;
- private static ColorSensorV3 colorSensor;
+ private static ColorSensor colorSensor;
+ private static ColorSensorV3 cs;
 
     /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -71,12 +72,15 @@ public class RobotContainer
 
     ahrs = new AHRS(SPI.Port.kMXP);
 
+    colorMotor = new WPI_VictorSPX(0);// change port value
+
+
     //encoders have 1440 as PPR and 360 CPR
     encRight = new Encoder(Constants.ENCODER_RIGHT_PORT_1, Constants.ENCODER_RIGHT_PORT_2);
     encRight.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
     encLeft = new Encoder(Constants.ENCODER_LEFT_PORT_1, Constants.ENCODER_LEFT_PORT_2);
     encLeft.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
-    colorSensor = new ColorSensor(colorMotor, colorSensor);
+    colorSensor = new ColorSensor(colorMotor, cs);
 
     // Configure the button bindings
     configureButtonBindings();

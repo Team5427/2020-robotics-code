@@ -32,7 +32,7 @@ public class ColorSensor extends SubsystemBase
     {
         this.colorMotor = colorMotor;
         this.colorSensor = colorSensor;
-        this.colorSensor.configureColorSensor(0,0,0);
+       // this.colorSensor.configureColorSensor();
 
     }
 
@@ -41,7 +41,7 @@ public class ColorSensor extends SubsystemBase
         return colorSensor.getColor();
     }
 
-    public Proximity getProximity()
+    public void getProximity()
     {
         int proximity = colorSensor.getProximity();
         SmartDashboard.putNumber("Proximity", proximity);
