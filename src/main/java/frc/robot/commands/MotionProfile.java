@@ -105,15 +105,14 @@ public class MotionProfile extends CommandBase
          + ka * currentState.accelerationMetersPerSecondSq
          + (kpLeft * positionError)
          + (kdLeft * derivativeError)
-         + (kiLeft * cummulativeError);
-        //  - (ktheta * trackError);
-
+         + (kiLeft * cummulativeError)
+        +(ktheta * trackError);
         rightSpeed = kv * currentState.velocityMetersPerSecond
          + ka * currentState.accelerationMetersPerSecondSq
          + (kpRight * positionError)
          + (kdRight * derivativeError)
-         + (kiRight * cummulativeError);
-        //  + (ktheta * trackError);
+         + (kiRight * cummulativeError)
+         + (ktheta * trackError);
         
         driveTrain.tankDrive(leftSpeed, rightSpeed);
 
