@@ -10,36 +10,51 @@
 
 package frc.robot.subsystems;
 
+
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.util.Color;
+
 import com.revrobotics.ColorSensorV3;
 
 //Documentation
 //http://www.revrobotics.com/content/sw/color-sensor-v3/sdk/docs/javadoc/com/revrobotics/ColorSensorV3.html
 
-public class ControlPanel extends SubsystemBase
+
+public class ColorSensor extends SubsystemBase
 {
     public static char color;
     
     SpeedController colorMotor;
 
     ColorSensorV3 colorSensor;
+    
 
-    public ControlPanel(SpeedController colorMotor, ColorSensorV3 colorSensor)
+    
+    public ColorSensor(SpeedController colorMotor, ColorSensorV3 colorSensor)
     {
         this.colorMotor = colorMotor;
         this.colorSensor = colorSensor;
+       // this.colorSensor.configureColorSensor();
+
     }
 
-    public Color getColor()
+    public void getColor()
     {
-        return colorSensor.getColor();
+        Color color = colorSensor.getColor();
+        SmartDashboard.putNumber("R", color.red);
+        SmartDashboard.putNumber("G", color.green);
+        SmartDashboard.putNumber("B", color.blue);
+
+        
+
     }
 
-    public void run(double speed)
+    public void getProximity()
     {
-        colorMotor.set(speed);
+        int proximity = colorSensor.getProximity();
+        SmartDashboard.putNumber("Proximity", proximity);
     }
 
     @Override

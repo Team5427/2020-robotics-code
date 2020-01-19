@@ -17,12 +17,13 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import frc.robot.subsystems.ControlPanel;
+import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.SPI;
 import com.revrobotics.ColorSensorV3;
+import edu.wpi.first.wpilibj.I2C;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -36,6 +37,7 @@ public class RobotContainer
   private static Joystick joy;
   private final SpeedController frontLeft, middleLeft, rearLeft;
   private final SpeedController frontRight, middleRight, rearRight;
+  private static SpeedController colorMotor;
   private static SpeedControllerGroup leftDrive;
   private static SpeedControllerGroup rightDrive;
   private static DifferentialDrive drive;
@@ -45,10 +47,9 @@ public class RobotContainer
   private static AHRS ahrs;
   private static Encoder encLeft;
   private static Encoder encRight;
-
-  private SpeedController colorMotor;
-  private ColorSensorV3 colorSensor;
-  private ControlPanel controlPanel;
+ private static ColorSensor colorSensor;
+ private static ColorSensorV3 cs;
+ private static I2C.Port i2cport;
 
     /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -73,15 +74,17 @@ public class RobotContainer
 
     ahrs = new AHRS(SPI.Port.kMXP);
 
+    colorMotor = new WPI_VictorSPX(0);// change port value
+    i2cport = I2C.Port.kOnboard;
+
+
     //encoders have 1440 as PPR and 360 CPR
     encRight = new Encoder(Constants.ENCODER_RIGHT_PORT_1, Constants.ENCODER_RIGHT_PORT_2);
     encRight.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
     encLeft = new Encoder(Constants.ENCODER_LEFT_PORT_1, Constants.ENCODER_LEFT_PORT_2);
     encLeft.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
-    
-    colorMotor = new WPI_VictorSPX(0); //need to change channel
-    //colorSensor = new ColorSensorV3(__); // need to change port
-    controlPanel = new ControlPanel(colorMotor, colorSensor);
+    cs = new ColorSensorV3(i2cport);
+    colorSensor = new ColorSensor(colorMotor, cs);
 
     // Configure the button bindings
     configureButtonBindings();
@@ -108,6 +111,10 @@ public class RobotContainer
   {
     // An ExampleCommand will run in autonomous
     return null;
+  }
+  public static ColorSensor getColorSensor()
+  {
+    return colorSensor;
   }
 
   //just some Accessors that take up space

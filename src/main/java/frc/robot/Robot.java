@@ -13,7 +13,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.MoveStraight;
-import frc.robot.subsystems.ControlPanel;
+import frc.robot.subsystems.ColorSensor;
+
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -62,6 +63,8 @@ public class Robot extends TimedRobot
     SmartDashboard.putNumber("Left Encoder Distance", RobotContainer.getEncLeft().getDistance());
     SmartDashboard.putNumber("Right Encoder Distance", RobotContainer.getEncRight().getDistance());
     SmartDashboard.putNumber("Average Distance", RobotContainer.getDriveTrain().getAvgDistance());
+    m_robotContainer.getColorSensor().getProximity();
+    m_robotContainer.getColorSensor().getColor();
 
     gameData = DriverStation.getInstance().getGameSpecificMessage();
     if(gameData.length() > 0)
@@ -69,16 +72,16 @@ public class Robot extends TimedRobot
       switch(gameData.charAt(0))
       {
         case 'B':
-          ControlPanel.color = 'R';
+          ColorSensor.color = 'R';
           break;
         case 'Y':
-          ControlPanel.color = 'G';
+          ColorSensor.color = 'G';
           break;
         case 'R':
-          ControlPanel.color = 'B';
+          ColorSensor.color = 'B';
           break;
         case 'G':
-          ControlPanel.color = 'Y';
+          ColorSensor.color = 'Y';
           break;
         default:
           SmartDashboard.putString("Error", "Corrupted data");
@@ -96,6 +99,7 @@ public class Robot extends TimedRobot
 
   @Override
   public void disabledPeriodic() {
+    
   }
 
   /**
@@ -118,6 +122,7 @@ public class Robot extends TimedRobot
    */
   @Override
   public void autonomousPeriodic() {
+
   }
 
   @Override
