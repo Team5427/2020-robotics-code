@@ -76,7 +76,7 @@ public class MotionProfile extends CommandBase
         State lastState = trajectory.sample(lastTimeDiff);
         
         //finds error in robot orientation for P controller
-        // trackError = currentState.poseMeters.getRotation().getDegrees() - ahrs.getAngle();
+        trackError = currentState.poseMeters.getRotation().getDegrees() - ahrs.getAngle();
 
         //calculates expected distance traveled by the robot
         Translation2d newPt = currentState.poseMeters.getTranslation();
@@ -106,7 +106,8 @@ public class MotionProfile extends CommandBase
          + (kpLeft * positionError)
          + (kdLeft * derivativeError)
          + (kiLeft * cummulativeError)
-        +(ktheta * trackError);
+         - (ktheta * trackError);
+         
         rightSpeed = kv * currentState.velocityMetersPerSecond
          + ka * currentState.accelerationMetersPerSecondSq
          + (kpRight * positionError)

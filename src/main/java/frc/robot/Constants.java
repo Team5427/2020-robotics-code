@@ -44,7 +44,7 @@ public final class Constants
     //0.410
     //
 
-    public static final double K_THETA = 2.0;;
+    public static final double K_THETA = 0.0000001;
 
     public static final double Z_ROT_DAMPENING = 0.75;
     
