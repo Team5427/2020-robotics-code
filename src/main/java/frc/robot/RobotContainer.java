@@ -10,11 +10,14 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PWM;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.subsystems.ColorSensor;
@@ -47,11 +50,13 @@ public class RobotContainer
   private static AHRS ahrs;
   private static Encoder encLeft;
   private static Encoder encRight;
- private static ColorSensor colorSensor;
- private static ColorSensorV3 cs;
- private static I2C.Port i2cport;
+  private static ColorSensor colorSensor;
+  private static ColorSensorV3 cs;
+  private static I2C.Port i2cport;
 
-    /**
+  public static AnalogInput ultrasonicSensorPort;
+
+  /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() 
@@ -76,6 +81,7 @@ public class RobotContainer
 
     colorMotor = new WPI_VictorSPX(0);// change port value
     i2cport = I2C.Port.kOnboard;
+    ultrasonicSensorPort = new AnalogInput(0);
 
 
     //encoders have 1440 as PPR and 360 CPR
@@ -85,7 +91,6 @@ public class RobotContainer
     encLeft.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
     cs = new ColorSensorV3(i2cport);
     colorSensor = new ColorSensor(colorMotor, cs);
-
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -115,6 +120,12 @@ public class RobotContainer
   public static ColorSensor getColorSensor()
   {
     return colorSensor;
+  }
+
+  public static int getUltrasonicDistance() {
+    int rawDist = ultrasonicSensorPort.getValue();
+    System.out.println(rawDist);
+    return rawDist;
   }
 
   //just some Accessors that take up space

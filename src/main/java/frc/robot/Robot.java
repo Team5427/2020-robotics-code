@@ -32,6 +32,8 @@ public class Robot extends TimedRobot
 
   private String gameData;
 
+  
+
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -65,6 +67,8 @@ public class Robot extends TimedRobot
     SmartDashboard.putNumber("Average Distance", RobotContainer.getDriveTrain().getAvgDistance());
     m_robotContainer.getColorSensor().getProximity();
     m_robotContainer.getColorSensor().getColor();
+    SmartDashboard.putNumber("Raw Ultrasonic Distance", RobotContainer.getUltrasonicDistance());
+
 
     gameData = DriverStation.getInstance().getGameSpecificMessage();
     if(gameData.length() > 0)
