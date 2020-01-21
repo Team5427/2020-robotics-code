@@ -54,7 +54,8 @@ public class RobotContainer
   private static ColorSensorV3 cs;
   private static I2C.Port i2cport;
 
-  public static AnalogInput ultrasonicSensorPort;
+  public static AnalogInput analogUltrasonic;
+  public static PWM pwmUltrasonic;
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -81,7 +82,8 @@ public class RobotContainer
 
     colorMotor = new WPI_VictorSPX(0);// change port value
     i2cport = I2C.Port.kOnboard;
-    ultrasonicSensorPort = new AnalogInput(0);
+    analogUltrasonic = new AnalogInput(0);
+    pwmUltrasonic = new PWM(0);
 
 
     //encoders have 1440 as PPR and 360 CPR
@@ -122,8 +124,14 @@ public class RobotContainer
     return colorSensor;
   }
 
-  public static int getUltrasonicDistance() {
-    int rawDist = ultrasonicSensorPort.getValue();
+  public static double PWMUltrasonicDistance() {
+    double rawDist = pwmUltrasonic.getRawBounds();
+    System.out.println(rawDist);
+    return rawDist;
+  }
+
+  public static double AnalogUltrasonicDistance() {
+    double rawDist = analogUltrasonic.getValue()-217;
     System.out.println(rawDist);
     return rawDist;
   }
