@@ -46,8 +46,37 @@ public class ColorSensor extends SubsystemBase
         SmartDashboard.putNumber("R", color.red);
         SmartDashboard.putNumber("G", color.green);
         SmartDashboard.putNumber("B", color.blue);
-
         
+
+        double k = 1 - Math.max(Math.max(color.red, color.green), color.blue);
+        double c = (1 - color.red - k) / (1 - k);
+        double m = (1 - color.green - k ) / (1 - k);
+        double y = (1 - color.blue - k) / (1- k);
+
+        String colorwheel = "null";
+
+        if(c > 0.95 && c < 1){
+            if(y > 0.95 && y < 1){
+                colorwheel = "green";
+            }
+            else{
+                colorwheel = "blue";
+            }
+        }
+        if(y > 0.95 && y < 1){
+            if(m > 0.95 && m < 1){
+                colorwheel = "red";
+            }
+            else{
+                colorwheel = "yellow";
+            }
+        }
+        SmartDashboard.putString("colorwheel",colorwheel);
+        SmartDashboard.putNumber("k", k);
+        SmartDashboard.putNumber("c", c);
+        SmartDashboard.putNumber("y", y);
+        SmartDashboard.putNumber("m", m);
+
 
     }
 
