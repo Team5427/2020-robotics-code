@@ -19,15 +19,17 @@ import frc.robot.subsystems.DriveTrain;
 
 public class MotionProfile extends CommandBase
 {
-    private double initTime;
-    private double curTime;
-    private double lastTimeDiff;
-    private double cummulativeDistance;
-    private double currentDistance;
-    private double lastPositionError;
-    private double cummulativeError;
-    public double trackError, positionError, derivativeError;
-    private double leftSpeed, rightSpeed;
+    private double initTime = 0;
+    private double curTime = 0;
+    private double lastTimeDiff = 0;
+    private double cummulativeDistance = 0;
+    private double currentDistance = 0;
+    private double lastPositionError = 0;
+    private double cummulativeError = 0;
+    private double trackError, positionError, derivativeError = 0;
+    private double lastTrackError = 0;
+    private double derivativeTrackError = 0;
+    private double leftSpeed, rightSpeed = 0;
     private Trajectory trajectory;
     private DriveTrain driveTrain;
     private AHRS ahrs;
@@ -41,7 +43,8 @@ public class MotionProfile extends CommandBase
     private final double kpRight = Constants.KP_right;
     private final double kiRight = Constants.KI_right;
     private final double kdRight = Constants.KD_right;
-    private final double ktheta = Constants.K_THETA;
+    private final double kthetap = Constants.K_THETA_P;
+    private final double kthetad = Constants.K_THETA_D;
     
     public MotionProfile( Pose2d start,  Pose2d end,  ArrayList<Translation2d> waypoints) {
         driveTrain = RobotContainer.getDriveTrain();
@@ -76,7 +79,7 @@ public class MotionProfile extends CommandBase
         State lastState = trajectory.sample(lastTimeDiff);
         
         //finds error in robot orientation for P controller
-        // trackError = currentState.poseMeters.getRotation().getDegrees() - ahrs.getAngle();
+        trackError = currentState.poseMeters.getRotation().getDegrees() - ahrs.getAngle();
 
         //calculates expected distance traveled by the robot
         Translation2d newPt = currentState.poseMeters.getTranslation();
@@ -98,6 +101,7 @@ public class MotionProfile extends CommandBase
 
         double delta_time = timeDiff - lastTimeDiff;
         derivativeError = (positionError - lastPositionError)/(delta_time);
+        derivativeTrackError = (trackError - lastTrackError)/(delta_time);
         
         //calculates speed using P heading controller and PD position controllers
         //angle decreases left speed magnitude while increases right speed magnitude - makes sense if trying to turn
@@ -105,20 +109,23 @@ public class MotionProfile extends CommandBase
          + ka * currentState.accelerationMetersPerSecondSq
          + (kpLeft * positionError)
          + (kdLeft * derivativeError)
-         + (kiLeft * cummulativeError);
-        //  - (ktheta * trackError);
+         + (kiLeft * cummulativeError)
+         - (kthetap * trackError)
+         - (kthetad * derivativeTrackError);
 
         rightSpeed = kv * currentState.velocityMetersPerSecond
          + ka * currentState.accelerationMetersPerSecondSq
          + (kpRight * positionError)
          + (kdRight * derivativeError)
-         + (kiRight * cummulativeError);
-        //  + (ktheta * trackError);
+         + (kiRight * cummulativeError)
+         + (kthetap * trackError)
+         + (kthetad * derivativeTrackError);
         
         driveTrain.tankDrive(leftSpeed, rightSpeed);
 
         lastTimeDiff = timeDiff;
         lastPositionError = positionError;
+        lastTrackError = trackError;
     }
  
     // Make this return true when this Command no longer needs to run execute()
