@@ -88,8 +88,7 @@ public class RobotContainer
 
     //creating a profile
     //COUNTER CLOCKWISE is POSITIVE, CLOCKWISE is NEGATIVE
-    motion = new MotionProfile(new Pose2d(0, 0, new Rotation2d(-360)), new Pose2d(0, 2, new Rotation2d(100)), new ArrayList<Translation2d>());
-
+    motion = new MotionProfile(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(0, 2, new Rotation2d(0)), new ArrayList<Translation2d>());
     // Configure the button bindings  
     configureButtonBindings();
   }

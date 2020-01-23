@@ -24,28 +24,18 @@ public final class Constants
     // (% Voltage [-1,1])/(Speed in meters per second) [basically we have to measure this]
     public static final double KV = .3030303;
 
+    
     //influence of acceleration on velocity, just a bias which can be further tested.
-    public static final double KA = 0.035;
-//.066
-    //
-    public static final double KP_left = 0.04;
-    //.04
+    public static final double KA = 0.066;
+
+    
+    public static final double KP_left = 0.081;
     public static final double KI_left = 0.001352;
-    //0.0014
     public static final double KD_left = 0.28;
-    //.410
-    public static final double KP_right = 0.04;
-    //.04
-
+    public static final double KP_right = 0.081;
     public static final double KI_right = 0.001352;
-    //0.0015
-
     public static final double KD_right = 0.28;
-    //0.28
-    //
-
-    public static final double K_THETA_P = 0;
-
+    public static final double K_THETA_P = 0.001;
     public static final double K_THETA_D = 0;
 
     public static final double Z_ROT_DAMPENING = 0.75;
