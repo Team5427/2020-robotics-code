@@ -35,7 +35,7 @@ public final class Constants
     public static final double KP_right = 0.081;
     public static final double KI_right = 0.001352;
     public static final double KD_right = 0.28;
-    public static final double K_THETA_P = 0.001;
+    public static final double K_THETA_P = 0.002336;
     public static final double K_THETA_D = 0;
 
     public static final double Z_ROT_DAMPENING = 0.75;
