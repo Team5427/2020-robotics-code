@@ -17,11 +17,14 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.SPI;
+
+import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.wpilibj.I2C;
 
@@ -47,10 +50,10 @@ public class RobotContainer
   private static AHRS ahrs;
   private static Encoder encLeft;
   private static Encoder encRight;
- private static ColorSensor colorSensor;
- private static ColorSensorV3 cs;
- private static I2C.Port i2cport;
-
+  private static ColorSensor colorSensor;
+  private static ColorSensorV3 cs;
+  private static I2C.Port i2cport;
+  private static ColorMatch colorMatch;
     /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -73,8 +76,9 @@ public class RobotContainer
     driveTrain = new DriveTrain(leftDrive, rightDrive, drive);
 
     ahrs = new AHRS(SPI.Port.kMXP);
-
+  
     colorMotor = new WPI_VictorSPX(0);// change port value
+
     i2cport = I2C.Port.kOnboard;
 
 
@@ -84,7 +88,10 @@ public class RobotContainer
     encLeft = new Encoder(Constants.ENCODER_LEFT_PORT_1, Constants.ENCODER_LEFT_PORT_2);
     encLeft.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
     cs = new ColorSensorV3(i2cport);
-    colorSensor = new ColorSensor(colorMotor, cs);
+    colorMatch = new ColorMatch();
+    colorSensor = new ColorSensor(colorMotor, cs, colorMatch);
+          
+
 
     // Configure the button bindings
     configureButtonBindings();

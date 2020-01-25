@@ -7,13 +7,19 @@
 
 package frc.robot;
 
+import com.revrobotics.ColorMatch;
+
+import edu.wpi.first.wpilibj.util.Color;
+
 /**
- * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
- * constants.  This class should not be used for any other purpose.  All constants should be
- * declared globally (i.e. public static).  Do not put anything functional in this class.
+ * The Constants class provides a convenient place for teams to hold robot-wide
+ * numerical or boolean constants. This class should not be used for any other
+ * purpose. All constants should be declared globally (i.e. public static). Do
+ * not put anything functional in this class.
  *
- * <p>It is advised to statically import this class (or one of its inner classes) wherever the
- * constants are needed, to reduce verbosity.
+ * <p>
+ * It is advised to statically import this class (or one of its inner classes)
+ * wherever the constants are needed, to reduce verbosity.
  */
 public final class Constants 
 {
@@ -49,6 +55,12 @@ public final class Constants
 	public static final int ENCODER_LEFT_PORT_1 = 3;
 	public static final int ENCODER_LEFT_PORT_2 = 4;
 	public static final int ENCODER_RIGHT_PORT_1 = 6; 
-	public static final int ENCODER_RIGHT_PORT_2 = 7;
+    public static final int ENCODER_RIGHT_PORT_2 = 7;
+    
+    /* Color Targets */
+    public static final Color kBlueTarget = ColorMatch.makeColor(0.11, 0.42, 0.47);
+    public static final Color kGreenTarget = ColorMatch.makeColor(0.16, 0.57, 0.26);
+    public static final Color kRedTarget = ColorMatch.makeColor(0.53, 0.33, 0.12);
+    public static final Color kYellowTarget = ColorMatch.makeColor(0.31, 0.56, 0.12);
 	
 }
