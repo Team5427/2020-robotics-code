@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import java.math.BigDecimal;
+
 import com.revrobotics.ColorMatch;
 
 import edu.wpi.first.wpilibj.util.Color;
@@ -54,7 +56,7 @@ public final class Constants
     /*Encoder Ports */
 	public static final int ENCODER_LEFT_PORT_1 = 3;
 	public static final int ENCODER_LEFT_PORT_2 = 4;
-	public static final int ENCODER_RIGHT_PORT_1 = 6; 
+	public static final int ENCODER_RIGHT_PORT_1 = 6;
     public static final int ENCODER_RIGHT_PORT_2 = 7;
     
     /* Color Targets */
@@ -62,5 +64,22 @@ public final class Constants
     public static final Color kGreenTarget = ColorMatch.makeColor(0.16, 0.57, 0.26);
     public static final Color kRedTarget = ColorMatch.makeColor(0.53, 0.33, 0.12);
     public static final Color kYellowTarget = ColorMatch.makeColor(0.31, 0.56, 0.12);
-	
+
+    public static final BigDecimal rBlueTarget = new BigDecimal("0.11");
+    public static final BigDecimal gBlueTarget = new BigDecimal("0.42");
+    public static final BigDecimal bBlueTarget = new BigDecimal("0.47");
+
+    public static final BigDecimal rGreenTarget = new BigDecimal("0.16");
+    public static final BigDecimal gGreenTarget = new BigDecimal("0.57");
+    public static final BigDecimal bGreenTarget = new BigDecimal("0.26");
+
+    public static final BigDecimal rRedTarget = new BigDecimal("0.53");
+    public static final BigDecimal gRedTarget = new BigDecimal("0.33");
+    public static final BigDecimal bRedTarget = new BigDecimal("0.12");
+
+    public static final BigDecimal rYellowTarget = new BigDecimal("0.31");
+    public static final BigDecimal gYellowTarget = new BigDecimal("0.56");
+    public static final BigDecimal bYellowTarget = new BigDecimal("0.12");
+
+    public static final double COLOR_THRESHOLD = 0.1;
 }

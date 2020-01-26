@@ -16,6 +16,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import edu.wpi.first.wpilibj.util.Color;
 
+import javax.lang.model.util.ElementScanner6;
+
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
@@ -44,42 +46,69 @@ public class ColorSensor extends SubsystemBase {
     }
 
     public void getColor() {
-        Color color = colorSensor.getColor();
+        int colorRed = colorSensor.getRed();
+        int colorGreen = colorSensor.getGreen();
+        int colorBlue = colorSensor.getBlue();
         String colorString = "";
-        final ColorMatchResult match = colorMatch.matchClosestColor(color);
-        double rBlueTarget =Constants.kBlueTarget.red;
-        double gBlueTarget =Constants.kBlueTarget.green;
-        double bBlueTarget =Constants.kBlueTarget.blue;
+        double rBlueTarget = Constants.kBlueTarget.red;
+        double gBlueTarget = Constants.kBlueTarget.green;
+        double bBlueTarget = Constants.kBlueTarget.blue;
 
-        double rRedTarget  =Constants.kRedTarget.red;
-        double gRedTarget =Constants.kRedTarget.green;
-        double bRedTarget =Constants.kRedTarget.blue;
+        double rRedTarget = Constants.kRedTarget.red;
+        double gRedTarget = Constants.kRedTarget.green;
+        double bRedTarget = Constants.kRedTarget.blue;
 
-        double rGreenTarget=Constants.kGreenTarget.red;
-        double gGreenTarget=Constants.kGreenTarget.green;
-        double bGreenTarget=Constants.kGreenTarget.blue;
+        double rGreenTarget = Constants.kGreenTarget.red;
+        double gGreenTarget = Constants.kGreenTarget.green;
+        double bGreenTarget = Constants.kGreenTarget.blue;
 
-        double rYellowTarget=Constants.kYellowTarget.red;
-        double gYellowTarget=Constants.kYellowTarget.green;
-        double bYellowTarget=Constants.kYellowTarget.blue;
+        double rYellowTarget = Constants.kYellowTarget.red;
+        double gYellowTarget = Constants.kYellowTarget.green;
+        double bYellowTarget = Constants.kYellowTarget.blue;
 
+        System.out.println(match.color.red + "RED");
+        System.out.println(match.color.green + "GREEN");
+        System.out.println(match.color.blue + "BLUE");
+
+        if(Math.abs(match.color.red - rRedTarget) <= Constants.COLOR_THRESHOLD && Math.abs(match.color.green - gRedTarget) <= Constants.COLOR_THRESHOLD && Math.abs(match.color.blue - bRedTarget) <= Constants.COLOR_THRESHOLD)
+        {
+          red = true;
+          System.out.println("red");
+        }
+        else if(Math.abs(match.color.red - rBlueTarget) <= Constants.COLOR_THRESHOLD && Math.abs(match.color.green - gBlueTarget) <= Constants.COLOR_THRESHOLD && Math.abs(match.color.blue - bBlueTarget) <= Constants.COLOR_THRESHOLD)
+        {
+          blue = true;
+          System.out.println("blue");
+        }
+        else if(Math.abs(match.color.red - rGreenTarget) <= Constants.COLOR_THRESHOLD && Math.abs(match.color.green - gGreenTarget) <= Constants.COLOR_THRESHOLD && Math.abs(match.color.blue - bGreenTarget) <= Constants.COLOR_THRESHOLD)
+        {
+          green = true;
+        }
+        else if(Math.abs(match.color.red - rYellowTarget) <= Constants.COLOR_THRESHOLD && Math.abs(match.color.green - gYellowTarget) <= Constants.COLOR_THRESHOLD && Math.abs(match.color.blue - bYellowTarget) <= Constants.COLOR_THRESHOLD)
+        {
+          yellow = true;
+        }
+        else 
+        {
+          red = blue = green = yellow = false;
+        }
         
-        if (match.color.blue <= (bBlueTarget +.05) && match.color.blue >= (bBlueTarget -.05) && match.color.red <= (rBlueTarget +.05) && match.color.red >= (rBlueTarget -.05) && match.color.green <= (gBlueTarget +.05) && match.color.green >= (gBlueTarget -.05)) {
-            colorString = "Blue";
-            blue = true;
-          } else if  (match.color.blue <= bRedTarget +.05 && match.color.blue >= bRedTarget -.05 && match.color.red <= rRedTarget +.05 && match.color.red >= rRedTarget -.05 && match.color.green <= gRedTarget +.05 && match.color.green >= gRedTarget -.05) {
-            colorString = "Red";
-            red = true;
-          } else if (match.color.blue <= bGreenTarget +.05 && match.color.blue >= bGreenTarget -.05 && match.color.red <= rGreenTarget +.05 && match.color.red >= rGreenTarget -.05 && match.color.green <= gGreenTarget +.05 && match.color.green >= gGreenTarget -.05) {
-            colorString = "Green";
-            green = true;
-          } else if (match.color.blue <= bYellowTarget +.05 && match.color.blue >= bYellowTarget -.05 && match.color.red <= rYellowTarget +.05 && match.color.red >= rYellowTarget -.05 && match.color.green <= gYellowTarget +.05 && match.color.green >= gYellowTarget -.05) {
-            colorString = "Yellow";
-            yellow = true;
-          } else {
-            colorString = "Unknown";
-            blue = red = green = yellow = false;
-          }
+        // if (match.color.blue <= (bBlueTarget + Constants.COLOR_THRESHOLD) && match.color.blue >= (bBlueTarget - Constants.COLOR_THRESHOLD) && match.color.red <= (rBlueTarget + Constants.COLOR_THRESHOLD) && match.color.red >= (rBlueTarget - Constants.COLOR_THRESHOLD) && match.color.green <= (gBlueTarget + Constants.COLOR_THRESHOLD) && match.color.green >= (gBlueTarget -Constants.COLOR_THRESHOLD)) {
+        //     colorString = "Blue";
+        //     blue = true;
+        //   } else if  (match.color.blue <= bRedTarget + Constants.COLOR_THRESHOLD && match.color.blue >= bRedTarget - Constants.COLOR_THRESHOLD && match.color.red <= rRedTarget + Constants.COLOR_THRESHOLD && match.color.red >= rRedTarget - Constants.COLOR_THRESHOLD && match.color.green <= gRedTarget + Constants.COLOR_THRESHOLD && match.color.green >= gRedTarget - Constants.COLOR_THRESHOLD) {
+        //     colorString = "Red";
+        //     red = true;
+        //   } else if (match.color.blue <= bGreenTarget + Constants.COLOR_THRESHOLD && match.color.blue >= bGreenTarget -Constants.COLOR_THRESHOLD && match.color.red <= rGreenTarget +Constants.COLOR_THRESHOLD && match.color.red >= rGreenTarget - Constants.COLOR_THRESHOLD && match.color.green <= gGreenTarget + Constants.COLOR_THRESHOLD && match.color.green >= gGreenTarget - Constants.COLOR_THRESHOLD) {
+        //     colorString = "Green";
+        //     green = true;
+        //   } else if (match.color.blue <= bYellowTarget + Constants.COLOR_THRESHOLD && match.color.blue >= bYellowTarget - Constants.COLOR_THRESHOLD && match.color.red <= rYellowTarget + Constants.COLOR_THRESHOLD && match.color.red >= rYellowTarget - Constants.COLOR_THRESHOLD && match.color.green <= gYellowTarget + Constants.COLOR_THRESHOLD && match.color.green >= gYellowTarget - Constants.COLOR_THRESHOLD) {
+        //     colorString = "Yellow";
+        //     yellow = true;
+        //   } else {
+        //     colorString = "Unknown";
+        //     blue = red = green = yellow = false;
+        //   }
           
 
         // SmartDashboard.putNumber("Red", color.red);
