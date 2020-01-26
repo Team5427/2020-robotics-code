@@ -40,7 +40,7 @@ public final class Constants
 
     public static final double Z_ROT_DAMPENING = 0.75;
 
-    public static final double TURN_TOLERANCE =  4;
+    public static final double TURN_TOLERANCE =  2;
     
     /**
      * Diameter of the drive wheel in meters. AKA 6 inches.
