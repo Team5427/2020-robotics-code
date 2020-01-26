@@ -29,6 +29,22 @@ public class ColorSensor extends SubsystemBase {
 
     public static char color;
 
+    double rBlueTarget = Constants.kBlueTarget.red;
+    double gBlueTarget = Constants.kBlueTarget.green;
+    double bBlueTarget = Constants.kBlueTarget.blue;
+
+    double rRedTarget = Constants.kRedTarget.red;
+    double gRedTarget = Constants.kRedTarget.green;      
+    double bRedTarget = Constants.kRedTarget.blue;
+
+    double rGreenTarget = Constants.kGreenTarget.red;
+    double gGreenTarget = Constants.kGreenTarget.green;
+    double bGreenTarget = Constants.kGreenTarget.blue;
+
+    double rYellowTarget = Constants.kYellowTarget.red;
+    double gYellowTarget = Constants.kYellowTarget.green;
+    double bYellowTarget = Constants.kYellowTarget.blue;
+
     SpeedController colorMotor;
 
     ColorSensorV3 colorSensor;
@@ -36,6 +52,8 @@ public class ColorSensor extends SubsystemBase {
     ColorMatch colorMatch;
 
     boolean red, green, blue, yellow = false;
+    
+    int colorRed, colorGreen, colorBlue = 0;
 
     public ColorSensor(SpeedController colorMotor, ColorSensorV3 colorSensor, ColorMatch colorMatch) {
         this.colorMotor = colorMotor;
@@ -46,45 +64,25 @@ public class ColorSensor extends SubsystemBase {
     }
 
     public void getColor() {
-        int colorRed = colorSensor.getRed();
-        int colorGreen = colorSensor.getGreen();
-        int colorBlue = colorSensor.getBlue();
-        String colorString = "";
-        double rBlueTarget = Constants.kBlueTarget.red;
-        double gBlueTarget = Constants.kBlueTarget.green;
-        double bBlueTarget = Constants.kBlueTarget.blue;
+        colorRed = colorSensor.getRed();
+        colorGreen = colorSensor.getGreen();
+        colorBlue = colorSensor.getBlue();
 
-        double rRedTarget = Constants.kRedTarget.red;
-        double gRedTarget = Constants.kRedTarget.green;
-        double bRedTarget = Constants.kRedTarget.blue;
-
-        double rGreenTarget = Constants.kGreenTarget.red;
-        double gGreenTarget = Constants.kGreenTarget.green;
-        double bGreenTarget = Constants.kGreenTarget.blue;
-
-        double rYellowTarget = Constants.kYellowTarget.red;
-        double gYellowTarget = Constants.kYellowTarget.green;
-        double bYellowTarget = Constants.kYellowTarget.blue;
-
-        System.out.println(match.color.red + "RED");
-        System.out.println(match.color.green + "GREEN");
-        System.out.println(match.color.blue + "BLUE");
-
-        if(Math.abs(match.color.red - rRedTarget) <= Constants.COLOR_THRESHOLD && Math.abs(match.color.green - gRedTarget) <= Constants.COLOR_THRESHOLD && Math.abs(match.color.blue - bRedTarget) <= Constants.COLOR_THRESHOLD)
+        if(Math.abs(colorRed - rRedTarget) <= Constants.COLOR_THRESHOLD && Math.abs(colorGreen - gRedTarget) <= Constants.COLOR_THRESHOLD && Math.abs(colorBlue - bRedTarget) <= Constants.COLOR_THRESHOLD)
         {
           red = true;
           System.out.println("red");
         }
-        else if(Math.abs(match.color.red - rBlueTarget) <= Constants.COLOR_THRESHOLD && Math.abs(match.color.green - gBlueTarget) <= Constants.COLOR_THRESHOLD && Math.abs(match.color.blue - bBlueTarget) <= Constants.COLOR_THRESHOLD)
+        else if(Math.abs(colorRed - rBlueTarget) <= Constants.COLOR_THRESHOLD && Math.abs(colorGreen - gBlueTarget) <= Constants.COLOR_THRESHOLD && Math.abs(colorBlue - bBlueTarget) <= Constants.COLOR_THRESHOLD)
         {
           blue = true;
           System.out.println("blue");
         }
-        else if(Math.abs(match.color.red - rGreenTarget) <= Constants.COLOR_THRESHOLD && Math.abs(match.color.green - gGreenTarget) <= Constants.COLOR_THRESHOLD && Math.abs(match.color.blue - bGreenTarget) <= Constants.COLOR_THRESHOLD)
+        else if(Math.abs(colorRed - rGreenTarget) <= Constants.COLOR_THRESHOLD && Math.abs(colorGreen - gGreenTarget) <= Constants.COLOR_THRESHOLD && Math.abs(colorBlue - bGreenTarget) <= Constants.COLOR_THRESHOLD)
         {
           green = true;
         }
-        else if(Math.abs(match.color.red - rYellowTarget) <= Constants.COLOR_THRESHOLD && Math.abs(match.color.green - gYellowTarget) <= Constants.COLOR_THRESHOLD && Math.abs(match.color.blue - bYellowTarget) <= Constants.COLOR_THRESHOLD)
+        else if(Math.abs(colorRed - rYellowTarget) <= Constants.COLOR_THRESHOLD && Math.abs(colorGreen - gYellowTarget) <= Constants.COLOR_THRESHOLD && Math.abs(colorBlue - bYellowTarget) <= Constants.COLOR_THRESHOLD)
         {
           yellow = true;
         }
@@ -118,13 +116,11 @@ public class ColorSensor extends SubsystemBase {
         SmartDashboard.putBoolean("Yellow", yellow);
         SmartDashboard.putBoolean("Green", green);
         SmartDashboard.putBoolean("Blue", blue);
-        SmartDashboard.putNumber("Confidence", match.confidence);
-        SmartDashboard.putString("Detected Color", colorString);
 
 
-        SmartDashboard.putNumber("R", color.red);
-        SmartDashboard.putNumber("G", color.green);
-        SmartDashboard.putNumber("B", color.blue);
+        SmartDashboard.putNumber("R", colorRed);
+        SmartDashboard.putNumber("G", colorGreen);
+        SmartDashboard.putNumber("B", colorBlue);
         
 
         // double k = 1 - Math.max(Math.max(color.red, color.green), color.blue);
