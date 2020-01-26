@@ -53,7 +53,8 @@ public class ColorSensor extends SubsystemBase {
 
     boolean red, green, blue, yellow = false;
     
-    int colorRed, colorGreen, colorBlue = 0;
+    int rawRed, rawGreen, rawBlue = 0;
+    double colorRed, colorGreen, colorBlue = 0;
 
     public ColorSensor(SpeedController colorMotor, ColorSensorV3 colorSensor, ColorMatch colorMatch) {
         this.colorMotor = colorMotor;
@@ -64,31 +65,53 @@ public class ColorSensor extends SubsystemBase {
     }
 
     public void getColor() {
-        colorRed = colorSensor.getRed();
-        colorGreen = colorSensor.getGreen();
-        colorBlue = colorSensor.getBlue();
+        rawRed = colorSensor.getRed();
+        rawGreen = colorSensor.getGreen();
+        rawBlue = colorSensor.getBlue();
+        int total = rawRed + rawGreen + rawBlue;
+
+        colorRed = rawRed/(double)total;
+        colorGreen = rawGreen/(double)total;
+        colorBlue = rawBlue/(double)total;
 
         if(Math.abs(colorRed - rRedTarget) <= Constants.COLOR_THRESHOLD && Math.abs(colorGreen - gRedTarget) <= Constants.COLOR_THRESHOLD && Math.abs(colorBlue - bRedTarget) <= Constants.COLOR_THRESHOLD)
         {
           red = true;
+          green = false;
+          blue = false;
+          yellow = false;
           System.out.println("red");
         }
         else if(Math.abs(colorRed - rBlueTarget) <= Constants.COLOR_THRESHOLD && Math.abs(colorGreen - gBlueTarget) <= Constants.COLOR_THRESHOLD && Math.abs(colorBlue - bBlueTarget) <= Constants.COLOR_THRESHOLD)
         {
           blue = true;
+          green = false;
+          red = false;
+          yellow = false;
           System.out.println("blue");
         }
         else if(Math.abs(colorRed - rGreenTarget) <= Constants.COLOR_THRESHOLD && Math.abs(colorGreen - gGreenTarget) <= Constants.COLOR_THRESHOLD && Math.abs(colorBlue - bGreenTarget) <= Constants.COLOR_THRESHOLD)
         {
           green = true;
+          blue = false;
+          red = false;
+          yellow = false;
+          System.out.println("green");
+
         }
         else if(Math.abs(colorRed - rYellowTarget) <= Constants.COLOR_THRESHOLD && Math.abs(colorGreen - gYellowTarget) <= Constants.COLOR_THRESHOLD && Math.abs(colorBlue - bYellowTarget) <= Constants.COLOR_THRESHOLD)
         {
           yellow = true;
+          green = false;
+          blue = false;
+          red = false;
+          System.out.println("yellow");
+
         }
         else 
         {
           red = blue = green = yellow = false;
+          System.out.println("none");
         }
         
         // if (match.color.blue <= (bBlueTarget + Constants.COLOR_THRESHOLD) && match.color.blue >= (bBlueTarget - Constants.COLOR_THRESHOLD) && match.color.red <= (rBlueTarget + Constants.COLOR_THRESHOLD) && match.color.red >= (rBlueTarget - Constants.COLOR_THRESHOLD) && match.color.green <= (gBlueTarget + Constants.COLOR_THRESHOLD) && match.color.green >= (gBlueTarget -Constants.COLOR_THRESHOLD)) {

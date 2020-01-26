@@ -81,5 +81,5 @@ public final class Constants
     public static final BigDecimal gYellowTarget = new BigDecimal("0.56");
     public static final BigDecimal bYellowTarget = new BigDecimal("0.12");
 
-    public static final double COLOR_THRESHOLD = 0.1;
+    public static final double COLOR_THRESHOLD = 0.05;
 }
