@@ -43,7 +43,9 @@ public final class Constants
 	public static final int LEFT_BOTTOM_MOTOR = 11;
 	public static final int RIGHT_TOP_MOTOR = 6;
 	public static final int RIGHT_MIDDLE_MOTOR = 7;
-	public static final int RIGHT_BOTTOM_MOTOR = 8;
+    public static final int RIGHT_BOTTOM_MOTOR = 8;
+    
+    public static final int INTAKE_MOTOR = 0; //need to configure
 
     /*Encoder Ports */
 	public static final int ENCODER_LEFT_PORT_1 = 3;

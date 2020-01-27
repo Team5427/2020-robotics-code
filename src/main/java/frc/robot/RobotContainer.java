@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.SPI;
@@ -39,6 +40,9 @@ public class RobotContainer
   private static DifferentialDrive drive;
 
   private static DriveTrain driveTrain;
+
+  private static SpeedController intakeMotor;
+  private static Intake intake;
 
   private static AHRS ahrs;
   private static Encoder encLeft;
@@ -63,6 +67,9 @@ public class RobotContainer
     drive.setSafetyEnabled(false);
 
     driveTrain = new DriveTrain(leftDrive, rightDrive, drive);
+
+    intakeMotor = new WPI_VictorSPX(Constants.INTAKE_MOTOR);
+    intake = new Intake(intakeMotor);
 
     ahrs = new AHRS(SPI.Port.kMXP);
 
