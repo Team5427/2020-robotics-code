@@ -32,8 +32,9 @@ public class DriveTrain extends SubsystemBase
 
     public void tankDrive(double leftSpeed, double rightSpeed)
     {
+        //System.out.println(leftSpeed);
         left.set(leftSpeed);
-        right.set(rightSpeed);
+        right.set(-rightSpeed);
     }
 
     public void stop()
