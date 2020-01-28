@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import java.util.ArrayList;
+
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 
@@ -16,8 +18,15 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.geometry.Translation2d;
+import frc.robot.commands.MotionProfile;
+import frc.robot.commands.MoveStraight;
+import frc.robot.commands.PointTurn;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -34,12 +43,11 @@ public class RobotContainer
 {
   // The robot's subsystems and commands are defined here...
   private static Joystick joy;
-  private final SpeedController frontLeft, middleLeft, rearLeft;
-  private final SpeedController frontRight, middleRight, rearRight;
+  private final SpeedController frontLeft, rearLeft;
+  private final SpeedController frontRight, rearRight;
   private static SpeedControllerGroup leftDrive;
   private static SpeedControllerGroup rightDrive;
   private static DifferentialDrive drive;
-
   private static DriveTrain driveTrain;
 
   private static SpeedController intakeMotor;
@@ -50,21 +58,27 @@ public class RobotContainer
   private static Encoder encRight;
   
   //add a AnalogInput named promixity sensor.
+  
+  private static Command motion;
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() 
   {
-    frontLeft = new WPI_VictorSPX(Constants.LEFT_TOP_MOTOR);
-    middleLeft = new WPI_VictorSPX(Constants.LEFT_MIDDLE_MOTOR);
-    rearLeft = new WPI_VictorSPX(Constants.LEFT_BOTTOM_MOTOR);
-    leftDrive = new SpeedControllerGroup(frontLeft, middleLeft, rearLeft);
+    //frontLeft = new WPI_VictorSPX(Constants.LEFT_TOP_MOTOR);
+    //middleLeft = new WPI_VictorSPX(Constants.LEFT_MIDDLE_MOTOR);
+    //rearLeft = new WPI_VictorSPX(Constants.LEFT_BOTTOM_MOTOR);
+    frontLeft = new Talon(2);
+    rearLeft = new Talon(3);
+    leftDrive = new SpeedControllerGroup(frontLeft, rearLeft);
     
-    frontRight = new WPI_VictorSPX(Constants.RIGHT_TOP_MOTOR);
-    middleRight = new WPI_VictorSPX(Constants.RIGHT_MIDDLE_MOTOR);
-    rearRight = new WPI_VictorSPX(Constants.RIGHT_BOTTOM_MOTOR);
-    rightDrive = new SpeedControllerGroup(frontRight, middleRight, rearRight);
+    //frontRight = new WPI_VictorSPX(Constants.RIGHT_TOP_MOTOR);
+    //middleRight = new WPI_VictorSPX(Constants.RIGHT_MIDDLE_MOTOR);
+    //rearRight = new WPI_VictorSPX(Constants.RIGHT_BOTTOM_MOTOR);
+    frontRight = new Talon(0);
+    rearRight = new Talon(1);
+    rightDrive = new SpeedControllerGroup(frontRight, rearRight);
 
     drive = new DifferentialDrive(leftDrive, rightDrive);
     drive.setSafetyEnabled(false);
@@ -79,13 +93,17 @@ public class RobotContainer
     ahrs = new AHRS(SPI.Port.kMXP);
 
     //encoders have 1440 as PPR and 360 CPR
-    encRight = new Encoder(Constants.ENCODER_RIGHT_PORT_1, Constants.ENCODER_RIGHT_PORT_2);
+    encRight = new Encoder(9,8);
     encRight.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
-    encLeft = new Encoder(Constants.ENCODER_LEFT_PORT_1, Constants.ENCODER_LEFT_PORT_2);
+    encRight.setReverseDirection(true);
+    encLeft = new Encoder(4,3);
     encLeft.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
+   
 
-
-    // Configure the button bindings
+    //creating a profile
+    //COUNTER CLOCKWISE is POSITIVE, CLOCKWISE is NEGATIVE
+    motion = new MotionProfile(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(0, 2, new Rotation2d(45)), new ArrayList<Translation2d>());
+    // Configure the button bindings  
     configureButtonBindings();
   }
 
@@ -108,8 +126,7 @@ public class RobotContainer
    */
   public Command getAutonomousCommand()
   {
-    // An ExampleCommand will run in autonomous
-    return null;
+    return new PointTurn(50);
   }
 
   //just some Accessors that take up space
