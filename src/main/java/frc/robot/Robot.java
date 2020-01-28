@@ -27,6 +27,7 @@ public class Robot extends TimedRobot
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+  private static double proximityVoltage;
 
   
   /**
@@ -63,6 +64,9 @@ public class Robot extends TimedRobot
     SmartDashboard.putNumber("Left Encoder Distance", RobotContainer.getEncLeft().getDistance());
     SmartDashboard.putNumber("Right Encoder Distance", RobotContainer.getEncRight().getDistance());
     SmartDashboard.putNumber("Average Distance", RobotContainer.getDriveTrain().getAvgDistance());
+    proximityVoltage = (1/m_robotContainer.getProximitySensor().getVoltage())*6.1111126 * 1/2.54;
+    SmartDashboard.putNumber("Proximity Distance", proximityVoltage);
+
   }
 
   /**
@@ -70,6 +74,13 @@ public class Robot extends TimedRobot
    */
   @Override
   public void disabledInit() {
+  }
+
+   /**
+   * @return the proximityVoltage
+   */
+  public static double getProximityVoltage() {
+    return proximityVoltage;
   }
 
   @Override
