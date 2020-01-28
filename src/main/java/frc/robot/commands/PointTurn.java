@@ -24,7 +24,7 @@ public class PointTurn extends PIDCommand {
   public PointTurn(double setAngle) {
     super(
         // The controller that the command will use
-        new PIDController(0.01317, 0, 0.0015),
+        new PIDController(0.01145, 0.001, 0.00178),
         // This should return the measurement
         () -> RobotContainer.getAHRS().getAngle(),
         // This should return the setpoint (can also be a constant)
