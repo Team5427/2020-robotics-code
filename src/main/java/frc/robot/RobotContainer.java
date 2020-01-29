@@ -31,6 +31,7 @@ import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.AnalogInput;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -57,6 +58,7 @@ public class RobotContainer
   private static Encoder encRight;
   
   private static Command motion;
+  private static AnalogInput proximitySensor;
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -93,7 +95,8 @@ public class RobotContainer
     encRight.setReverseDirection(true);
     encLeft = new Encoder(4,3);
     encLeft.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
-   
+    proximitySensor = new AnalogInput(1);
+
 
     //creating a profile
     //COUNTER CLOCKWISE is POSITIVE, CLOCKWISE is NEGATIVE
@@ -133,4 +136,6 @@ public class RobotContainer
   public static Encoder getEncLeft(){return encLeft;}
   public static Encoder getEncRight(){return encRight;}
   public static Joystick getJoy(){return joy;}
+  public static AnalogInput getProximitySensor(){return proximitySensor;}
+
 }
