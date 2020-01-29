@@ -8,6 +8,7 @@ import edu.wpi.*;
 
 public class Intake extends SubsystemBase 
 {
+    //add static field for count of balls. 
     private SpeedController intake;
     Robot prV =  new Robot();
     private int amtBallsHeld = 0;    
@@ -24,6 +25,10 @@ public class Intake extends SubsystemBase
     {
        intake.stopMotor();
     }
+
+    //add another method to get proximity input (true or false).
+
+
     public void increaseBalls()
     {
         //if proximity in certain range, then increase ball count

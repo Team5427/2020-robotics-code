@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -57,6 +58,8 @@ public class RobotContainer
   private static Encoder encLeft;
   private static Encoder encRight;
   
+  //add a AnalogInput named promixity sensor.
+  
   private static Command motion;
   private static AnalogInput proximitySensor;
 
@@ -83,6 +86,8 @@ public class RobotContainer
     drive.setSafetyEnabled(false);
 
     driveTrain = new DriveTrain(leftDrive, rightDrive, drive);
+
+    //initialize promixity sensor and add as parameter to intake.
 
     intakeMotor = new WPI_VictorSPX(Constants.INTAKE_MOTOR);
     intake = new Intake(intakeMotor);
