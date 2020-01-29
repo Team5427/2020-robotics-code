@@ -1,41 +1,51 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Robot;
+import frc.robot.RobotContainer;
 import edu.wpi.*;
 
 
 public class Intake extends SubsystemBase 
-{
-    //add static field for count of balls. 
-    private SpeedController intake;
-    Robot prV =  new Robot();
-    private int amtBallsHeld = 0;    
+{ 
+    private double proximityVoltage;
+    private double previousVoltage;
+    private SpeedController intake;  
+    private AnalogInput proximitySensor;
 
-    public Intake(SpeedController intake) 
+    public Intake(SpeedController intake, AnalogInput proximitySensor) 
     {
          this.intake = intake;
+         this.proximitySensor = proximitySensor;
+         proximityVoltage = previousVoltage = getDistance();
     }
-    public void moveIntake(double Intake)
+    public void moveIntake(double speed)
     {
-        intake.set(Intake);
+        intake.set(speed);
     }
     public void stop()
     {
        intake.stopMotor();
     }
 
-    //add another method to get proximity input (true or false).
-
-
-    public void increaseBalls()
+    public double getDistance()
     {
-        //if proximity in certain range, then increase ball count
-        if (prV.getProximityVoltage()==4 && prV.getProximityVoltage()==1)
+        return (1/proximitySensor.getVoltage())*6.1111126 * 1/2.54;
+    }
+
+    @Override
+    public void periodic()
+    {
+        proximityVoltage = getDistance();
+
+        if((proximityVoltage - previousVoltage) >= Constants.INTAKE_PROXIMITY_DIFFERENCE)
         {
-            increaseBalls();
-            amtBallsHeld++;
+            RobotContainer.ballCount++;
         }
+
+        previousVoltage = proximityVoltage;
     }
 }

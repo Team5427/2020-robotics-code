@@ -43,6 +43,10 @@ import edu.wpi.first.wpilibj.AnalogInput;
 public class RobotContainer 
 {
   // The robot's subsystems and commands are defined here...
+
+  //we will increment this in our commands. 
+  public static int ballCount = 0;
+
   private static Joystick joy;
   private final SpeedController frontLeft, rearLeft;
   private final SpeedController frontRight, rearRight;
@@ -62,6 +66,7 @@ public class RobotContainer
   
   private static Command motion;
   private static AnalogInput proximitySensor;
+  private static AnalogInput intakeProximity;
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -90,7 +95,8 @@ public class RobotContainer
     //initialize promixity sensor and add as parameter to intake.
 
     intakeMotor = new WPI_VictorSPX(Constants.INTAKE_MOTOR);
-    intake = new Intake(intakeMotor);
+    intakeProximity = new AnalogInput(Constants.INTAKE_PROXIMITY_SENSOR_PORT);
+    intake = new Intake(intakeMotor, intakeProximity);
 
     ahrs = new AHRS(SPI.Port.kMXP);
 
