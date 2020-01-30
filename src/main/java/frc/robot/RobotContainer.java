@@ -114,7 +114,11 @@ public class RobotContainer
    */
   public Command getAutonomousCommand()
   {
-    return new MoveStraightPID(2);
+    return new MoveStraightPID(4);
+  }
+
+  public Command getTurn(){
+    return new PointTurn(90);
   }
 
   //just some Accessors that take up space

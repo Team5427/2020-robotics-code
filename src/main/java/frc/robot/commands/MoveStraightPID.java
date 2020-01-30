@@ -19,24 +19,24 @@ public class MoveStraightPID extends PIDCommand {
   /**
    * Creates a new MoveStraightPID.
    */
-  private static double displacement;
-  private static double driveTolerance = Constants.DRIVE_TOLERANCE;
-  private double trackerror = 0;
-  private double encoderAverage = 0;
+  private double displacement;
+  private double driveTolerance = Constants.DRIVE_TOLERANCE;
   public MoveStraightPID(double setDisp) {
     super(
         // The controller that the command will use
-        new PIDController(0.01, 0, 0),
+        new PIDController(0.31, 0, 0),
         // This should return the measurement
-        () -> (RobotContainer.getEncLeft().get() + RobotContainer.getEncRight().get()) / 2,
+        () -> (RobotContainer.getEncLeft().getDistance() + RobotContainer.getEncRight().getDistance()) / 2,
         // This should return the setpoint (can also be a constant)
         () -> setDisp,
         // This uses the output
         output -> {
           // Use the output here
+          //System.out.println(output);
           RobotContainer.getDriveTrain().tankDrive(output, output);
         });
         this.displacement = setDisp;
+        
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
   }
@@ -45,8 +45,20 @@ public class MoveStraightPID extends PIDCommand {
   @Override
   public boolean isFinished() 
   {
-    encoderAverage = (RobotContainer.getEncLeft().get() + RobotContainer.getEncRight().get()) / 2;
-    trackerror = displacement - encoderAverage;
-    return Math.abs(trackerror) < driveTolerance;
+    
+    double encoderAverage = (RobotContainer.getEncLeft().getDistance() + RobotContainer.getEncRight().getDistance()) / 2;
+    double error = displacement - encoderAverage;
+    //System.out.println(Math.abs(error) < driveTolerance);
+    return Math.abs(error) < driveTolerance;
   }
+
+ 
+  // Called once after isFinished returns true
+  @Override
+  public void end(boolean interrupted){
+    RobotContainer.getAHRS().reset();
+    RobotContainer.getEncLeft().reset();
+    RobotContainer.getEncRight().reset();
+  }
+
 }

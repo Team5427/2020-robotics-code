@@ -19,12 +19,13 @@ public class PointTurn extends PIDCommand {
   /**
    * Creates a new PointTurn.
    */
-  private static double angle;
-  private static double angleTolerance = Constants.TURN_TOLERANCE;
+  private double angle;
+  private double angleTolerance = Constants.TURN_TOLERANCE;
   public PointTurn(double setAngle) {
+    
     super(
         // The controller that the command will use
-        new PIDController(0.01145, 0.001, 0.00178),
+        new PIDController(0.008,0,0),
         // This should return the measurement
         () -> RobotContainer.getAHRS().getAngle(),
         // This should return the setpoint (can also be a constant)
@@ -35,6 +36,7 @@ public class PointTurn extends PIDCommand {
           RobotContainer.getDriveTrain().tankDrive(output, -output);
         });
         this.angle = setAngle;
+        
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
   }
@@ -42,7 +44,17 @@ public class PointTurn extends PIDCommand {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    //System.out.println("AAAAAAA");
     double trackError = angle - RobotContainer.getAHRS().getAngle();
     return Math.abs(trackError) < angleTolerance;
   }
+
+   // Called once after isFinished returns true
+   @Override
+   public void end(boolean interrupted){
+     RobotContainer.getAHRS().reset();
+     RobotContainer.getEncLeft().reset();
+     RobotContainer.getEncRight().reset();
+   }
+ 
 }

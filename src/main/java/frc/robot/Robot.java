@@ -8,11 +8,12 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.MoveStraight;
-import frc.robot.subsystems.DriveTrain;
+import frc.robot.commands.MoveStraightPID;
+import frc.robot.commands.PointTurn;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -82,14 +83,14 @@ public class Robot extends TimedRobot
   @Override
   public void autonomousInit() {
     RobotContainer.getAHRS().reset();
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-
-    // schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
-    }
-
-    
+    RobotContainer.getEncLeft().reset();
+    RobotContainer.getEncRight().reset();
+    CommandScheduler.getInstance().schedule(
+      false,
+      new PointTurn(90),
+      new MoveStraightPID(0.5), 
+      new PointTurn(90)
+      );
 
   }
 
