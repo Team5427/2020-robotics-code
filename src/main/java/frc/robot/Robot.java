@@ -87,7 +87,14 @@ public class Robot extends TimedRobot
     RobotContainer.getEncLeft().reset();
     RobotContainer.getEncRight().reset();
 
-    CommandScheduler.getInstance().schedule(new StraightAndTurn());
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+
+    if(m_autonomousCommand != null)
+    {
+      m_autonomousCommand.schedule();
+    }
+
+    //CommandScheduler.getInstance().schedule(new StraightAndTurn());
   }
 
   /**
