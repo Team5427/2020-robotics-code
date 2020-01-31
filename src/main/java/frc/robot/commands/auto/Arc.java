@@ -1,5 +1,7 @@
 package frc.robot.commands.auto;
 
+import com.ctre.phoenix.motorcontrol.SupplyCurrentLimitConfiguration;
+
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.MoveStraight;
 import frc.robot.commands.MoveStraightPID;
@@ -10,11 +12,13 @@ public class Arc extends SequentialCommandGroup
 {
     public Arc(DriveTrain driveTrain)
     {
-        addCommands
+        super
         (
+            
             new MoveStraightPID(2),
-            new PointTurn(90), 
-            new MoveStraight(2)
+            new PointTurn(90),
+            new MoveStraightPID(2)
+           
         );
     }
 }
