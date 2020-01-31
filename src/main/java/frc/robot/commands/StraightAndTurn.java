@@ -19,6 +19,6 @@ public class StraightAndTurn extends SequentialCommandGroup {
   public StraightAndTurn() {
     // Add your commands in the super() call, e.g.
     // super(new FooCommand(), new BarCommand());
-    super( new MoveStraightPID(2), new PointTurn(90), new MoveStraightPID(2));
+    super( new MoveStraightPID(2), new PointTurn(90));
   }
 }

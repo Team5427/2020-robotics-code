@@ -114,7 +114,7 @@ public class RobotContainer
    */
   public Command getAutonomousCommand()
   {
-    return new MoveStraightPID(4);
+    return motion;
   }
 
   public Command getTurn(){
