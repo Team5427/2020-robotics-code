@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.MoveStraightPID;
 import frc.robot.commands.PointTurn;
+import frc.robot.commands.StraightAndTurn;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -85,13 +86,8 @@ public class Robot extends TimedRobot
     RobotContainer.getAHRS().reset();
     RobotContainer.getEncLeft().reset();
     RobotContainer.getEncRight().reset();
-    CommandScheduler.getInstance().schedule(
-      false,
-      new PointTurn(90),
-      new MoveStraightPID(0.5), 
-      new PointTurn(90)
-      );
 
+    CommandScheduler.getInstance().schedule(new StraightAndTurn());
   }
 
   /**

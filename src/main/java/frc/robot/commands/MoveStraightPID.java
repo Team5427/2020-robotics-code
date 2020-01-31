@@ -41,24 +41,32 @@ public class MoveStraightPID extends PIDCommand {
     // Configure additional PID options by calling `getController` here.
   }
 
+  @Override
+  public void initialize(){
+    //System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    RobotContainer.getAHRS().reset();
+    RobotContainer.getEncLeft().reset();
+    RobotContainer.getEncRight().reset(); 
+  }
+
+  @Override
+  public void end (boolean interrupted){
+    System.out.println(RobotContainer.getEncLeft().getDistance());
+    //RobotContainer.getAHRS().reset();
+    RobotContainer.getEncLeft().reset();
+    RobotContainer.getEncRight().reset(); 
+    RobotContainer.getDiffDrive().stopMotor();
+  }
+
+
   // Returns true when the command should end.
   @Override
   public boolean isFinished() 
   {
-    
     double encoderAverage = (RobotContainer.getEncLeft().getDistance() + RobotContainer.getEncRight().getDistance()) / 2;
     double error = displacement - encoderAverage;
     //System.out.println(Math.abs(error) < driveTolerance);
     return Math.abs(error) < driveTolerance;
-  }
-
- 
-  // Called once after isFinished returns true
-  @Override
-  public void end(boolean interrupted){
-    RobotContainer.getAHRS().reset();
-    RobotContainer.getEncLeft().reset();
-    RobotContainer.getEncRight().reset();
   }
 
 }
