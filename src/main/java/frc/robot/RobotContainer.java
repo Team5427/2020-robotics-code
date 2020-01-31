@@ -27,6 +27,7 @@ import frc.robot.commands.MotionProfile;
 import frc.robot.commands.MoveStraight;
 import frc.robot.commands.MoveStraightPID;
 import frc.robot.commands.PointTurn;
+import frc.robot.commands.auto.Arc;
 import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -114,7 +115,7 @@ public class RobotContainer
    */
   public Command getAutonomousCommand()
   {
-    return new MoveStraightPID(4);
+    return new Arc(driveTrain);
   }
 
   public Command getTurn(){
