@@ -16,10 +16,12 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import frc.robot.commands.MoveShooter;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj.CANTalon;
+import com.ctre.phoenix.motorcontrol.can.*;
+import com.ctre.phoenix.motorcontrol.*;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -40,9 +42,9 @@ public class RobotContainer
 
   private Encoder shooterEncoder;
 
-  public SpeedController shooterMotor;
+  private WPI_TalonSRX shooterMotor;
 
-  public Shooter shooter;
+  public static Shooter shooter;
 
   private static Joystick joy;
 
@@ -65,12 +67,13 @@ public class RobotContainer
     driveBase = new DifferentialDrive(left, right);
     driveTrain = new DriveTrain(left, right, driveBase);
 
-    shooterMotor = new CANTalon(Constants.SHOOTER_MOTOR);
+    shooterMotor = new WPI_TalonSRX(Constants.SHOOTER_MOTOR);
+    shooterMotor.configFactoryDefault();
 
-    shooterEncoder = new Encoder(Constants.SHOOTER_ENC_CHANNEL_A, Constants.SHOOTER_ENC_CHANNEL_B);
+    //shooterEncoder = new Encoder(Constants.SHOOTER_ENC_CHANNEL_A, Constants.SHOOTER_ENC_CHANNEL_B);
     shooterEncoder.setDistancePerPulse((Math.PI * Constants.SHOOTER_WHEEL_DIAMETER) / Constants.SHOOTER_ENC_PPR);
 
-    shooter = new Shooter(shooterMotor, shooterEncoder);
+    shooter = new Shooter(shooterMotor);
 
     // Configure the button bindings
     configureButtonBindings();
@@ -95,7 +98,7 @@ public class RobotContainer
   public Command getAutonomousCommand() 
   {
     // An ExampleCommand will run in autonomous
-    return null;
+    return new MoveShooter(0);
   }
 
   public static DriveTrain getDriveTrain() 
@@ -106,6 +109,11 @@ public class RobotContainer
   public static Joystick getJoy()
   {
     return joy;
+  }
+
+  public static Shooter getShooter()
+  {
+    return shooter;
   }
 
 }

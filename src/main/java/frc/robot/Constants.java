@@ -96,4 +96,5 @@ public final class Constants
      */
     public static final double kV_SHOOTER = 0;
 
+    public static final double SHOOTER_SETPOINT = 0;
 }
