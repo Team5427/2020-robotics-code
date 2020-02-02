@@ -71,7 +71,7 @@ public class RobotContainer
     shooterMotor.configFactoryDefault();
 
     //shooterEncoder = new Encoder(Constants.SHOOTER_ENC_CHANNEL_A, Constants.SHOOTER_ENC_CHANNEL_B);
-    shooterEncoder.setDistancePerPulse((Math.PI * Constants.SHOOTER_WHEEL_DIAMETER) / Constants.SHOOTER_ENC_PPR);
+    //shooterEncoder.setDistancePerPulse((Math.PI * Constants.SHOOTER_WHEEL_DIAMETER) / Constants.SHOOTER_ENC_PPR);
 
     shooter = new Shooter(shooterMotor);
 

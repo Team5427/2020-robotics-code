@@ -22,7 +22,7 @@ public final class Constants
     /**
      * CAN port for shooter motor.
      */
-    public static final int SHOOTER_MOTOR = 0;
+    public static final int SHOOTER_MOTOR = 1;
 
     /*******************Sensors*******************/
 
