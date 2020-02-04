@@ -16,9 +16,7 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import frc.robot.commands.MoveShooter;
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
 import com.ctre.phoenix.motorcontrol.can.*;
 import com.ctre.phoenix.motorcontrol.*;
@@ -40,13 +38,13 @@ public class RobotContainer
 
   private static DriveTrain driveTrain;
 
-  private Encoder shooterEncoder;
+  private static Encoder shooterEncoder;
 
-  private WPI_TalonSRX shooterMotor;
-
-  public static Shooter shooter;
+  private static TalonSRX shooterMotor;
 
   private static Joystick joy;
+
+  private static StringBuilder string = new StringBuilder();
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -67,13 +65,20 @@ public class RobotContainer
     driveBase = new DifferentialDrive(left, right);
     driveTrain = new DriveTrain(left, right, driveBase);
 
-    shooterMotor = new WPI_TalonSRX(Constants.SHOOTER_MOTOR);
-    shooterMotor.configFactoryDefault();
+    shooterMotor = new TalonSRX(Constants.SHOOTER_MOTOR);
+    shooterMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, Constants.K_TIMEOUT_MS);
+    shooterMotor.setSensorPhase(true);
 
-    //shooterEncoder = new Encoder(Constants.SHOOTER_ENC_CHANNEL_A, Constants.SHOOTER_ENC_CHANNEL_B);
-    //shooterEncoder.setDistancePerPulse((Math.PI * Constants.SHOOTER_WHEEL_DIAMETER) / Constants.SHOOTER_ENC_PPR);
+    shooterMotor.configNominalOutputForward(0, Constants.K_TIMEOUT_MS);
+    shooterMotor.configNominalOutputReverse(0, Constants.K_TIMEOUT_MS);
+    shooterMotor.configPeakOutputForward(1, Constants.K_TIMEOUT_MS);
+    shooterMotor.configPeakOutputReverse(-1, Constants.K_TIMEOUT_MS);
 
-    shooter = new Shooter(shooterMotor);
+    shooterMotor.config_kF(Constants.SHOOTER_PID_ID, 0.34, Constants.K_TIMEOUT_MS);
+    shooterMotor.config_kP(Constants.SHOOTER_PID_ID, 0.2, Constants.K_TIMEOUT_MS);
+    shooterMotor.config_kI(Constants.SHOOTER_PID_ID, 0, Constants.K_TIMEOUT_MS);
+    shooterMotor.config_kD(Constants.SHOOTER_PID_ID, 0, Constants.K_TIMEOUT_MS);
+
 
     // Configure the button bindings
     configureButtonBindings();
@@ -98,7 +103,7 @@ public class RobotContainer
   public Command getAutonomousCommand() 
   {
     // An ExampleCommand will run in autonomous
-    return new MoveShooter(0);
+    return null;
   }
 
   public static DriveTrain getDriveTrain() 
@@ -111,9 +116,14 @@ public class RobotContainer
     return joy;
   }
 
-  public static Shooter getShooter()
+  public static TalonSRX getShooterMotor()
   {
-    return shooter;
+    return shooterMotor;
+  }
+
+  public static StringBuilder getBuilder()
+  {
+    return string;
   }
 
 }

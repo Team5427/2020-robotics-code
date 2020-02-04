@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -36,7 +38,6 @@ public class Robot extends TimedRobot
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    RobotContainer.getShooter().setSpeed(1.0);
   }
 
   /**
@@ -54,7 +55,6 @@ public class Robot extends TimedRobot
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
     
-    SmartDashboard.putNumber("Encoder velocity", RobotContainer.getShooter().getVelocity());
   }
 
   /**
@@ -99,11 +99,44 @@ public class Robot extends TimedRobot
     }
   }
 
+
+  int loops = 0;
   /**
    * This function is called periodically during operator control.
    */
   @Override
-  public void teleopPeriodic() {
+  public void teleopPeriodic() 
+  {
+    double leftYStick = m_robotContainer.getJoy().getY();
+    double motorOutput = m_robotContainer.getShooterMotor().getMotorOutputPercent();
+
+    m_robotContainer.getBuilder().append("\tout:");
+    m_robotContainer.getBuilder().append(motorOutput);
+    m_robotContainer.getBuilder().append(("\tspd:"));
+    m_robotContainer.getBuilder().append(m_robotContainer.getShooterMotor().getSelectedSensorVelocity(Constants.SHOOTER_PID_ID));
+
+    if(m_robotContainer.getJoy().getRawButton(1))
+    {
+      double targetVelocity = leftYStick * 4096 * 500.0 / 600;
+
+      m_robotContainer.getShooterMotor().set(ControlMode.Velocity, targetVelocity);
+
+      m_robotContainer.getBuilder().append("\terr:");
+      m_robotContainer.getBuilder().append(m_robotContainer.getShooterMotor().getClosedLoopError(Constants.SHOOTER_PID_ID));
+      m_robotContainer.getBuilder().append(("\ttrg:"));
+      m_robotContainer.getBuilder().append(targetVelocity);
+    }
+    else
+    {
+      m_robotContainer.getShooterMotor().set(ControlMode.PercentOutput, leftYStick);
+    }
+
+    if(++loops >= 10)
+    {
+      loops = 0;
+      System.out.println(m_robotContainer.getBuilder().toString());
+    }
+    m_robotContainer.getBuilder().setLength(0);
   }
 
   @Override

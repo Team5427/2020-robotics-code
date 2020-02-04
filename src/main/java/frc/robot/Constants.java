@@ -97,4 +97,8 @@ public final class Constants
     public static final double kV_SHOOTER = 0;
 
     public static final double SHOOTER_SETPOINT = 0;
+
+    public static final int K_TIMEOUT_MS = 0;
+
+    public static final int SHOOTER_PID_ID = 0;
 }
