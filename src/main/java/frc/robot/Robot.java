@@ -113,11 +113,11 @@ public class Robot extends TimedRobot
     m_robotContainer.getBuilder().append("\tout:");
     m_robotContainer.getBuilder().append(motorOutput);
     m_robotContainer.getBuilder().append(("\tspd:"));
-    m_robotContainer.getBuilder().append(m_robotContainer.getShooterMotor().getSelectedSensorVelocity(Constants.SHOOTER_PID_ID));
+    m_robotContainer.getBuilder().append(m_robotContainer.getShooterMotor().getSelectedSensorVelocity()*((double)600/(double)4096));
 
-    if(m_robotContainer.getJoy().getRawButton(1))
+    if(m_robotContainer.getJoy().getRawButton(7))
     {
-      double targetVelocity = leftYStick * 4096 * 500.0 / 600;
+      double targetVelocity = 0.5 * 4096 * 500.0 / 600;
 
       m_robotContainer.getShooterMotor().set(ControlMode.Velocity, targetVelocity);
 
