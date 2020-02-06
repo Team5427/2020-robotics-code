@@ -75,7 +75,7 @@ public class RobotContainer
     shooterMotor.configPeakOutputReverse(-1, Constants.K_TIMEOUT_MS);
 
     shooterMotor.config_kF(Constants.SHOOTER_PID_ID, 2.407, Constants.K_TIMEOUT_MS);
-    shooterMotor.config_kP(Constants.SHOOTER_PID_ID, 0, Constants.K_TIMEOUT_MS);
+    shooterMotor.config_kP(Constants.SHOOTER_PID_ID, 1.2, Constants.K_TIMEOUT_MS);
     shooterMotor.config_kI(Constants.SHOOTER_PID_ID, 0, Constants.K_TIMEOUT_MS);
     shooterMotor.config_kD(Constants.SHOOTER_PID_ID, 0, Constants.K_TIMEOUT_MS);
 

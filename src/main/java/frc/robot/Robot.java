@@ -114,22 +114,16 @@ public class Robot extends TimedRobot
     m_robotContainer.getBuilder().append(motorOutput);
     m_robotContainer.getBuilder().append(("\tspd:"));
     m_robotContainer.getBuilder().append(m_robotContainer.getShooterMotor().getSelectedSensorVelocity()*((double)600/(double)4096));
+    SmartDashboard.putNumber("Velocity", m_robotContainer.getShooterMotor().getSelectedSensorVelocity()*((double)600/(double)4096));
 
-    if(m_robotContainer.getJoy().getRawButton(7))
-    {
-      double targetVelocity = 0.5 * 4096 * 500.0 / 600;
+    double targetVelocity = 32;
 
-      m_robotContainer.getShooterMotor().set(ControlMode.Velocity, targetVelocity);
+    m_robotContainer.getShooterMotor().set(ControlMode.Velocity, targetVelocity*((double)4096/(double)600));
 
-      m_robotContainer.getBuilder().append("\terr:");
-      m_robotContainer.getBuilder().append(m_robotContainer.getShooterMotor().getClosedLoopError(Constants.SHOOTER_PID_ID));
-      m_robotContainer.getBuilder().append(("\ttrg:"));
-      m_robotContainer.getBuilder().append(targetVelocity);
-    }
-    else
-    {
-      m_robotContainer.getShooterMotor().set(ControlMode.PercentOutput, leftYStick);
-    }
+    m_robotContainer.getBuilder().append("\terr:");
+    m_robotContainer.getBuilder().append(m_robotContainer.getShooterMotor().getClosedLoopError(Constants.SHOOTER_PID_ID)*((double)600/(double)4096));
+    m_robotContainer.getBuilder().append(("\ttrg:"));
+    m_robotContainer.getBuilder().append(targetVelocity);
 
     if(++loops >= 10)
     {
