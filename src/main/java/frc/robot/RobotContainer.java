@@ -37,6 +37,11 @@ import edu.wpi.first.wpilibj.I2C;
 public class RobotContainer 
 {
   // The robot's subsystems and commands are defined here...
+
+  //the color that WE need to detect, not the one sent through game data
+  public static char color = '0';
+
+
   private static Joystick joy;
   private final SpeedController frontLeft, middleLeft, rearLeft;
   private final SpeedController frontRight, middleRight, rearRight;
@@ -53,7 +58,6 @@ public class RobotContainer
   private static ColorSensor colorSensor;
   private static ColorSensorV3 cs;
   private static I2C.Port i2cport;
-  private static ColorMatch colorMatch;
     /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -77,7 +81,7 @@ public class RobotContainer
 
     ahrs = new AHRS(SPI.Port.kMXP);
   
-    colorMotor = new WPI_VictorSPX(0);// change port value
+    colorMotor = new WPI_VictorSPX(Constants.COLOR_WHEEL_MOTOR);// change port value
 
     i2cport = I2C.Port.kOnboard;
 
@@ -87,9 +91,9 @@ public class RobotContainer
     encRight.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
     encLeft = new Encoder(Constants.ENCODER_LEFT_PORT_1, Constants.ENCODER_LEFT_PORT_2);
     encLeft.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
+    
     cs = new ColorSensorV3(i2cport);
-    colorMatch = new ColorMatch();
-    colorSensor = new ColorSensor(colorMotor, cs, colorMatch);
+    colorSensor = new ColorSensor(colorMotor, cs);
           
 
 

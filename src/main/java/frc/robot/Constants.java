@@ -51,7 +51,8 @@ public final class Constants
 	public static final int LEFT_BOTTOM_MOTOR = 11;
 	public static final int RIGHT_TOP_MOTOR = 6;
 	public static final int RIGHT_MIDDLE_MOTOR = 7;
-	public static final int RIGHT_BOTTOM_MOTOR = 8;
+    public static final int RIGHT_BOTTOM_MOTOR = 8;
+    public static final int COLOR_WHEEL_MOTOR = 0; //need to change
 
     /*Encoder Ports */
 	public static final int ENCODER_LEFT_PORT_1 = 3;
@@ -82,4 +83,8 @@ public final class Constants
     public static final BigDecimal bYellowTarget = new BigDecimal("0.12");
 
     public static final double COLOR_THRESHOLD = 0.05;
+
+
+    /* SPEEDS */
+    public static final double COLOR_WHEEL_SPEED = 0.2;
 }

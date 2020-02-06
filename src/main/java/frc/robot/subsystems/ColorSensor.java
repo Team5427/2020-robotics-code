@@ -11,6 +11,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.SpeedController;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -25,9 +26,8 @@ import com.revrobotics.ColorSensorV3;
 //Documentation
 //http://www.revrobotics.com/content/sw/color-sensor-v3/sdk/docs/javadoc/com/revrobotics/ColorSensorV3.html
 
-public class ColorSensor extends SubsystemBase {
-
-    public static char color;
+public class ColorSensor extends Subsystem 
+{
 
     double rBlueTarget = Constants.kBlueTarget.red;
     double gBlueTarget = Constants.kBlueTarget.green;
@@ -49,22 +49,28 @@ public class ColorSensor extends SubsystemBase {
 
     ColorSensorV3 colorSensor;
 
-    ColorMatch colorMatch;
-
     boolean red, green, blue, yellow = false;
     
     int rawRed, rawGreen, rawBlue = 0;
     double colorRed, colorGreen, colorBlue = 0;
 
-    public ColorSensor(SpeedController colorMotor, ColorSensorV3 colorSensor, ColorMatch colorMatch) {
+    public ColorSensor(SpeedController colorMotor, ColorSensorV3 colorSensor) {
         this.colorMotor = colorMotor;
         this.colorSensor = colorSensor;
-        this.colorMatch = colorMatch;
-        // this.colorSensor.configureColorSensor();
-
     }
 
-    public void getColor() {
+    public void run(double speed)
+    {
+      colorMotor.set(speed);
+    }
+
+    public void stop()
+    {
+      colorMotor.stopMotor();
+    }
+
+    public char getColor() 
+    {
         rawRed = colorSensor.getRed();
         rawGreen = colorSensor.getGreen();
         rawBlue = colorSensor.getBlue();
@@ -114,27 +120,6 @@ public class ColorSensor extends SubsystemBase {
           System.out.println("none");
         }
         
-        // if (match.color.blue <= (bBlueTarget + Constants.COLOR_THRESHOLD) && match.color.blue >= (bBlueTarget - Constants.COLOR_THRESHOLD) && match.color.red <= (rBlueTarget + Constants.COLOR_THRESHOLD) && match.color.red >= (rBlueTarget - Constants.COLOR_THRESHOLD) && match.color.green <= (gBlueTarget + Constants.COLOR_THRESHOLD) && match.color.green >= (gBlueTarget -Constants.COLOR_THRESHOLD)) {
-        //     colorString = "Blue";
-        //     blue = true;
-        //   } else if  (match.color.blue <= bRedTarget + Constants.COLOR_THRESHOLD && match.color.blue >= bRedTarget - Constants.COLOR_THRESHOLD && match.color.red <= rRedTarget + Constants.COLOR_THRESHOLD && match.color.red >= rRedTarget - Constants.COLOR_THRESHOLD && match.color.green <= gRedTarget + Constants.COLOR_THRESHOLD && match.color.green >= gRedTarget - Constants.COLOR_THRESHOLD) {
-        //     colorString = "Red";
-        //     red = true;
-        //   } else if (match.color.blue <= bGreenTarget + Constants.COLOR_THRESHOLD && match.color.blue >= bGreenTarget -Constants.COLOR_THRESHOLD && match.color.red <= rGreenTarget +Constants.COLOR_THRESHOLD && match.color.red >= rGreenTarget - Constants.COLOR_THRESHOLD && match.color.green <= gGreenTarget + Constants.COLOR_THRESHOLD && match.color.green >= gGreenTarget - Constants.COLOR_THRESHOLD) {
-        //     colorString = "Green";
-        //     green = true;
-        //   } else if (match.color.blue <= bYellowTarget + Constants.COLOR_THRESHOLD && match.color.blue >= bYellowTarget - Constants.COLOR_THRESHOLD && match.color.red <= rYellowTarget + Constants.COLOR_THRESHOLD && match.color.red >= rYellowTarget - Constants.COLOR_THRESHOLD && match.color.green <= gYellowTarget + Constants.COLOR_THRESHOLD && match.color.green >= gYellowTarget - Constants.COLOR_THRESHOLD) {
-        //     colorString = "Yellow";
-        //     yellow = true;
-        //   } else {
-        //     colorString = "Unknown";
-        //     blue = red = green = yellow = false;
-        //   }
-          
-
-        // SmartDashboard.putNumber("Red", color.red);
-        // SmartDashboard.putNumber("Green", color.green);
-        // SmartDashboard.putNumber("Blue", color.blue);
         SmartDashboard.putBoolean("Red", red);
         SmartDashboard.putBoolean("Yellow", yellow);
         SmartDashboard.putBoolean("Green", green);
@@ -144,38 +129,17 @@ public class ColorSensor extends SubsystemBase {
         SmartDashboard.putNumber("R", colorRed);
         SmartDashboard.putNumber("G", colorGreen);
         SmartDashboard.putNumber("B", colorBlue);
-        
 
-        // double k = 1 - Math.max(Math.max(color.red, color.green), color.blue);
-        // double c = (1 - color.red - k) / (1 - k);
-        // double m = (1 - color.green - k ) / (1 - k);
-        // double y = (1 - color.blue - k) / (1- k);
-
-        // String colorwheel = "null";
-
-        // if(c > 0.95 && c < 1){
-        //     if(y > 0.95 && y < 1){
-        //         colorwheel = "green";
-        //     }
-        //     else{
-        //         colorwheel = "blue";
-        //     }
-        // }
-        // if(y > 0.95 && y < 1){
-        //     if(m > 0.95 && m < 1){
-        //         colorwheel = "red";
-        //     }
-        //     else{
-        //         colorwheel = "yellow";
-        //     }
-        // }
-        // SmartDashboard.putString("colorwheel",colorwheel);
-        // SmartDashboard.putNumber("k", k);
-        // SmartDashboard.putNumber("c", c);
-        // SmartDashboard.putNumber("y", y);
-        // SmartDashboard.putNumber("m", m);
-
-
+        if(red)
+          return 'R';
+        else if(green)
+          return 'G';
+        else if(yellow)
+          return 'Y';
+        else if(blue)
+          return 'B';
+        else 
+          return '0';
     }
 
     public void getProximity()
@@ -187,5 +151,10 @@ public class ColorSensor extends SubsystemBase {
     @Override
     public void periodic()
     {}
+
+  @Override
+  protected void initDefaultCommand() {
+    // TODO Auto-generated method stub 
+  }
     
 }

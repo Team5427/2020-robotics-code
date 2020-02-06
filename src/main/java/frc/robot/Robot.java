@@ -8,7 +8,6 @@
 package frc.robot;
 
 import com.revrobotics.ColorMatch;
-import com.revrobotics.ColorMatchResult;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -29,27 +28,15 @@ import com.revrobotics.ColorSensorV3;
  */
 public class Robot extends TimedRobot 
 {
-  //created dev branch 
-  private final I2C.Port i2cPort = I2C.Port.kOnboard;
-
-  private final ColorSensorV3 m_colorSensor = new ColorSensorV3(i2cPort);
   
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
 
   private String gameData;
-  private final ColorMatch m_colorMatcher = new ColorMatch();
-  private final Color kBlueTarget = ColorMatch.makeColor(0.143, 0.427, 0.429);
-  private final Color kGreenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);
-  private final Color kRedTarget = ColorMatch.makeColor(0.561, 0.232, 0.114);
-  private final Color kYellowTarget = ColorMatch.makeColor(0.361, 0.524, 0.113);
+
   @Override
   public void robotInit() {
-    m_colorMatcher.addColorMatch(kBlueTarget);
-    m_colorMatcher.addColorMatch(kGreenTarget);
-    m_colorMatcher.addColorMatch(kRedTarget);
-    m_colorMatcher.addColorMatch(kYellowTarget); 
     m_robotContainer = new RobotContainer();
   }
 
@@ -67,31 +54,34 @@ public class Robot extends TimedRobot
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    SmartDashboard.putNumber("Average velocity", RobotContainer.getDriveTrain().getAvgRate());
-    SmartDashboard.putNumber("AHRS X Speed", RobotContainer.getAHRS().getVelocityX());
-    SmartDashboard.putNumber("AHRS Y Speed", RobotContainer.getAHRS().getVelocityY());
-    SmartDashboard.putNumber("Left Encoder Distance", RobotContainer.getEncLeft().getDistance());
-    SmartDashboard.putNumber("Right Encoder Distance", RobotContainer.getEncRight().getDistance());
-    SmartDashboard.putNumber("Average Distance", RobotContainer.getDriveTrain().getAvgDistance());
     m_robotContainer.getColorSensor().getProximity();
     m_robotContainer.getColorSensor().getColor();
 
     gameData = DriverStation.getInstance().getGameSpecificMessage();
+
     if(gameData.length() > 0)
     {
       switch(gameData.charAt(0))
       {
         case 'B':
-          ColorSensor.color = 'R';
+          SmartDashboard.putString("Received: ", "Blue");
+          SmartDashboard.putString("Go To: ", "Red");
+          m_robotContainer.color = 'R';
           break;
         case 'Y':
-          ColorSensor.color = 'G';
+          SmartDashboard.putString("Received: ", "Yellow");
+          SmartDashboard.putString("Go To: ", "Green");
+          m_robotContainer.color = 'G';
           break;
         case 'R':
-          ColorSensor.color = 'B';
+          SmartDashboard.putString("Received: ", "Red");
+          SmartDashboard.putString("Go To: ", "Blue");
+          m_robotContainer.color = 'B';
           break;
         case 'G':
-          ColorSensor.color = 'Y';
+          SmartDashboard.putString("Received: ", "Green");
+          SmartDashboard.putString("Go To: ", "Yellow");
+          m_robotContainer.color = 'Y';
           break;
         default:
           SmartDashboard.putString("Error", "Corrupted data");
