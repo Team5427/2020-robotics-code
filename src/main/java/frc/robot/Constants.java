@@ -59,17 +59,17 @@ public final class Constants
     /**
      * Proportional gain value for shooter PID controller.
      */
-    public static final double kP_SHOOTER = 1.0;
+    public static final double kP_SHOOTER = 0.035;
 
     /**
      * Integral gain value for shooter PID controller.
      */
-    public static final double kI_SHOOTER = 1.0;
+    public static final double kI_SHOOTER = 0.0;
 
     /**
      * Derivative gain value for shooter PID controller.
      */
-    public static final double kD_SHOOTER = 1.0;
+    public static final double kD_SHOOTER =.002;
 
     /**
      * The period between shooter controller updates in seconds.
