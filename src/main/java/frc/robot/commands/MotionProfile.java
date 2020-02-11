@@ -80,6 +80,7 @@ public class MotionProfile extends CommandBase
         
         //finds error in robot orientation for P controller
         trackError = currentState.poseMeters.getRotation().getDegrees() - ahrs.getAngle();
+        System.out.println(currentState.poseMeters.getRotation().getDegrees());
 
         //calculates expected distance traveled by the robot
         Translation2d newPt = currentState.poseMeters.getTranslation();
@@ -90,7 +91,7 @@ public class MotionProfile extends CommandBase
         //calculates current distance traveled by the robot
         currentDistance = (encLeft.getDistance() + encRight.getDistance())/2;
 
-        //System.out.println("D: "+ currentDistance+" "+ cummulativeDistance);
+        System.out.println("D: "+ currentDistance+" "+ newPt.getY());
         System.out.println("V: "+ encLeft.getRate()+" "+ currentState.velocityMetersPerSecond);
 
         //finds error in robot distance for PD controller

@@ -32,9 +32,11 @@ public class PointTurn extends PIDCommand {
         // This should return the setpoint (can also be a constant)
         () -> setAngle,
         // This uses the output
-        output -> {
+        output -> 
+        {
           // Use the output here
           RobotContainer.getDriveTrain().tankDrive(output, -output);
+          System.out.println(output);
         });
         this.angle = setAngle;
         

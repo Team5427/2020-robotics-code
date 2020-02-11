@@ -87,10 +87,14 @@ public class RobotContainer
     encLeft = new Encoder(4,3);
     encLeft.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
    
+    ArrayList<Translation2d> waypoints = new ArrayList<>();
+    waypoints.add(new Translation2d(0, 1));
+
 
     //creating a profile
     //COUNTER CLOCKWISE is POSITIVE, CLOCKWISE is NEGATIVE
-    motion = new MotionProfile(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(0, 2, new Rotation2d(45)), new ArrayList<Translation2d>());
+    motion = new MotionProfile(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(0, 2, new Rotation2d(0)), waypoints);
+    
     // Configure the button bindings  
     configureButtonBindings();
   }
@@ -114,7 +118,7 @@ public class RobotContainer
    */
   public Command getAutonomousCommand()
   {
-    return new PointTurn(90);
+    return motion;
   }
 
   public Command getTurn(){
