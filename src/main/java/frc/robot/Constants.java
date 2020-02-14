@@ -30,11 +30,11 @@ public final class Constants
 
     
     public static final double KP_left = 0.081;
-    public static final double KI_left = 0.001352;
-    public static final double KD_left = 0.28;
+    public static final double KI_left = 0.001353;
+    public static final double KD_left = 0.36;
     public static final double KP_right = 0.081;
-    public static final double KI_right = 0.001352;
-    public static final double KD_right = 0.28;
+    public static final double KI_right = 0.001353;
+    public static final double KD_right = 0.36;
     public static final double K_THETA_P = 0.002336;
     public static final double K_THETA_D = 0;
 
