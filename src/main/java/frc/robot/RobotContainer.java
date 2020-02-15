@@ -29,9 +29,11 @@ import edu.wpi.first.wpilibj.geometry.Translation2d;
 import frc.robot.commands.IntakeC;
 import frc.robot.commands.MotionProfile;
 import frc.robot.commands.MoveStraight;
+import frc.robot.commands.MoveTransport;
 import frc.robot.commands.PointTurn;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Transport;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.SPI;
@@ -50,8 +52,9 @@ public class RobotContainer
   //we will increment this in our commands. 
   public static int ballCount = 0;
 
-  public static Joystick joy;
-  public static JoystickButton intakeButton;
+  private static Joystick joy;
+  private static Button intakeButton;
+  private static Button transportButton;
 
 
   private final SpeedController frontLeft, rearLeft;
@@ -60,6 +63,8 @@ public class RobotContainer
   private static SpeedControllerGroup rightDrive;
   private static DifferentialDrive drive;
   private static DriveTrain driveTrain;
+  private static Transport transport;
+  private static SpeedController transportMotor;
 
   private static SpeedController intakeMotor;
   private static Intake intake;
@@ -73,6 +78,7 @@ public class RobotContainer
   private static Command motion;
   private static AnalogInput proximitySensor;
   private static AnalogInput intakeProximity;
+  private static AnalogInput transportProximity;
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -104,6 +110,10 @@ public class RobotContainer
     intakeProximity = new AnalogInput(Constants.INTAKE_PROXIMITY_SENSOR_PORT);
     intake = new Intake(intakeMotor, intakeProximity);
 
+    transportMotor = new WPI_VictorSPX(Constants.TRANSPORT_MOTOR);
+    transportProximity = new AnalogInput(Constants.TRANSPORT_PROXIMITY_SENSOR_PORT);
+    transport = new Transport(transportMotor, proximitySensor);
+
     ahrs = new AHRS(SPI.Port.kMXP);
 
     //encoders have 1440 as PPR and 360 CPR
@@ -133,8 +143,10 @@ public class RobotContainer
     joy = new Joystick(0);
 
     intakeButton = new JoystickButton(joy, Constants.INTAKE_BUTTON);
+    transportButton = new JoystickButton(joy, Constants.TRANSPORT_BUTTON);
 
     intakeButton.whenPressed(new IntakeC(Constants.INTAKE_TELEOP_SPEED));
+    transportButton.whenPressed(new MoveTransport(Constants.TRANSPORT_TELEOP_SPEED));
   }
 
 
@@ -159,5 +171,6 @@ public class RobotContainer
   public static Joystick getJoy(){return joy;}
   public static AnalogInput getProximitySensor(){return proximitySensor;}
   public static Intake getIntake(){return intake;}
+  public static Transport getTransport(){return transport;}
 
 }

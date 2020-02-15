@@ -58,6 +58,7 @@ public final class Constants
     public static final int RIGHT_BOTTOM_MOTOR = 8;
     
     public static final int INTAKE_MOTOR = 0; //need to configure
+    public static final int TRANSPORT_MOTOR = 0;
 
     /*Encoder Ports */
 	public static final int ENCODER_LEFT_PORT_1 = 3;
@@ -66,14 +67,17 @@ public final class Constants
     public static final int ENCODER_RIGHT_PORT_2 = 7;
     
     public static final int INTAKE_PROXIMITY_SENSOR_PORT = 1;
+    public static final int TRANSPORT_PROXIMITY_SENSOR_PORT = 1;
 
     public static final int INTAKE_PROXIMITY_DIFFERENCE = 8; //arbitrary number for now
 
     //Joystick buttons
     public static final int INTAKE_BUTTON = 0;
+    public static final int TRANSPORT_BUTTON = 0;
 
 
     //Speeds
     public static final double INTAKE_TELEOP_SPEED = 0;
+    public static final double TRANSPORT_TELEOP_SPEED = 0;
 	
 }
