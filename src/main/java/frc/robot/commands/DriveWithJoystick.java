@@ -8,6 +8,12 @@ import frc.robot.subsystems.DriveTrain;
 
 public class DriveWithJoystick extends CommandBase
 {
+
+    public DriveWithJoystick(DriveTrain driveTrain)
+    {
+        addRequirements(driveTrain);
+    }
+
     @Override
     public void initialize()
     {

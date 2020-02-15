@@ -45,7 +45,7 @@ public class DriveTrain extends SubsystemBase
 
     public void takeJoystickInputs(Joystick joy)
     {
-        driveBase.arcadeDrive(joy.getY(), -joy.getZ());
+        driveBase.arcadeDrive(joy.getY(), -joy.getZ()* Constants.Z_ROT_DAMPENING);
         System.out.println(joy.getY()+ "---------"+ joy.getZ());
     }
 

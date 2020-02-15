@@ -73,7 +73,7 @@ public class RobotContainer
     drive.setSafetyEnabled(false);
 
     driveTrain = new DriveTrain(leftDrive, rightDrive, drive);
-    driveTrain.setDefaultCommand(new DriveWithJoystick());
+    driveTrain.setDefaultCommand(new DriveWithJoystick(driveTrain));
     ahrs = new AHRS(SPI.Port.kMXP);
 
     //encoders have 1440 as PPR and 360 CPR
