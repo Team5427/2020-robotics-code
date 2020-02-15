@@ -68,5 +68,12 @@ public final class Constants
     public static final int INTAKE_PROXIMITY_SENSOR_PORT = 1;
 
     public static final int INTAKE_PROXIMITY_DIFFERENCE = 8; //arbitrary number for now
+
+    //Joystick buttons
+    public static final int INTAKE_BUTTON = 0;
+
+
+    //Speeds
+    public static final double INTAKE_TELEOP_SPEED = 0;
 	
 }

@@ -20,10 +20,13 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
+import frc.robot.commands.IntakeC;
 import frc.robot.commands.MotionProfile;
 import frc.robot.commands.MoveStraight;
 import frc.robot.commands.PointTurn;
@@ -47,7 +50,10 @@ public class RobotContainer
   //we will increment this in our commands. 
   public static int ballCount = 0;
 
-  private static Joystick joy;
+  public static Joystick joy;
+  public static JoystickButton intakeButton;
+
+
   private final SpeedController frontLeft, rearLeft;
   private final SpeedController frontRight, rearRight;
   private static SpeedControllerGroup leftDrive;
@@ -125,6 +131,10 @@ public class RobotContainer
   private void configureButtonBindings() 
   {
     joy = new Joystick(0);
+
+    intakeButton = new JoystickButton(joy, Constants.INTAKE_BUTTON);
+
+    intakeButton.whenPressed(new IntakeC(Constants.INTAKE_TELEOP_SPEED));
   }
 
 
@@ -148,5 +158,6 @@ public class RobotContainer
   public static Encoder getEncRight(){return encRight;}
   public static Joystick getJoy(){return joy;}
   public static AnalogInput getProximitySensor(){return proximitySensor;}
+  public static Intake getIntake(){return intake;}
 
 }
