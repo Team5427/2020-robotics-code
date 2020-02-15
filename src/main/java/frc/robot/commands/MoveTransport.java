@@ -24,7 +24,12 @@ public class MoveTransport extends Command
     @Override
     protected boolean isFinished() 
     {
-        return RobotContainer.getJoy().getRawButtonPressed(Constants.TRANSPORT_BUTTON);
+        return !RobotContainer.getJoy().getRawButtonPressed(Constants.TRANSPORT_BUTTON);
+    }
+
+    @Override
+    protected void end() {
+        RobotContainer.getTransport().stop();
     }
 
 }

@@ -28,11 +28,13 @@ import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
 import frc.robot.commands.IntakeC;
 import frc.robot.commands.MotionProfile;
+import frc.robot.commands.MovePulley;
 import frc.robot.commands.MoveStraight;
 import frc.robot.commands.MoveTransport;
 import frc.robot.commands.PointTurn;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Pulley;
 import frc.robot.subsystems.Transport;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -55,6 +57,7 @@ public class RobotContainer
   private static Joystick joy;
   private static Button intakeButton;
   private static Button transportButton;
+  private static Button pulleyButton;
 
 
   private final SpeedController frontLeft, rearLeft;
@@ -68,6 +71,10 @@ public class RobotContainer
 
   private static SpeedController intakeMotor;
   private static Intake intake;
+
+  private static SpeedController pulleyMotor;
+  private static AnalogInput pulleyProximity;
+  private static Pulley pulley;
 
   private static AHRS ahrs;
   private static Encoder encLeft;
@@ -114,6 +121,10 @@ public class RobotContainer
     transportProximity = new AnalogInput(Constants.TRANSPORT_PROXIMITY_SENSOR_PORT);
     transport = new Transport(transportMotor, proximitySensor);
 
+    pulleyMotor = new WPI_VictorSPX(Constants.PULLEY_MOTOR);
+    pulleyProximity = new AnalogInput(Constants.PULLEY_PROXIMITY_SENSOR_PORT);
+    pulley = new Pulley(pulleyMotor, pulleyProximity);
+
     ahrs = new AHRS(SPI.Port.kMXP);
 
     //encoders have 1440 as PPR and 360 CPR
@@ -144,9 +155,11 @@ public class RobotContainer
 
     intakeButton = new JoystickButton(joy, Constants.INTAKE_BUTTON);
     transportButton = new JoystickButton(joy, Constants.TRANSPORT_BUTTON);
+    pulleyButton = new JoystickButton(joy, Constants.PULLEY_BUTTON);
 
     intakeButton.whenPressed(new IntakeC(Constants.INTAKE_TELEOP_SPEED));
     transportButton.whenPressed(new MoveTransport(Constants.TRANSPORT_TELEOP_SPEED));
+    pulleyButton.whenPressed(new MovePulley(Constants.PULLEY_TELEOP_SPEED));
   }
 
 
@@ -172,5 +185,6 @@ public class RobotContainer
   public static AnalogInput getProximitySensor(){return proximitySensor;}
   public static Intake getIntake(){return intake;}
   public static Transport getTransport(){return transport;}
+  public static Pulley getPulley(){return pulley;}
 
 }

@@ -26,4 +26,10 @@ public class IntakeC extends Command
         return !RobotContainer.getJoy().getRawButtonPressed(Constants.INTAKE_BUTTON);
     }
 
+    @Override
+    protected void end() 
+    {
+        RobotContainer.getIntake().stop();
+    }
+
 }
