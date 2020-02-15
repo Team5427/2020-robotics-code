@@ -40,9 +40,8 @@ public final class Constants
 
     public static final double Z_ROT_DAMPENING = 0.75;
 
-    public static final double TURN_TOLERANCE =  0.5;
-
-    public static final double DRIVE_TOLERANCE = 0.2;
+    public static final double TURN_TOLERANCE =  2;
+    public static final double DRIVE_TOLERANCE = 0.5;
     
     /**
      * Diameter of the drive wheel in meters. AKA 6 inches.
@@ -57,12 +56,18 @@ public final class Constants
 	public static final int LEFT_BOTTOM_MOTOR = 11;
 	public static final int RIGHT_TOP_MOTOR = 6;
 	public static final int RIGHT_MIDDLE_MOTOR = 7;
-	public static final int RIGHT_BOTTOM_MOTOR = 8;
+    public static final int RIGHT_BOTTOM_MOTOR = 8;
+    
+    public static final int INTAKE_MOTOR = 0; //need to configure
 
     /*Encoder Ports */
 	public static final int ENCODER_LEFT_PORT_1 = 3;
 	public static final int ENCODER_LEFT_PORT_2 = 4;
 	public static final int ENCODER_RIGHT_PORT_1 = 6; 
-	public static final int ENCODER_RIGHT_PORT_2 = 7;
+    public static final int ENCODER_RIGHT_PORT_2 = 7;
+    
+    public static final int INTAKE_PROXIMITY_SENSOR_PORT = 1;
+
+    public static final int INTAKE_PROXIMITY_DIFFERENCE = 8; //arbitrary number for now
 	
 }

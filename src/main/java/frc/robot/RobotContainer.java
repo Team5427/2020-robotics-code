@@ -19,10 +19,12 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
+import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.MotionProfile;
 import frc.robot.commands.MoveStraight;
 import frc.robot.commands.MoveStraightPID;
@@ -43,7 +45,7 @@ public class RobotContainer
   // The robot's subsystems and commands are defined here...
   private static Joystick joy;
   private final SpeedController frontLeft, rearLeft;
-  private final SpeedController frontRight, rearRight;
+  private final SpeedController middleRight,rearRight;
   private static SpeedControllerGroup leftDrive;
   private static SpeedControllerGroup rightDrive;
   private static DifferentialDrive drive;
@@ -60,24 +62,18 @@ public class RobotContainer
    */
   public RobotContainer() 
   {
-    //frontLeft = new WPI_VictorSPX(Constants.LEFT_TOP_MOTOR);
-    //middleLeft = new WPI_VictorSPX(Constants.LEFT_MIDDLE_MOTOR);
-    //rearLeft = new WPI_VictorSPX(Constants.LEFT_BOTTOM_MOTOR);
-    frontLeft = new Talon(2);
-    rearLeft = new Talon(3);
+    frontLeft = new WPI_VictorSPX(Constants.LEFT_TOP_MOTOR);
+    rearLeft = new WPI_VictorSPX(Constants.LEFT_BOTTOM_MOTOR);
     leftDrive = new SpeedControllerGroup(frontLeft, rearLeft);
-    
-    //frontRight = new WPI_VictorSPX(Constants.RIGHT_TOP_MOTOR);
-    //middleRight = new WPI_VictorSPX(Constants.RIGHT_MIDDLE_MOTOR);
-    //rearRight = new WPI_VictorSPX(Constants.RIGHT_BOTTOM_MOTOR);
-    frontRight = new Talon(0);
-    rearRight = new Talon(1);
-    rightDrive = new SpeedControllerGroup(frontRight, rearRight);
+    middleRight = new WPI_VictorSPX(Constants.RIGHT_MIDDLE_MOTOR);
+    rearRight = new WPI_VictorSPX(Constants.RIGHT_BOTTOM_MOTOR);
+    rightDrive = new SpeedControllerGroup(middleRight, rearRight);
 
     drive = new DifferentialDrive(leftDrive, rightDrive);
     drive.setSafetyEnabled(false);
 
     driveTrain = new DriveTrain(leftDrive, rightDrive, drive);
+    driveTrain.setDefaultCommand(new DriveWithJoystick());
     ahrs = new AHRS(SPI.Port.kMXP);
 
     //encoders have 1440 as PPR and 360 CPR

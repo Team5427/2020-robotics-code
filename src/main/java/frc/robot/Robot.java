@@ -115,6 +115,8 @@ public class Robot extends TimedRobot
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+
+    //RobotContainer.getDriveTrain().tankDrive(-0.3, 0.3);
   }
 
   /**

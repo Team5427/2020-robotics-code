@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import frc.robot.commands.DriveWithJoystick;
 
 public class DriveTrain extends SubsystemBase
 {
@@ -32,9 +33,8 @@ public class DriveTrain extends SubsystemBase
 
     public void tankDrive(double leftSpeed, double rightSpeed)
     {
-        //System.out.println(leftSpeed);
-        left.set(leftSpeed);
-        right.set(-rightSpeed);
+        left.set(-leftSpeed);
+        right.set(rightSpeed);
     }
 
     public void stop()
@@ -45,7 +45,8 @@ public class DriveTrain extends SubsystemBase
 
     public void takeJoystickInputs(Joystick joy)
     {
-        driveBase.arcadeDrive(joy.getY(), -joy.getZ() * Constants.Z_ROT_DAMPENING);
+        driveBase.arcadeDrive(joy.getY(), -joy.getZ());
+        System.out.println(joy.getY()+ "---------"+ joy.getZ());
     }
 
     public double getAvgDistance()
