@@ -65,6 +65,7 @@ public class Robot extends TimedRobot
     SmartDashboard.putNumber("Left Encoder Distance", RobotContainer.getEncLeft().getDistance());
     SmartDashboard.putNumber("Right Encoder Distance", RobotContainer.getEncRight().getDistance());
     SmartDashboard.putNumber("Average Distance", RobotContainer.getDriveTrain().getAvgDistance());
+    SmartDashboard.putNumber("Velocity", RobotContainer.getDriveTrain().getAvgRate());
   }
 
   /**

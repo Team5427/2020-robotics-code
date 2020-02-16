@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
+import edu.wpi.first.wpilibj.util.Units;
 import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.MotionProfile;
 import frc.robot.commands.MoveStraight;
@@ -77,19 +78,19 @@ public class RobotContainer
     ahrs = new AHRS(SPI.Port.kMXP);
 
     //encoders have 1440 as PPR and 360 CPR
-    encRight = new Encoder(9,8);
+    encRight = new Encoder(Constants.ENCODER_RIGHT_PORT_1,Constants.ENCODER_RIGHT_PORT_2);
     encRight.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
     encRight.setReverseDirection(true);
-    encLeft = new Encoder(4,3);
+    encLeft = new Encoder(Constants.ENCODER_LEFT_PORT_1, Constants.ENCODER_LEFT_PORT_2);
     encLeft.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
    
-    ArrayList<Translation2d> waypoints = new ArrayList<>();
+    ArrayList<Translation2d> waypoints = new ArrayList<Translation2d>();
     waypoints.add(new Translation2d(0, 1));
 
 
     //creating a profile
     //COUNTER CLOCKWISE is POSITIVE, CLOCKWISE is NEGATIVE
-    motion = new MotionProfile(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(0, 2, new Rotation2d(0)), waypoints);
+    motion = new MotionProfile(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(Units.inchesToMeters(125), 0, new Rotation2d(0)), waypoints);
     
     // Configure the button bindings  
     configureButtonBindings();
