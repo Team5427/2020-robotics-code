@@ -1,31 +1,33 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
-public class MovePulley extends Command
+public class MovePulley extends CommandBase
 {
     private double speed;
     public MovePulley(double speed)
     {
-        requires(RobotContainer.getPulley());
+        addRequirements(RobotContainer.getPulley());
         this.speed = speed;
     }
 
     @Override
-    protected void initialize() 
+    public void initialize() 
     {
         RobotContainer.getPulley().movePulley(speed);
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) 
+    {
         RobotContainer.getPulley().stop();
     }
 
 	@Override
-    protected boolean isFinished() 
+    public boolean isFinished() 
     {
         return RobotContainer.getJoy().getRawButtonPressed(Constants.PULLEY_BUTTON);
 	}

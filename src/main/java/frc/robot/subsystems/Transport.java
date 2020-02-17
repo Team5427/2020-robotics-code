@@ -9,7 +9,7 @@ import frc.robot.RobotContainer;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.*;
 
-public class Transport extends Subsystem
+public class Transport extends SubsystemBase
 {
     private double proximityVoltage;
     private double previousVoltage;
@@ -52,12 +52,6 @@ public class Transport extends Subsystem
         }
 
         previousVoltage = proximityVoltage;
-    }
-
-    @Override
-    protected void initDefaultCommand() {
-        // TODO Auto-generated method stub
-
     }
 
 }

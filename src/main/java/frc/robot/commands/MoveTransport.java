@@ -1,35 +1,41 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import frc.robot.subsystems.Transport;
 
-public class MoveTransport extends Command
+public class MoveTransport extends CommandBase
 {
     private double speed;
 
     public MoveTransport(double speed)
     {
-        requires(RobotContainer.getTransport());
+        addRequirements(RobotContainer.getTransport());
         this.speed = speed;
 
     }
 
     @Override
-    protected void initialize() {
-        // TODO Auto-generated method stub
+    public void initialize() {
         RobotContainer.getTransport().moveTransport(speed);
     }
 
     @Override
-    protected boolean isFinished() 
+    public void execute() 
     {
-        return !RobotContainer.getJoy().getRawButtonPressed(Constants.TRANSPORT_BUTTON);
+        RobotContainer.getTransport().moveTransport(speed);
     }
 
     @Override
-    protected void end() {
+    public void end(boolean interrupted) {
         RobotContainer.getTransport().stop();
     }
 
+    @Override
+    public boolean isFinished() 
+    {
+        return !RobotContainer.getJoy().getRawButtonPressed(Constants.TRANSPORT_BUTTON);
+    }
 }

@@ -10,7 +10,7 @@ import frc.robot.RobotContainer;
 import edu.wpi.*;
 
 
-public class Intake extends Subsystem 
+public class Intake extends SubsystemBase
 { 
     private double proximityVoltage;
     private double previousVoltage;
@@ -48,11 +48,5 @@ public class Intake extends Subsystem
         }
 
         previousVoltage = proximityVoltage;
-    }
-
-    @Override
-    protected void initDefaultCommand() {
-        // TODO Auto-generated method stub
-
     }
 }
