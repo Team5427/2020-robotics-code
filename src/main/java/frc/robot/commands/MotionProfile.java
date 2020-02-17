@@ -26,9 +26,9 @@ public class MotionProfile extends CommandBase
     private double currentDistance = 0;
     private double lastPositionError = 0;
     private double cummulativeError = 0;
-    private double trackError, positionError, derivativeError = 0;
-    private double lastTrackError = 0;
-    private double derivativeTrackError = 0;
+    private double positionError, derivativeError = 0;
+    // private double lastTrackError = 0;
+    // private double derivativeTrackError = 0;
     private double leftSpeed, rightSpeed = 0;
     private Trajectory trajectory;
     private DriveTrain driveTrain;
@@ -91,8 +91,8 @@ public class MotionProfile extends CommandBase
         //calculates current distance traveled by the robot
         currentDistance = (encLeft.getDistance() + encRight.getDistance())/2;
 
-        System.out.println("D: "+ currentDistance+" "+ newPt.getY());
-        System.out.println("V: "+ RobotContainer.getDriveTrain().getAvgRate()+" : "+ currentState.velocityMetersPerSecond);
+        // System.out.println("D: "+ currentDistance+" "+ newPt.getY());
+        // System.out.println("V: "+ RobotContainer.getDriveTrain().getAvgRate()+" : "+ currentState.velocityMetersPerSecond);
 
         //finds error in robot distance for PD controller
         positionError = cummulativeDistance - currentDistance;
@@ -122,7 +122,7 @@ public class MotionProfile extends CommandBase
         //  - (kthetap * trackError)
         //  - (kthetad * derivativeTrackError);
 
-        System.out.println(leftSpeed + "::" + rightSpeed);
+        // System.out.print(leftSpeed + "::" + rightSpeed + "::");
         
         driveTrain.tankDrive(leftSpeed, rightSpeed);
 

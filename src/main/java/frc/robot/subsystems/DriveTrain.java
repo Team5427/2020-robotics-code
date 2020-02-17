@@ -35,18 +35,20 @@ public class DriveTrain extends SubsystemBase
     {
         left.set(-leftSpeed);
         right.set(rightSpeed);
+        System.out.println("Speed: " + left.get() + "::" + right.get());
     }
 
     public void stop()
     {
         left.stopMotor();
         right.stopMotor();
+        System.out.println("******************************");
     }
 
     public void takeJoystickInputs(Joystick joy)
     {
         driveBase.arcadeDrive(joy.getY(), -joy.getZ()* Constants.Z_ROT_DAMPENING);
-        // System.out.println(joy.getY()+ "---------"+ joy.getZ());
+        // System.out.println(left.get()+ "::"+ right.get());
     }
 
     public double getAvgDistance()
@@ -56,7 +58,7 @@ public class DriveTrain extends SubsystemBase
 
     public double getAvgRate()
     {
-        return (RobotContainer.getEncLeft().getRate() + RobotContainer.getEncRight().getRate()) / 2;
+        return (left.get()+right.get())/2;
     }
 
     @Override

@@ -24,7 +24,7 @@ public class MoveStraightPID extends PIDCommand {
   public MoveStraightPID(double setDisp) {
     super(
         // The controller that the command will use
-        new PIDController(0.31, 0, 0),
+        new PIDController(0.2, 0, 0),
         // This should return the measurement
         () -> (RobotContainer.getEncLeft().getDistance() + RobotContainer.getEncRight().getDistance()) / 2,
         // This should return the setpoint (can also be a constant)
@@ -51,7 +51,7 @@ public class MoveStraightPID extends PIDCommand {
 
   @Override
   public void end (boolean interrupted){
-    System.out.println(RobotContainer.getEncLeft().getDistance());
+    System.out.println(RobotContainer.getDriveTrain().getAvgDistance());
     //RobotContainer.getAHRS().reset();
     RobotContainer.getEncLeft().reset();
     RobotContainer.getEncRight().reset(); 
