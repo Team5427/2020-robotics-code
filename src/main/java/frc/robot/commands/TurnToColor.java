@@ -1,16 +1,17 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.ColorSensor;
 
-public class TurnToColor extends Command
+public class TurnToColor extends CommandBase
 {
     public TurnToColor()
     {
-        requires(RobotContainer.getColorSensor());
+        addRequirements(RobotContainer.getColorSensor());
     }
 
     @Override
@@ -23,14 +24,14 @@ public class TurnToColor extends Command
     }
 
     @Override
-    protected boolean isFinished() 
+    public boolean isFinished() 
     {
         // TODO Auto-generated method stub
         return RobotContainer.getColorSensor().getColor() == RobotContainer.color;
     }
 
     @Override
-    public void end()
+    public void end(boolean interrupted)
     {
         RobotContainer.getColorSensor().stop();
     }

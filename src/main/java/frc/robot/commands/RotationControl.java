@@ -1,10 +1,11 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 
-public class RotationControl extends Command
+public class RotationControl extends CommandBase
 {
     private char color;
     private char previous = '0';
@@ -12,11 +13,11 @@ public class RotationControl extends Command
 
     public RotationControl()
     {
-        requires(RobotContainer.getColorSensor());
+        addRequirements(RobotContainer.getColorSensor());
     }
 
     @Override
-    protected void initialize() 
+    public void initialize() 
     {
         color = RobotContainer.getColorSensor().getColor();
         if(color != '0')
@@ -25,12 +26,12 @@ public class RotationControl extends Command
         }
         else
         {
-            end();
+            end(true);
         }
     }
 
     @Override
-    protected void execute() 
+    public void execute() 
     {
         if(color != previous && RobotContainer.getColorSensor().getColor() == color)
         {
@@ -40,7 +41,12 @@ public class RotationControl extends Command
     }
 
     @Override
-    protected boolean isFinished() 
+    public void end(boolean interrupted) {
+        RobotContainer.getColorSensor().stop();
+    }
+
+    @Override
+    public boolean isFinished() 
     {
         // TODO Auto-generated method stub
         return count >= 6;

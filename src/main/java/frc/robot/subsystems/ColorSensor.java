@@ -26,7 +26,7 @@ import com.revrobotics.ColorSensorV3;
 //Documentation
 //http://www.revrobotics.com/content/sw/color-sensor-v3/sdk/docs/javadoc/com/revrobotics/ColorSensorV3.html
 
-public class ColorSensor extends Subsystem 
+public class ColorSensor extends SubsystemBase
 {
 
     double rBlueTarget = Constants.kBlueTarget.red;
@@ -151,10 +151,4 @@ public class ColorSensor extends Subsystem
     @Override
     public void periodic()
     {}
-
-  @Override
-  protected void initDefaultCommand() {
-    // TODO Auto-generated method stub 
-  }
-    
 }
