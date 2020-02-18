@@ -15,6 +15,37 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.MoveStraightPID;
 import frc.robot.commands.PointTurn;
 import frc.robot.commands.StraightAndTurn;
+import java.util.ArrayList;
+
+import org.opencv.core.Core;
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
+import org.opencv.core.MatOfInt;
+import org.opencv.core.MatOfPoint;
+
+import org.opencv.core.MatOfPoint2f;
+import org.opencv.core.Point;
+import org.opencv.core.Rect;
+import org.opencv.core.Scalar;
+import org.opencv.imgproc.Imgproc;
+import com.kauailabs.navx.frc.AHRS;
+
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.CvSource;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.Vision.GripPipeline;
+import frc.robot.Vision.Target;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.CvSource;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.wpilibj.SPI;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -29,8 +60,10 @@ public class Robot extends TimedRobot
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+  private int status = 0;
 
-  
+  private static CameraServer cameraServer;
+  private static AHRS ahrs;
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -40,6 +73,97 @@ public class Robot extends TimedRobot
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    System.out.println("kuykfwegteiygewkwytriweutwuguy");
+    ahrs = new AHRS(SPI.Port.kMXP);
+    ahrs.setAngleAdjustment(0);
+  
+    new Thread(() -> {
+      // Initializes Camera from RoboRio and starts capture
+       UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+       camera.setResolution(640, 480); // sets resolution
+       System.out.println("agshkahrhresl");
+      // // Gets video from RoboRio CameraServer [accessible via SmrtDshbrd]
+       CvSink cvSink = CameraServer.getInstance().getVideo();
+       CvSource outputStream = CameraServer.getInstance().putVideo("Processed", 640, 480);
+
+      Mat source = new Mat(); // Mats are essentially video frame Objects
+      GripPipeline pipeline = new GripPipeline();
+      camera.setExposureManual(100);
+  
+      int timer = 0;
+
+      while (!Thread.interrupted()) 
+      {
+        if (cvSink.grabFrame(source) == 0)
+          System.out.print("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
+        else 
+        {
+          SmartDashboard.putNumber("Angle", ahrs.getAngle());
+          System.out.print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+           pipeline.process(source);
+           outputStream.putFrame(pipeline.hslThresholdOutput());
+           ArrayList<MatOfPoint> filteredPoints = pipeline.filterContoursOutput();
+           ArrayList<Target> validTargets=  new ArrayList<Target>();
+           Target leftMostTarget = null;
+
+           Point[] points = null;
+   
+           Target target;
+           for(MatOfPoint currentMat : filteredPoints)
+           {
+              points = ((MatOfPoint)currentMat).toArray();
+              target = new Target(points, source);
+              validTargets.add(target);
+           }
+   
+           if(validTargets.isEmpty())
+           {
+              SmartDashboard.putBoolean("Target Exists?", false);
+           }
+           else{
+            SmartDashboard.putBoolean("Target Exists?", true);
+            if(validTargets.isEmpty())
+            
+             continue;
+             SmartDashboard.putNumber("Target Amounts", validTargets.size());
+
+          leftMostTarget = validTargets.get(0);
+           for(Target t : validTargets)
+           {
+             // t.getLeftPoint().x<leftMostTarget.getLeftPoint().x 
+             //current code for closest to middle, not leftmost
+              if(t.getUprightDiff()/t.getSideDiff()>2 || t.getSideDiff()/t.getUprightDiff()>2)
+              continue;
+               if( t.getProportion()>.9 && t.getProportion()<1.1 && t.getUprightDiff()>leftMostTarget.getUprightDiff())
+                   leftMostTarget=t;
+           }
+
+           if(ahrs.getAngle()>360)
+           {
+              ahrs.setAngleAdjustment(ahrs.getAngleAdjustment()+-360);
+           }
+           if(ahrs.getAngle()<-360)
+           {
+              ahrs.setAngleAdjustment(ahrs.getAngleAdjustment()+360);
+           }
+           if(leftMostTarget.isCentered()== false && leftMostTarget.getDistanceFromCenter()<0)
+             status =1;
+          if(leftMostTarget.isCentered()== false && leftMostTarget.getDistanceFromCenter()>0)
+             status = 2;
+           if(leftMostTarget.isCentered())
+              status = 3;
+           SmartDashboard.putNumber("Proportion", leftMostTarget.getProportion());
+           SmartDashboard.putNumber("Upright Difference", leftMostTarget.getUprightDiff());
+           SmartDashboard.putNumber("Side Difference", leftMostTarget.getSideDiff());
+           SmartDashboard.putNumber("DistanceFromCenter", leftMostTarget.getDistanceFromCenter());
+           SmartDashboard.putBoolean("isCentered", leftMostTarget.isCentered());
+
+
+          }
+
+        }
+      }
+     }).start();
   }
 
   /**
@@ -94,6 +218,8 @@ public class Robot extends TimedRobot
   public void autonomousPeriodic() {
     CommandScheduler.getInstance().run();
 
+   
+
   }
 
   @Override
@@ -114,6 +240,18 @@ public class Robot extends TimedRobot
    */
   @Override
   public void teleopPeriodic() {
+    if(status==1)
+    {
+      System.out.println("SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
+    new PointTurn(-5);
+    }
+  if(status ==2)
+  {
+    System.out.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBbb");
+
+    new PointTurn(5);
+  }
+
   }
 
   @Override
