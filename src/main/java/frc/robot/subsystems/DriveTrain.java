@@ -29,12 +29,13 @@ public class DriveTrain extends SubsystemBase
         this.left = left;
         this.right = right;
         this.driveBase = driveBase;
+        driveBase.setRightSideInverted(false);
     }
 
     public void tankDrive(double leftSpeed, double rightSpeed)
     {
-        left.set(-leftSpeed);
-        right.set(rightSpeed);
+        left.set(leftSpeed);
+        right.set(-rightSpeed);
         System.out.println("Speed: " + left.get() + "::" + right.get());
         //2019 robot
     }
@@ -48,8 +49,8 @@ public class DriveTrain extends SubsystemBase
 
     public void takeJoystickInputs(Joystick joy)
     {
+        System.out.println(left.get()+ "::"+ right.get());
         driveBase.arcadeDrive(joy.getY(), -joy.getZ()* Constants.Z_ROT_DAMPENING);
-        // System.out.println(left.get()+ "::"+ right.get());
     }
 
     public double getAvgDistance()
@@ -64,6 +65,8 @@ public class DriveTrain extends SubsystemBase
 
     @Override
     public void periodic()
-    {}
+    {
+
+    }
     
 }
