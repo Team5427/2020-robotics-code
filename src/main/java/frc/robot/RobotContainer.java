@@ -63,11 +63,11 @@ public class RobotContainer
    */
   public RobotContainer() 
   {
-    frontLeft = new WPI_VictorSPX(Constants.LEFT_TOP_MOTOR);
-    rearLeft = new WPI_VictorSPX(Constants.LEFT_BOTTOM_MOTOR);
+    frontLeft = new Talon(2);
+    rearLeft = new Talon(3);
     leftDrive = new SpeedControllerGroup(frontLeft, rearLeft);
-    middleRight = new WPI_VictorSPX(Constants.RIGHT_MIDDLE_MOTOR);
-    rearRight = new WPI_VictorSPX(Constants.RIGHT_BOTTOM_MOTOR);
+    middleRight = new Talon(0);
+    rearRight = new Talon(1);
     rightDrive = new SpeedControllerGroup(middleRight, rearRight);
 
     drive = new DifferentialDrive(leftDrive, rightDrive);
@@ -78,14 +78,16 @@ public class RobotContainer
     ahrs = new AHRS(SPI.Port.kMXP);
 
     //encoders have 1440 as PPR and 360 CPR
-    encRight = new Encoder(Constants.ENCODER_RIGHT_PORT_1,Constants.ENCODER_RIGHT_PORT_2);
+    encRight = new Encoder(9, 8);
     encRight.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
     encRight.setReverseDirection(true);
-    encLeft = new Encoder(Constants.ENCODER_LEFT_PORT_1, Constants.ENCODER_LEFT_PORT_2);
+    encLeft = new Encoder(4, 3);
     encLeft.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
    
     ArrayList<Translation2d> waypoints = new ArrayList<Translation2d>();
     waypoints.add(new Translation2d(0, 1));
+
+    
 
 
     //creating a profile

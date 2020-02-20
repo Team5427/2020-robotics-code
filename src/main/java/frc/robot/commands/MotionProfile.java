@@ -26,9 +26,9 @@ public class MotionProfile extends CommandBase
     private double currentDistance = 0;
     private double lastPositionError = 0;
     private double cummulativeError = 0;
-    private double positionError, derivativeError = 0;
-    // private double lastTrackError = 0;
-    // private double derivativeTrackError = 0;
+    private double trackError, positionError, derivativeError = 0;
+    private double lastTrackError = 0;
+    private double derivativeTrackError = 0;
     private double leftSpeed, rightSpeed = 0;
     private Trajectory trajectory;
     private DriveTrain driveTrain;
@@ -79,8 +79,7 @@ public class MotionProfile extends CommandBase
         State lastState = trajectory.sample(lastTimeDiff);
         
         //finds error in robot orientation for P controller
-        // trackError = currentState.poseMeters.getRotation().getDegrees() - ahrs.getAngle();
-        // System.out.println(currentState.poseMeters.getRotation().getDegrees());
+        trackError = currentState.poseMeters.getRotation().getDegrees() - ahrs.getAngle();
 
         //calculates expected distance traveled by the robot
         Translation2d newPt = currentState.poseMeters.getTranslation();
@@ -91,8 +90,8 @@ public class MotionProfile extends CommandBase
         //calculates current distance traveled by the robot
         currentDistance = (encLeft.getDistance() + encRight.getDistance())/2;
 
-        // System.out.println("D: "+ currentDistance+" "+ newPt.getY());
-        // System.out.println("V: "+ RobotContainer.getDriveTrain().getAvgRate()+" : "+ currentState.velocityMetersPerSecond);
+        //System.out.println("D: "+ currentDistance+" "+ cummulativeDistance);
+        System.out.println("V: "+ encLeft.getRate()+" "+ currentState.velocityMetersPerSecond);
 
         //finds error in robot distance for PD controller
         positionError = cummulativeDistance - currentDistance;
@@ -102,7 +101,7 @@ public class MotionProfile extends CommandBase
 
         double delta_time = timeDiff - lastTimeDiff;
         derivativeError = (positionError - lastPositionError)/(delta_time);
-        // derivativeTrackError = (trackError - lastTrackError)/(delta_time);
+        derivativeTrackError = (trackError - lastTrackError)/(delta_time);
         
         //calculates speed using P heading controller and PD position controllers
         //angle decreases left speed magnitude while increases right speed magnitude - makes sense if trying to turn
@@ -110,25 +109,23 @@ public class MotionProfile extends CommandBase
          + ka * currentState.accelerationMetersPerSecondSq
          + (kpLeft * positionError)
          + (kdLeft * derivativeError)
-         + (kiLeft * cummulativeError);
-        //  + (kthetap * trackError)
-        //  + (kthetad * derivativeTrackError);
+         + (kiLeft * cummulativeError)
+         + (kthetap * trackError)
+         + (kthetad * derivativeTrackError);
 
         rightSpeed = kv * currentState.velocityMetersPerSecond
          + ka * currentState.accelerationMetersPerSecondSq
          + (kpRight * positionError)
          + (kdRight * derivativeError)
-         + (kiRight * cummulativeError);
-        //  - (kthetap * trackError)
-        //  - (kthetad * derivativeTrackError);
-
-        // System.out.print(leftSpeed + "::" + rightSpeed + "::");
+         + (kiRight * cummulativeError)
+         - (kthetap * trackError)
+         - (kthetad * derivativeTrackError);
         
         driveTrain.tankDrive(leftSpeed, rightSpeed);
 
         lastTimeDiff = timeDiff;
         lastPositionError = positionError;
-        // lastTrackError = trackError;
+        lastTrackError = trackError;
     }
  
     // Make this return true when this Command no longer needs to run execute()
