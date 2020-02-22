@@ -63,15 +63,15 @@ public class RobotContainer
     //frontLeft = new WPI_VictorSPX(Constants.LEFT_TOP_MOTOR);
     //middleLeft = new WPI_VictorSPX(Constants.LEFT_MIDDLE_MOTOR);
     //rearLeft = new WPI_VictorSPX(Constants.LEFT_BOTTOM_MOTOR);
-    frontLeft = new Talon(2);
-    rearLeft = new Talon(3);
+    frontLeft = new WPI_VictorSPX(10);
+    rearLeft = new WPI_VictorSPX(11);
     leftDrive = new SpeedControllerGroup(frontLeft, rearLeft);
     
     //frontRight = new WPI_VictorSPX(Constants.RIGHT_TOP_MOTOR);
     //middleRight = new WPI_VictorSPX(Constants.RIGHT_MIDDLE_MOTOR);
     //rearRight = new WPI_VictorSPX(Constants.RIGHT_BOTTOM_MOTOR);
-    frontRight = new Talon(0);
-    rearRight = new Talon(1);
+    frontRight = new WPI_VictorSPX(7);
+    rearRight = new WPI_VictorSPX(8);
     rightDrive = new SpeedControllerGroup(frontRight, rearRight);
 
     drive = new DifferentialDrive(leftDrive, rightDrive);
@@ -81,10 +81,10 @@ public class RobotContainer
     ahrs = new AHRS(SPI.Port.kMXP);
 
     //encoders have 1440 as PPR and 360 CPR
-    encRight = new Encoder(9,8);
+    encRight = new Encoder(4,5);
     encRight.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
     encRight.setReverseDirection(true);
-    encLeft = new Encoder(4,3);
+    encLeft = new Encoder(6,7);
     encLeft.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
    
 
