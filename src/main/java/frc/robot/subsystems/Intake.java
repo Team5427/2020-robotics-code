@@ -45,6 +45,7 @@ public class Intake extends SubsystemBase
         if((proximityVoltage - previousVoltage) >= Constants.INTAKE_PROXIMITY_DIFFERENCE)
         {
             RobotContainer.ballCount++;
+            RobotContainer.getTransport().stop();
         }
 
         previousVoltage = proximityVoltage;

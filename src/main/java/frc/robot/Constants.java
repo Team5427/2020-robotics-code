@@ -68,7 +68,8 @@ public final class Constants
     public static final int ENCODER_RIGHT_PORT_2 = 7;
     
     public static final int INTAKE_PROXIMITY_SENSOR_PORT = 1;
-    public static final int TRANSPORT_PROXIMITY_SENSOR_PORT = 1;
+    public static final int TRANSPORT_PROXIMITY_ONE_SENSOR_PORT = 1;
+    public static final int TRANSPORT_PROXIMITY_TWO_SENSOR_PORT = 1;
     public static final int PULLEY_PROXIMITY_SENSOR_PORT = 1;
 
     public static final int INTAKE_PROXIMITY_DIFFERENCE = 8; //arbitrary number for now
@@ -83,4 +84,7 @@ public final class Constants
     public static final double INTAKE_TELEOP_SPEED = 0;
     public static final double TRANSPORT_TELEOP_SPEED = 0;
     public static final double PULLEY_TELEOP_SPEED = 0;
+
+    public static final double INTAKE_INTEGRATED_SPEED = 0;
+    public static final double TRANSPORT_INTEGRATED_SPEED = 0;
 }

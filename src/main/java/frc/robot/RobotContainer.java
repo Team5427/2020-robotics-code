@@ -86,6 +86,7 @@ public class RobotContainer
   private static AnalogInput proximitySensor;
   private static AnalogInput intakeProximity;
   private static AnalogInput transportProximity;
+  private static AnalogInput transportProximityTwo;
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -118,8 +119,8 @@ public class RobotContainer
     intake = new Intake(intakeMotor, intakeProximity);
 
     transportMotor = new WPI_VictorSPX(Constants.TRANSPORT_MOTOR);
-    transportProximity = new AnalogInput(Constants.TRANSPORT_PROXIMITY_SENSOR_PORT);
-    transport = new Transport(transportMotor, proximitySensor);
+    transportProximity = new AnalogInput(Constants.TRANSPORT_PROXIMITY_ONE_SENSOR_PORT);
+    transport = new Transport(transportMotor, transportProximity, transportProximityTwo);
 
     pulleyMotor = new WPI_VictorSPX(Constants.PULLEY_MOTOR);
     pulleyProximity = new AnalogInput(Constants.PULLEY_PROXIMITY_SENSOR_PORT);

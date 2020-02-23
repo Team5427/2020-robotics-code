@@ -14,13 +14,18 @@ public class Transport extends SubsystemBase
     private double proximityVoltage;
     private double previousVoltage;
     private AnalogInput proximitySensor;
+
+    private double proximityVoltageTwo;
+    private double previousVoltageTwo;
+    private AnalogInput proximitySensorTwo;
     private SpeedController transportMotor;  
    
     
-    public Transport (SpeedController transportMotor, AnalogInput proximitySensor) 
+    public Transport (SpeedController transportMotor, AnalogInput proximitySensor, AnalogInput proximitySensorTwo) 
     {
         this.proximitySensor =  proximitySensor;
-        proximityVoltage = previousVoltage = getDistance();
+        this.proximitySensorTwo = proximitySensorTwo;
+        proximityVoltage = previousVoltage = proximityVoltageTwo = previousVoltageTwo = getDistance();
         this.transportMotor = transportMotor;
 
     }
@@ -40,18 +45,38 @@ public class Transport extends SubsystemBase
         double distance = (1/proximitySensor.getVoltage())*6.1111126 * 1/2.54;
         return distance;
     }
+
+    public double getDistanceTwo()
+    {
+        double distance = (1/proximitySensorTwo.getVoltage())*6.1111126 * 1/2.54;
+        return distance;
+    }
     
     @Override
     public void periodic()
     {
         proximityVoltage = getDistance();
+        proximityVoltageTwo = getDistanceTwo();
 
+        //something leaves
         if((proximityVoltage - previousVoltage) >= Constants.INTAKE_PROXIMITY_DIFFERENCE)
         {
+            RobotContainer.getTransport().moveTransport(Constants.TRANSPORT_INTEGRATED_SPEED);
+        }
+        //something enters
+        else if((proximityVoltage - previousVoltage) <= -Constants.INTAKE_PROXIMITY_DIFFERENCE)
+        {
             RobotContainer.ballCount++;
+            RobotContainer.getTransport().stop();
+        }
+
+        if((proximityVoltageTwo - previousVoltageTwo) <= -Constants.INTAKE_PROXIMITY_DIFFERENCE)
+        {
+            RobotContainer.getTransport().stop();
         }
 
         previousVoltage = proximityVoltage;
+        previousVoltageTwo = proximityVoltageTwo;
     }
 
 }
