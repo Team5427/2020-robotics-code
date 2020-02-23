@@ -9,36 +9,33 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
-import frc.robot.RobotContainer;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-public class PointTurn extends PIDCommand {
+public class MoveStraightPID extends PIDCommand {
   /**
-   * Creates a new PointTurn.
+   * Creates a new MoveStraightPID.
    */
-  private double angle;
-  private double angleTolerance = Constants.TURN_TOLERANCE;
-  public PointTurn(double setAngle) {
-    
+  private double displacement;
+  private double driveTolerance = Constants.DRIVE_TOLERANCE;
+  public MoveStraightPID(double setDisp) {
     super(
         // The controller that the command will use
-        //0.0080111---> original P value
-        new PIDController(0.008,0,0),
+        new PIDController(0.2, 0, 0),
         // This should return the measurement
-        () -> RobotContainer.getAHRS().getAngle(),
+        () -> (RobotContainer.getEncLeft().getDistance() + RobotContainer.getEncRight().getDistance()) / 2,
         // This should return the setpoint (can also be a constant)
-        () -> setAngle,
+        () -> setDisp,
         // This uses the output
-        output -> 
-        {
+        output -> {
           // Use the output here
+          //System.out.println(output);
           RobotContainer.getDriveTrain().tankDrive(output, output);
-          System.out.println(output);
         });
-        this.angle = setAngle;
+        this.displacement = setDisp;
         
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
@@ -46,31 +43,30 @@ public class PointTurn extends PIDCommand {
 
   @Override
   public void initialize(){
+    //System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     RobotContainer.getAHRS().reset();
     RobotContainer.getEncLeft().reset();
     RobotContainer.getEncRight().reset(); 
   }
 
-  
   @Override
   public void end (boolean interrupted){
-    //System.out.println(RobotContainer.getEncLeft().getDistance());
-    System.out.println(RobotContainer.getAHRS().getAngle());
-    RobotContainer.getAHRS().reset();
+    System.out.println(RobotContainer.getDriveTrain().getAvgDistance());
+    //RobotContainer.getAHRS().reset();
     RobotContainer.getEncLeft().reset();
     RobotContainer.getEncRight().reset(); 
+    RobotContainer.getDiffDrive().stopMotor();
   }
 
-  
 
   // Returns true when the command should end.
   @Override
-  public boolean isFinished() {
-    double trackError = angle - RobotContainer.getAHRS().getAngle();
-    System.out.println(Math.abs(trackError) < angleTolerance);
-    return Math.abs(trackError) < angleTolerance;
+  public boolean isFinished() 
+  {
+    double encoderAverage = (RobotContainer.getEncLeft().getDistance() + RobotContainer.getEncRight().getDistance()) / 2;
+    double error = displacement - encoderAverage;
+    //System.out.println(Math.abs(error) < driveTolerance);
+    return Math.abs(error) < driveTolerance;
   }
 
-   
- 
 }

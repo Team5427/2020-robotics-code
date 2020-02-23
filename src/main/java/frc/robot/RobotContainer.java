@@ -20,15 +20,19 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
+import edu.wpi.first.wpilibj.util.Units;
+import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.MotionProfile;
 import frc.robot.commands.MoveIntake;
 import frc.robot.commands.MovePulley;
 import frc.robot.commands.MoveStraight;
 import frc.robot.commands.MoveTransport;
+import frc.robot.commands.MoveStraightPID;
 import frc.robot.commands.PointTurn;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
@@ -65,7 +69,7 @@ public class RobotContainer
 
 
   private final SpeedController frontLeft, rearLeft;
-  private final SpeedController frontRight, rearRight;
+  private final SpeedController middleRight,rearRight;
   private static SpeedControllerGroup leftDrive;
   private static SpeedControllerGroup rightDrive;
   private static DifferentialDrive drive;
@@ -104,19 +108,12 @@ public class RobotContainer
    */
   public RobotContainer() 
   {
-    //frontLeft = new WPI_VictorSPX(Constants.LEFT_TOP_MOTOR);
-    //middleLeft = new WPI_VictorSPX(Constants.LEFT_MIDDLE_MOTOR);
-    //rearLeft = new WPI_VictorSPX(Constants.LEFT_BOTTOM_MOTOR);
     frontLeft = new Talon(2);
     rearLeft = new Talon(3);
     leftDrive = new SpeedControllerGroup(frontLeft, rearLeft);
-    
-    //frontRight = new WPI_VictorSPX(Constants.RIGHT_TOP_MOTOR);
-    //middleRight = new WPI_VictorSPX(Constants.RIGHT_MIDDLE_MOTOR);
-    //rearRight = new WPI_VictorSPX(Constants.RIGHT_BOTTOM_MOTOR);
-    frontRight = new Talon(0);
+    middleRight = new Talon(0);
     rearRight = new Talon(1);
-    rightDrive = new SpeedControllerGroup(frontRight, rearRight);
+    rightDrive = new SpeedControllerGroup(middleRight, rearRight);
 
     drive = new DifferentialDrive(leftDrive, rightDrive);
     drive.setSafetyEnabled(false);
@@ -137,15 +134,21 @@ public class RobotContainer
     pulleyProximity = new AnalogInput(Constants.PULLEY_PROXIMITY_SENSOR_PORT);
     pulley = new Pulley(pulleyMotor, pulleyProximity);
 
+    driveTrain.setDefaultCommand(new DriveWithJoystick(driveTrain));
     ahrs = new AHRS(SPI.Port.kMXP);
 
     //encoders have 1440 as PPR and 360 CPR
-    encRight = new Encoder(9,8);
+    encRight = new Encoder(9, 8);
     encRight.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
     encRight.setReverseDirection(true);
-    encLeft = new Encoder(4,3);
+    encLeft = new Encoder(4, 3);
     encLeft.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
     proximitySensor = new AnalogInput(1);
+   
+    ArrayList<Translation2d> waypoints = new ArrayList<Translation2d>();
+    waypoints.add(new Translation2d(0, 1));
+
+    
 
 
     //creating a profile
@@ -190,8 +193,11 @@ public class RobotContainer
    */
   public Command getAutonomousCommand() 
   {
-    // An ExampleCommand will run in autonomous
-    return null;
+    return motion;
+  }
+
+  public Command getTurn(){
+    return new PointTurn(90);
   }
 
   //just some Accessors that take up space

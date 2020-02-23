@@ -11,11 +11,13 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.MoveStraight;
-import frc.robot.subsystems.DriveTrain;
+import frc.robot.commands.MoveStraightPID;
+import frc.robot.commands.PointTurn;
+import frc.robot.commands.StraightAndTurn;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -67,44 +69,27 @@ public class Robot extends TimedRobot
     SmartDashboard.putNumber("Left Encoder Distance", RobotContainer.getEncLeft().getDistance());
     SmartDashboard.putNumber("Right Encoder Distance", RobotContainer.getEncRight().getDistance());
     SmartDashboard.putNumber("Average Distance", RobotContainer.getDriveTrain().getAvgDistance());
-    proximityVoltage = (1/m_robotContainer.getProximitySensor().getVoltage())*6.1111126 * 1/2.54;
-    SmartDashboard.putNumber("Proximity Distance", proximityVoltage);
-
-  }
-
-  /**
-   * This function is called once each time the robot enters Disabled mode.
-   */
-  @Override
-  public void disabledInit() {
-  }
-
-   /**
-   * @return the proximityVoltage
-   */
-  public static double getProximityVoltage() {
-    return proximityVoltage;
-  }
-
-  @Override
-  public void disabledPeriodic() {
+    SmartDashboard.putNumber("Velocity", RobotContainer.getDriveTrain().getAvgRate());
   }
 
   /**
    * This autonomous runs the autonomous command selected by your {@link RobotContainer} class.
    */
   @Override
-  public void autonomousInit() {
+  public void autonomousInit() 
+  {
     RobotContainer.getAHRS().reset();
+    RobotContainer.getEncLeft().reset();
+    RobotContainer.getEncRight().reset();
+
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
-    // schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
+    if(m_autonomousCommand != null)
+    {
       m_autonomousCommand.schedule();
     }
 
-    
-
+    //CommandScheduler.getInstance().schedule(new StraightAndTurn());
   }
 
   /**
@@ -112,7 +97,7 @@ public class Robot extends TimedRobot
    */
   @Override
   public void autonomousPeriodic() {
-    CommandScheduler.getInstance().run();
+    // CommandScheduler.getInstance().run();
 
   }
 
@@ -125,6 +110,8 @@ public class Robot extends TimedRobot
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+
+    //RobotContainer.getDriveTrain().tankDrive(-0.3, 0.3);
   }
 
   /**
@@ -140,12 +127,5 @@ public class Robot extends TimedRobot
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
-  }
-
-  /**
-   * This function is called periodically during test mode.
-   */
-  @Override
-  public void testPeriodic() {
   }
 }
