@@ -18,24 +18,24 @@ package frc.robot;
 public final class Constants 
 {
     //We need to measure these too
-    public static final double MAX_VELOCITY = 3.3;
-    public static final double MAX_ACCELERATION = 3.21333863;
+    public static final double MAX_VELOCITY = 1.57169249;
+    public static final double MAX_ACCELERATION = 1.09201;
 
     // (% Voltage [-1,1])/(Speed in meters per second) [basically we have to measure this]
-    public static final double KV = .3030303;
+    public static final double KV = 1/MAX_VELOCITY;
 
-    
     //influence of acceleration on velocity, just a bias which can be further tested.
-    public static final double KA = 0.066;
+    public static final double KA = 0.0783;
 
-    
-    public static final double KP_left = 0.081;
-    public static final double KI_left = 0.001352;
-    public static final double KD_left = 0.28;
-    public static final double KP_right = 0.081;
-    public static final double KI_right = 0.001352;
-    public static final double KD_right = 0.28;
-    public static final double K_THETA_P = 0.002336;
+    public static final double KP_left = 0.95;
+    public static final double KI_left = 0;
+    public static final double KD_left = 0;
+
+    public static final double KP_right = 0.9;
+    public static final double KI_right = 0;
+    public static final double KD_right = 0;
+
+    public static final double K_THETA_P = 0;
     public static final double K_THETA_D = 0;
 
     public static final double Z_ROT_DAMPENING = 0.75;
@@ -49,7 +49,7 @@ public final class Constants
      */
     public static final double DRIVETRAIN_WHEEL_DIAMETER = .1524;
     //public static final double ENCODER_PPR = 691.907;
-    public static final double DISTANCE_PER_PULSE = Math.PI * DRIVETRAIN_WHEEL_DIAMETER/360;
+    public static final double DISTANCE_PER_PULSE = (Math.PI * DRIVETRAIN_WHEEL_DIAMETER/1440)/3.68;
 
     /*CAN Port VALUES*/
 	public static final int LEFT_TOP_MOTOR = 10; //? why 10

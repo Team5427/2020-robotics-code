@@ -17,6 +17,9 @@ public class MoveStraight extends CommandBase {
   private double time;
   private double startTime;
   private DriveTrain driveTrain;
+  private double highestSpeed;
+  private double speed;
+  private double highestTime;
   /**
    * Creates a new MoveStraight.
    */
@@ -24,6 +27,7 @@ public class MoveStraight extends CommandBase {
     // Use addRequirements() here to declare subsystem dependencies.
     this.time = time;
     addRequirements(RobotContainer.getDriveTrain());
+    speed = highestSpeed = highestTime = 0;
     //initialize();
   }
 
@@ -34,16 +38,19 @@ public class MoveStraight extends CommandBase {
     RobotContainer.getEncLeft().reset();
     RobotContainer.getEncRight().reset();
     startTime = Timer.getFPGATimestamp();
-    //System.out.println("SAD;LFKJAS;LDFKJ");
-    //execute();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     double timediff = Timer.getFPGATimestamp() - startTime;
-    System.out.println(RobotContainer.getEncLeft().getRate()+ ": "+ timediff);
     driveTrain.tankDrive(1.0, 1.0);
+    speed = RobotContainer.getDriveTrain().getAvgRate();
+    if(speed > highestSpeed)
+    {
+      highestSpeed = speed;
+      highestTime = timediff;
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -51,6 +58,7 @@ public class MoveStraight extends CommandBase {
   public void end(boolean interrupted)
   {
     driveTrain.stop();
+    System.out.println("Max Velocity: " + highestSpeed + " - Time: " + highestTime);
   }
 
   // Returns true when the command should end.

@@ -91,7 +91,7 @@ public class MotionProfile extends CommandBase
         currentDistance = (encLeft.getDistance() + encRight.getDistance())/2;
 
         //System.out.println("D: "+ currentDistance+" "+ cummulativeDistance);
-        System.out.println("V: "+ encLeft.getRate()+" "+ currentState.velocityMetersPerSecond);
+        //System.out.println("V: "+ RobotContainer.getDriveTrain().getAvgRate() +" "+ currentState.velocityMetersPerSecond);
 
         //finds error in robot distance for PD controller
         positionError = cummulativeDistance - currentDistance;
@@ -139,6 +139,7 @@ public class MotionProfile extends CommandBase
     // Called once after isFinished returns true
     @Override
     public void end(boolean interrupted){
+        System.out.println(RobotContainer.getDriveTrain().getAvgDistance());
         driveTrain.stop();
     }
 
