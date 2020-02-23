@@ -59,7 +59,7 @@ public final class Constants
     
     public static final int INTAKE_MOTOR = 0; //need to configure
 
-    /*Encoder Ports */
+    /*Encoder Ports*/
 	public static final int ENCODER_LEFT_PORT_1 = 3;
 	public static final int ENCODER_LEFT_PORT_2 = 4;
 	public static final int ENCODER_RIGHT_PORT_1 = 6; 
@@ -68,5 +68,11 @@ public final class Constants
     public static final int INTAKE_PROXIMITY_SENSOR_PORT = 1;
 
     public static final int INTAKE_PROXIMITY_DIFFERENCE = 8; //arbitrary number for now
+
+    /*Elevator System Encoders*/
+    public static final double ENC_TOLERANCE = 0.5;
+
+    
+
 	
 }
