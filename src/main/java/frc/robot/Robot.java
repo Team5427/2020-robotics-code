@@ -99,38 +99,13 @@ public class Robot extends TimedRobot
     }
   }
 
-
-  int loops = 0;
   /**
    * This function is called periodically during operator control.
    */
   @Override
   public void teleopPeriodic() 
   {
-    double leftYStick = m_robotContainer.getJoy().getY();
-    double motorOutput = m_robotContainer.getShooterMotor().getMotorOutputPercent();
-
-    m_robotContainer.getBuilder().append("\tout:");
-    m_robotContainer.getBuilder().append(motorOutput);
-    m_robotContainer.getBuilder().append(("\tspd:"));
-    m_robotContainer.getBuilder().append(m_robotContainer.getShooterMotor().getSelectedSensorVelocity()*((double)600/(double)4096));
-    SmartDashboard.putNumber("Velocity", m_robotContainer.getShooterMotor().getSelectedSensorVelocity()*((double)600/(double)4096));
-
-    double targetVelocity = 32;
-
-    m_robotContainer.getShooterMotor().set(ControlMode.Velocity, targetVelocity*((double)4096/(double)600));
-
-    m_robotContainer.getBuilder().append("\terr:");
-    m_robotContainer.getBuilder().append(m_robotContainer.getShooterMotor().getClosedLoopError(Constants.SHOOTER_PID_ID)*((double)600/(double)4096));
-    m_robotContainer.getBuilder().append(("\ttrg:"));
-    m_robotContainer.getBuilder().append(targetVelocity);
-
-    if(++loops >= 10)
-    {
-      loops = 0;
-      System.out.println(m_robotContainer.getBuilder().toString());
-    }
-    m_robotContainer.getBuilder().setLength(0);
+    
   }
 
   @Override

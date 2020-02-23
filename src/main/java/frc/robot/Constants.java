@@ -59,17 +59,22 @@ public final class Constants
     /**
      * Proportional gain value for shooter PID controller.
      */
-    public static final double kP_SHOOTER = 0.035;
+    public static final double kP_SHOOTER = 1.2;
 
     /**
      * Integral gain value for shooter PID controller.
      */
-    public static final double kI_SHOOTER = 0.0;
+    public static final double kI_SHOOTER = 0;
 
     /**
      * Derivative gain value for shooter PID controller.
      */
-    public static final double kD_SHOOTER =.002;
+    public static final double kD_SHOOTER = 0;
+
+    /**
+     * Feedforward constant for the shooter PID controller with TalonSRX.
+     */
+    public static final double kF_SHOOTER = 2.407;
 
     /**
      * The period between shooter controller updates in seconds.

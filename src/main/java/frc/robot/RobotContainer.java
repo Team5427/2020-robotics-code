@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
 import com.ctre.phoenix.motorcontrol.can.*;
 import com.ctre.phoenix.motorcontrol.*;
@@ -46,6 +47,8 @@ public class RobotContainer
 
   private static StringBuilder string = new StringBuilder();
 
+  private static Shooter shooter;
+
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -68,16 +71,7 @@ public class RobotContainer
     shooterMotor = new TalonSRX(Constants.SHOOTER_MOTOR);
     shooterMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, Constants.K_TIMEOUT_MS);
     shooterMotor.setSensorPhase(true);
-
-    shooterMotor.configNominalOutputForward(0, Constants.K_TIMEOUT_MS);
-    shooterMotor.configNominalOutputReverse(0, Constants.K_TIMEOUT_MS);
-    shooterMotor.configPeakOutputForward(1, Constants.K_TIMEOUT_MS);
-    shooterMotor.configPeakOutputReverse(-1, Constants.K_TIMEOUT_MS);
-
-    shooterMotor.config_kF(Constants.SHOOTER_PID_ID, 2.407, Constants.K_TIMEOUT_MS);
-    shooterMotor.config_kP(Constants.SHOOTER_PID_ID, 1.2, Constants.K_TIMEOUT_MS);
-    shooterMotor.config_kI(Constants.SHOOTER_PID_ID, 0, Constants.K_TIMEOUT_MS);
-    shooterMotor.config_kD(Constants.SHOOTER_PID_ID, 0, Constants.K_TIMEOUT_MS);
+    shooter = new Shooter(shooterMotor);
 
 
     // Configure the button bindings
@@ -114,6 +108,11 @@ public class RobotContainer
   public static Joystick getJoy()
   {
     return joy;
+  }
+
+  public static Shooter getShooter()
+  {
+    return shooter;
   }
 
   public static TalonSRX getShooterMotor()
