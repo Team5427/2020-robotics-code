@@ -70,6 +70,7 @@ public class Transport extends SubsystemBase
             RobotContainer.getTransport().stop();
         }
 
+        //something enters
         if((proximityVoltageTwo - previousVoltageTwo) <= -Constants.INTAKE_PROXIMITY_DIFFERENCE)
         {
             RobotContainer.getTransport().stop();

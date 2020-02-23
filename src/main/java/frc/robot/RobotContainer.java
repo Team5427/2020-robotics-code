@@ -40,6 +40,10 @@ import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.AnalogInput;
+import frc.robot.subsystems.Shooter;
+import edu.wpi.first.wpilibj2.command.Command;
+import com.ctre.phoenix.motorcontrol.can.*;
+import com.ctre.phoenix.motorcontrol.*;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -87,6 +91,13 @@ public class RobotContainer
   private static AnalogInput intakeProximity;
   private static AnalogInput transportProximity;
   private static AnalogInput transportProximityTwo;
+  private static Encoder shooterEncoder;
+
+  private static TalonSRX shooterMotor;
+
+  private static StringBuilder string = new StringBuilder();
+
+  private static Shooter shooter;
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -140,7 +151,15 @@ public class RobotContainer
     //creating a profile
     //COUNTER CLOCKWISE is POSITIVE, CLOCKWISE is NEGATIVE
     motion = new MotionProfile(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(0, 2, new Rotation2d(45)), new ArrayList<Translation2d>());
-    // Configure the button bindings  
+    // Configure the button bindings
+
+    shooterMotor = new TalonSRX(Constants.SHOOTER_MOTOR);
+    shooterMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, Constants.K_TIMEOUT_MS);
+    shooterMotor.setSensorPhase(true);
+    shooter = new Shooter(shooterMotor);
+
+
+    // Configure the button bindings
     configureButtonBindings();
   }
 
@@ -169,9 +188,10 @@ public class RobotContainer
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand()
+  public Command getAutonomousCommand() 
   {
-    return new PointTurn(50);
+    // An ExampleCommand will run in autonomous
+    return null;
   }
 
   //just some Accessors that take up space
@@ -187,5 +207,20 @@ public class RobotContainer
   public static Intake getIntake(){return intake;}
   public static Transport getTransport(){return transport;}
   public static Pulley getPulley(){return pulley;}
+  
+  public static Shooter getShooter()
+  {
+    return shooter;
+  }
+
+  public static TalonSRX getShooterMotor()
+  {
+    return shooterMotor;
+  }
+
+  public static StringBuilder getBuilder()
+  {
+    return string;
+  }
 
 }
