@@ -54,19 +54,24 @@ public class RobotContainer
   private static Encoder encRight;
   
   private static Command motion;
+  private static boolean TargetCentered = false;
+  private static double distCenter = 0;
+
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() 
   {
+        System.out.println("kuykfwegteiygewkwytriweutwuguy");
+
     //frontLeft = new WPI_VictorSPX(Constants.LEFT_TOP_MOTOR);
     //middleLeft = new WPI_VictorSPX(Constants.LEFT_MIDDLE_MOTOR);
     //rearLeft = new WPI_VictorSPX(Constants.LEFT_BOTTOM_MOTOR);
     frontLeft = new Talon(2);
     rearLeft = new Talon(3);
     leftDrive = new SpeedControllerGroup(frontLeft, rearLeft);
-    
+
     //frontRight = new WPI_VictorSPX(Constants.RIGHT_TOP_MOTOR);
     //middleRight = new WPI_VictorSPX(Constants.RIGHT_MIDDLE_MOTOR);
     //rearRight = new WPI_VictorSPX(Constants.RIGHT_BOTTOM_MOTOR);
@@ -87,10 +92,9 @@ public class RobotContainer
     encLeft = new Encoder(4,3);
     encLeft.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
    
-
     //creating a profile
     //COUNTER CLOCKWISE is POSITIVE, CLOCKWISE is NEGATIVE
-    motion = new MotionProfile(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(0, 2, new Rotation2d(45)), new ArrayList<Translation2d>());
+    motion = new MotionProfile(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(2, 0, new Rotation2d(0)), new ArrayList<Translation2d>());
     // Configure the button bindings  
     configureButtonBindings();
   }
@@ -120,6 +124,14 @@ public class RobotContainer
   public Command getTurn(){
     return new PointTurn(90);
   }
+  public void setCentered(boolean centered)
+  {
+    TargetCentered=centered;
+  }
+    public void setDistanceFromCenter(double distanceFromCenter)
+    {
+      distCenter=distanceFromCenter;
+    }
 
   //just some Accessors that take up space
   public static DriveTrain getDriveTrain(){return driveTrain;}
@@ -130,4 +142,8 @@ public class RobotContainer
   public static Encoder getEncLeft(){return encLeft;}
   public static Encoder getEncRight(){return encRight;}
   public static Joystick getJoy(){return joy;}
+  public static boolean getCentered(){return TargetCentered;}
+  public static double getDistanceFromCenter(){return distCenter;}
+
+
 }
