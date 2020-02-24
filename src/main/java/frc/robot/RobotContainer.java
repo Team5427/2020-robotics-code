@@ -35,6 +35,10 @@ import frc.robot.commands.MoveStraight;
 import frc.robot.commands.MoveTransport;
 import frc.robot.commands.MoveStraightPID;
 import frc.robot.commands.PointTurn;
+import frc.robot.commands.RotationControl;
+import frc.robot.commands.TurnToColor;
+import edu.wpi.first.wpilibj.util.Color;
+import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Pulley;
@@ -49,6 +53,10 @@ import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
 import com.ctre.phoenix.motorcontrol.can.*;
 import com.ctre.phoenix.motorcontrol.*;
+
+import com.revrobotics.ColorMatch;
+import com.revrobotics.ColorSensorV3;
+import edu.wpi.first.wpilibj.I2C;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -71,9 +79,16 @@ public class RobotContainer
   private static Button pulleyButton;
   private static Button shooterButton;
 
+  private static Button rotationControl;
+  private static Button positionControl;
+
 
   private final SpeedController frontLeft, rearLeft;
   private final SpeedController middleRight,rearRight;
+  //the color that WE need to detect, not the one sent through game data
+  public static char color = '0';
+  
+  private static SpeedController colorMotor;
   private static SpeedControllerGroup leftDrive;
   private static SpeedControllerGroup rightDrive;
   private static DifferentialDrive drive;
@@ -91,9 +106,7 @@ public class RobotContainer
   private static AHRS ahrs;
   private static Encoder encLeft;
   private static Encoder encRight;
-  
-  //add a AnalogInput named promixity sensor.
-  
+    
   private static Command motion;
   private static AnalogInput proximitySensor;
   private static AnalogInput transportProximity;
@@ -106,16 +119,22 @@ public class RobotContainer
 
   private static Shooter shooter;
 
-  /**
+  private static ColorSensor colorSensor;
+  private static ColorSensorV3 cs;
+  private static I2C.Port i2cport;
+  
+   /*
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() 
   {
-    frontLeft = new Talon(2);
-    rearLeft = new Talon(3);
+
+    frontLeft = new WPI_VictorSPX(Constants.LEFT_TOP_MOTOR);
+    rearLeft = new WPI_VictorSPX(Constants.LEFT_BOTTOM_MOTOR);
     leftDrive = new SpeedControllerGroup(frontLeft, rearLeft);
-    middleRight = new Talon(0);
-    rearRight = new Talon(1);
+    
+    middleRight = new WPI_VictorSPX(Constants.RIGHT_MIDDLE_MOTOR);
+    rearRight = new WPI_VictorSPX(Constants.RIGHT_BOTTOM_MOTOR);
     rightDrive = new SpeedControllerGroup(middleRight, rearRight);
 
     drive = new DifferentialDrive(leftDrive, rightDrive);
@@ -138,6 +157,11 @@ public class RobotContainer
 
     driveTrain.setDefaultCommand(new DriveWithJoystick(driveTrain));
     ahrs = new AHRS(SPI.Port.kMXP);
+  
+    colorMotor = new WPI_VictorSPX(Constants.COLOR_WHEEL_MOTOR);// change port value
+
+    i2cport = I2C.Port.kOnboard;
+
 
     //encoders have 1440 as PPR and 360 CPR
     encRight = new Encoder(9, 8);
@@ -150,9 +174,6 @@ public class RobotContainer
     ArrayList<Translation2d> waypoints = new ArrayList<Translation2d>();
     waypoints.add(new Translation2d(0, 1));
 
-    
-
-
     //creating a profile
     //COUNTER CLOCKWISE is POSITIVE, CLOCKWISE is NEGATIVE
     motion = new MotionProfile(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(0, 2, new Rotation2d(45)), new ArrayList<Translation2d>());
@@ -162,6 +183,10 @@ public class RobotContainer
     shooterMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, Constants.K_TIMEOUT_MS);
     shooterMotor.setSensorPhase(true);
     shooter = new Shooter(shooterMotor);
+    
+    cs = new ColorSensorV3(i2cport);
+    colorSensor = new ColorSensor(colorMotor, cs);
+          
 
 
     // Configure the button bindings
@@ -182,11 +207,15 @@ public class RobotContainer
     transportButton = new JoystickButton(joy, Constants.TRANSPORT_BUTTON);
     pulleyButton = new JoystickButton(joy, Constants.PULLEY_BUTTON);
     shooterButton = new JoystickButton(joy, Constants.SHOOTER_BUTTON);
+    rotationControl = new JoystickButton(joy, Constants.ROTATION_CONTROL);
+    positionControl = new JoystickButton(joy, Constants.POSITION_CONTROL);
 
     intakeButton.whenPressed(new MoveIntake(Constants.INTAKE_TELEOP_SPEED));
     transportButton.whenPressed(new MoveTransport(Constants.TRANSPORT_TELEOP_SPEED));
     pulleyButton.whenPressed(new MovePulley(Constants.PULLEY_TELEOP_SPEED));
     shooterButton.whenPressed(new MoveShooter());
+    rotationControl.whenPressed(new RotationControl());
+    positionControl.whenPressed(new TurnToColor());
   }
 
 
@@ -202,6 +231,10 @@ public class RobotContainer
 
   public Command getTurn(){
     return new PointTurn(90);
+  }
+  public static ColorSensor getColorSensor()
+  {
+    return colorSensor;
   }
 
   //just some Accessors that take up space

@@ -7,13 +7,21 @@
 
 package frc.robot;
 
+import java.math.BigDecimal;
+
+import com.revrobotics.ColorMatch;
+
+import edu.wpi.first.wpilibj.util.Color;
+
 /**
- * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
- * constants.  This class should not be used for any other purpose.  All constants should be
- * declared globally (i.e. public static).  Do not put anything functional in this class.
+ * The Constants class provides a convenient place for teams to hold robot-wide
+ * numerical or boolean constants. This class should not be used for any other
+ * purpose. All constants should be declared globally (i.e. public static). Do
+ * not put anything functional in this class.
  *
- * <p>It is advised to statically import this class (or one of its inner classes) wherever the
- * constants are needed, to reduce verbosity.
+ * <p>
+ * It is advised to statically import this class (or one of its inner classes)
+ * wherever the constants are needed, to reduce verbosity.
  */
 public final class Constants 
 {
@@ -63,6 +71,7 @@ public final class Constants
     public static final int INTAKE_MOTOR = 0; //need to configure
     public static final int TRANSPORT_MOTOR = 0;
     public static final int PULLEY_MOTOR = 0;
+    public static final int COLOR_WHEEL_MOTOR = 0; //need to change
 
     /*Encoder Ports */
 	public static final int ENCODER_LEFT_PORT_1 = 3;
@@ -86,6 +95,9 @@ public final class Constants
     public static final int TRANSPORT_BUTTON = 0;
     public static final int PULLEY_BUTTON = 0;
     public static final int SHOOTER_BUTTON = 0;
+    
+    public static final int ROTATION_CONTROL = 0;
+    public static final int POSITION_CONTROL = 0;
 
 
     //Speeds
@@ -186,4 +198,32 @@ public final class Constants
     public static final int SHOOTER_PID_ID = 0;
 
     public static final double SHOOTER_ERROR_TOLERANCE = 0.5;
+    
+    /* Color Targets */
+    public static final Color kBlueTarget = ColorMatch.makeColor(0.11, 0.42, 0.47);
+    public static final Color kGreenTarget = ColorMatch.makeColor(0.16, 0.57, 0.26);
+    public static final Color kRedTarget = ColorMatch.makeColor(0.53, 0.33, 0.12);
+    public static final Color kYellowTarget = ColorMatch.makeColor(0.31, 0.56, 0.12);
+
+    public static final BigDecimal rBlueTarget = new BigDecimal("0.11");
+    public static final BigDecimal gBlueTarget = new BigDecimal("0.42");
+    public static final BigDecimal bBlueTarget = new BigDecimal("0.47");
+
+    public static final BigDecimal rGreenTarget = new BigDecimal("0.16");
+    public static final BigDecimal gGreenTarget = new BigDecimal("0.57");
+    public static final BigDecimal bGreenTarget = new BigDecimal("0.26");
+
+    public static final BigDecimal rRedTarget = new BigDecimal("0.53");
+    public static final BigDecimal gRedTarget = new BigDecimal("0.33");
+    public static final BigDecimal bRedTarget = new BigDecimal("0.12");
+
+    public static final BigDecimal rYellowTarget = new BigDecimal("0.31");
+    public static final BigDecimal gYellowTarget = new BigDecimal("0.56");
+    public static final BigDecimal bYellowTarget = new BigDecimal("0.12");
+
+    public static final double COLOR_THRESHOLD = 0.05;
+
+
+    /* SPEEDS */
+    public static final double COLOR_WHEEL_SPEED = 0.2;
 }
