@@ -10,6 +10,7 @@ import frc.robot.RobotContainer;
 public class MoveShooter extends CommandBase
 {
     private int loops = 0;
+    private double velocity = 0;
 
     @Override
     public void execute() {
@@ -29,11 +30,22 @@ public class MoveShooter extends CommandBase
         RobotContainer.getBuilder().append(("\ttrg:"));
         RobotContainer.getBuilder().append(targetVelocity);
 
-        if(++loops >= 10)
+        if(RobotContainer.getShooterMotor().getClosedLoopError(Constants.SHOOTER_PID_ID)*((double)600/(double)4096) <= Constants.SHOOTER_ERROR_TOLERANCE)
         {
-            loops = 0;
-            System.out.println(RobotContainer.getBuilder().toString());
+            RobotContainer.loop++;
         }
+        else
+        {
+            RobotContainer.loop = 0;
+        }
+
+        if(RobotContainer.loop >= 2)
+        {
+            RobotContainer.getPulley().movePulley(Constants.PULLEY_TELEOP_SPEED);
+            RobotContainer.loop = 0;
+        }
+
+        System.out.println(RobotContainer.getBuilder().toString());
         RobotContainer.getBuilder().setLength(0);
     }
 }

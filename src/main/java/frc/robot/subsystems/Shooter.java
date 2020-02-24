@@ -14,7 +14,6 @@ import frc.robot.RobotContainer;
 public class Shooter extends SubsystemBase
 {
     private TalonSRX shooterMotor;
-    private int loops;
     
     public Shooter(TalonSRX shooterMotor)
     {
@@ -28,8 +27,6 @@ public class Shooter extends SubsystemBase
         shooterMotor.config_kP(Constants.SHOOTER_PID_ID, Constants.kP_SHOOTER, Constants.K_TIMEOUT_MS);
         shooterMotor.config_kI(Constants.SHOOTER_PID_ID, Constants.kI_SHOOTER, Constants.K_TIMEOUT_MS);
         shooterMotor.config_kD(Constants.SHOOTER_PID_ID, Constants.kD_SHOOTER, Constants.K_TIMEOUT_MS);
-
-        loops = 0;
     }
 
     public double getVelocity()

@@ -77,10 +77,15 @@ public final class Constants
 
     public static final int INTAKE_PROXIMITY_DIFFERENCE = 8; //arbitrary number for now
 
+    public static final int FIRST_PROXIMITY_UNCOVERED = 0;
+
+    public static final int PROXIMITY_TOLERANCE = 0;
+
     //Joystick buttons
     public static final int INTAKE_BUTTON = 0;
     public static final int TRANSPORT_BUTTON = 0;
     public static final int PULLEY_BUTTON = 0;
+    public static final int SHOOTER_BUTTON = 0;
 
 
     //Speeds
@@ -179,4 +184,6 @@ public final class Constants
     public static final int K_TIMEOUT_MS = 0;
 
     public static final int SHOOTER_PID_ID = 0;
+
+    public static final double SHOOTER_ERROR_TOLERANCE = 0.5;
 }

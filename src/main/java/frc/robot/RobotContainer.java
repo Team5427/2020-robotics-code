@@ -30,6 +30,7 @@ import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.MotionProfile;
 import frc.robot.commands.MoveIntake;
 import frc.robot.commands.MovePulley;
+import frc.robot.commands.MoveShooter;
 import frc.robot.commands.MoveStraight;
 import frc.robot.commands.MoveTransport;
 import frc.robot.commands.MoveStraightPID;
@@ -61,11 +62,14 @@ public class RobotContainer
 
   //we will increment this in our commands. 
   public static int ballCount = 0;
+  public static int loop = 0;
+  public static boolean canShoot = false;
 
   private static Joystick joy;
   private static Button intakeButton;
   private static Button transportButton;
   private static Button pulleyButton;
+  private static Button shooterButton;
 
 
   private final SpeedController frontLeft, rearLeft;
@@ -92,7 +96,6 @@ public class RobotContainer
   
   private static Command motion;
   private static AnalogInput proximitySensor;
-  private static AnalogInput intakeProximity;
   private static AnalogInput transportProximity;
   private static AnalogInput transportProximityTwo;
   private static Encoder shooterEncoder;
@@ -123,8 +126,7 @@ public class RobotContainer
     //initialize promixity sensor and add as parameter to intake.
 
     intakeMotor = new WPI_VictorSPX(Constants.INTAKE_MOTOR);
-    intakeProximity = new AnalogInput(Constants.INTAKE_PROXIMITY_SENSOR_PORT);
-    intake = new Intake(intakeMotor, intakeProximity);
+    intake = new Intake(intakeMotor);
 
     transportMotor = new WPI_VictorSPX(Constants.TRANSPORT_MOTOR);
     transportProximity = new AnalogInput(Constants.TRANSPORT_PROXIMITY_ONE_SENSOR_PORT);
@@ -179,10 +181,12 @@ public class RobotContainer
     intakeButton = new JoystickButton(joy, Constants.INTAKE_BUTTON);
     transportButton = new JoystickButton(joy, Constants.TRANSPORT_BUTTON);
     pulleyButton = new JoystickButton(joy, Constants.PULLEY_BUTTON);
+    shooterButton = new JoystickButton(joy, Constants.SHOOTER_BUTTON);
 
     intakeButton.whenPressed(new MoveIntake(Constants.INTAKE_TELEOP_SPEED));
     transportButton.whenPressed(new MoveTransport(Constants.TRANSPORT_TELEOP_SPEED));
     pulleyButton.whenPressed(new MovePulley(Constants.PULLEY_TELEOP_SPEED));
+    shooterButton.whenPressed(new MoveShooter());
   }
 
 

@@ -58,22 +58,30 @@ public class Transport extends SubsystemBase
         proximityVoltage = getDistance();
         proximityVoltageTwo = getDistanceTwo();
 
-        //something leaves
+        //something leaves the first sensor
         if((proximityVoltage - previousVoltage) >= Constants.INTAKE_PROXIMITY_DIFFERENCE)
         {
             RobotContainer.getTransport().moveTransport(Constants.TRANSPORT_INTEGRATED_SPEED);
         }
-        //something enters
+        //something enters the first sensor
         else if((proximityVoltage - previousVoltage) <= -Constants.INTAKE_PROXIMITY_DIFFERENCE)
         {
             RobotContainer.ballCount++;
             RobotContainer.getTransport().stop();
         }
 
-        //something enters
+        //something enters the second sensor
         if((proximityVoltageTwo - previousVoltageTwo) <= -Constants.INTAKE_PROXIMITY_DIFFERENCE)
         {
             RobotContainer.getTransport().stop();
+        }
+        else if((proximityVoltageTwo - previousVoltageTwo) >= Constants.INTAKE_PROXIMITY_DIFFERENCE)
+        {
+            RobotContainer.ballCount--;
+            if(RobotContainer.ballCount > 0)
+            {
+                RobotContainer.getTransport().moveTransport(Constants.TRANSPORT_INTEGRATED_SPEED);
+            }
         }
 
         previousVoltage = proximityVoltage;

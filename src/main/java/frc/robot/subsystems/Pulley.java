@@ -45,6 +45,7 @@ public class Pulley extends SubsystemBase
         if((proximityVoltage - previousVoltage) >= Constants.INTAKE_PROXIMITY_DIFFERENCE)
         {
             RobotContainer.getPulley().stop();
+            RobotContainer.loop = 0;
         }
     }
 }
