@@ -1,42 +1,48 @@
 package frc.robot.subsystems;
 
-import java.util.Base64.Encoder;
+import edu.wpi.first.wpilibj.Encoder;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.SpeedController;
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
-public class Elevator<LimitSwitch> extends Subsystem
+public class Elevator extends SubsystemBase
 {
 
     private SpeedController left, right;
     private Encoder leftEnc, rightEnc;
-    //private LimitSwitch topSwitch, bottomSwitch;
-    private DigitalInput high, low;
+    private DigitalInput limit;
 
-    public void setSpeed(double speed) {
+    public Elevator(SpeedController left, SpeedController right, Encoder elevatorLeftEnc, Encoder elevatorRightEnc, DigitalInput limit)
+    {
+        this.left = left;
+        this.right = right;
+        this.leftEnc = elevatorLeftEnc;
+        this.rightEnc = elevatorRightEnc;
+        this.limit = limit;
+    }
+
+    public void setSpeed(double speed) 
+    {
         left.set(speed);
         right.set(speed);
     }
 
-    public void stopMotor() {
+    public void stop() 
+    {
         left.stopMotor();
         right.stopMotor();
     }
 
-    public void periodic(boolean high, boolean low) {
-        if(high == true)
-            stopMotor();
-        else if(low == true)
-            stopMotor();
-
-        if(Math.abs(leftEnc))
-
+    public boolean getLimit()
+    {
+        return limit.get();
     }
-    @Override
-    protected void initDefaultCommand() {
-        // TODO Auto-generated method stub
 
+    public boolean getEncLimit()
+    {
+        return leftEnc.getDistance() >= Constants.ELEVATOR_UPPER_LIMIT || rightEnc.getDistance() >= Constants.ELEVATOR_UPPER_LIMIT;
     }
 
 }

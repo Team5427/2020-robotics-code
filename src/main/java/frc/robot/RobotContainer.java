@@ -13,6 +13,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -28,6 +29,7 @@ import frc.robot.commands.MotionProfile;
 import frc.robot.commands.MoveStraight;
 import frc.robot.commands.PointTurn;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -67,6 +69,11 @@ public class RobotContainer
   private static Command motion;
   private static AnalogInput proximitySensor;
   private static AnalogInput intakeProximity;
+
+  private static SpeedController elevatorLeft, elevatorRight;
+  private static Encoder elevatorLeftEnc, elevatorRightEnc;
+  private static DigitalInput limitSwitch;
+  private static Elevator elevator;
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -108,6 +115,16 @@ public class RobotContainer
     encLeft.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
     proximitySensor = new AnalogInput(1);
 
+    elevatorLeft = new WPI_VictorSPX(Constants.ELEVATOR_LEFT_MOTOR);
+    elevatorRight = new WPI_VictorSPX(Constants.ELEVATOR_RIGHT_MOTOR);
+
+    elevatorLeftEnc = new Encoder(Constants.ELEVATOR_LEFT_PORT_1, Constants.ELEVATOR_LEFT_PORT_2);
+    elevatorRightEnc = new Encoder(Constants.ELEVATOR_RIGHT_PORT_1, Constants.ELEVATOR_RIGHT_PORT_2);
+
+    limitSwitch = new DigitalInput(Constants.ELEVATOR_LIMIT_SWITCH);
+
+    elevator = new Elevator(elevatorLeft, elevatorRight, elevatorLeftEnc, elevatorRightEnc, limitSwitch);
+
 
     //creating a profile
     //COUNTER CLOCKWISE is POSITIVE, CLOCKWISE is NEGATIVE
@@ -148,5 +165,6 @@ public class RobotContainer
   public static Encoder getEncRight(){return encRight;}
   public static Joystick getJoy(){return joy;}
   public static AnalogInput getProximitySensor(){return proximitySensor;}
+  public static Elevator getElevator(){return elevator;}
 
 }

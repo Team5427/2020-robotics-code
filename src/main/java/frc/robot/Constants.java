@@ -59,11 +59,23 @@ public final class Constants
     
     public static final int INTAKE_MOTOR = 0; //need to configure
 
+    //NEED TO CONFIGURE
+    public static final int ELEVATOR_LEFT_MOTOR = 0;
+    public static final int ELEVATOR_RIGHT_MOTOR = 0;
+
     /*Encoder Ports*/
 	public static final int ENCODER_LEFT_PORT_1 = 3;
 	public static final int ENCODER_LEFT_PORT_2 = 4;
 	public static final int ENCODER_RIGHT_PORT_1 = 6; 
     public static final int ENCODER_RIGHT_PORT_2 = 7;
+
+    public static final int ELEVATOR_LEFT_PORT_1 = 0;
+    public static final int ELEVATOR_LEFT_PORT_2 = 0;
+    public static final int ELEVATOR_RIGHT_PORT_1 = 0;
+    public static final int ELEVATOR_RIGHT_PORT_2 = 0;
+
+    public static final int ELEVATOR_LIMIT_SWITCH = 0;
+    
     
     public static final int INTAKE_PROXIMITY_SENSOR_PORT = 1;
 
@@ -71,6 +83,10 @@ public final class Constants
 
     /*Elevator System Encoders*/
     public static final double ENC_TOLERANCE = 0.5;
+
+    public static final double ELEVATOR_UPPER_LIMIT = 15;
+
+    public static final double ELEVATOR_SPEED = 0;
 
     
 
