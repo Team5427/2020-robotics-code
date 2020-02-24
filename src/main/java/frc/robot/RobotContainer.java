@@ -13,6 +13,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -40,6 +41,7 @@ import frc.robot.commands.TurnToColor;
 import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Pulley;
 import frc.robot.subsystems.Transport;
@@ -123,7 +125,13 @@ public class RobotContainer
   private static ColorSensorV3 cs;
   private static I2C.Port i2cport;
   
-   /*
+   
+  private static SpeedController elevatorLeft, elevatorRight;
+  private static Encoder elevatorLeftEnc, elevatorRightEnc;
+  private static DigitalInput limitSwitch;
+  private static Elevator elevator;
+
+  /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() 
@@ -173,6 +181,17 @@ public class RobotContainer
    
     ArrayList<Translation2d> waypoints = new ArrayList<Translation2d>();
     waypoints.add(new Translation2d(0, 1));
+
+    elevatorLeft = new WPI_VictorSPX(Constants.ELEVATOR_LEFT_MOTOR);
+    elevatorRight = new WPI_VictorSPX(Constants.ELEVATOR_RIGHT_MOTOR);
+
+    elevatorLeftEnc = new Encoder(Constants.ELEVATOR_LEFT_PORT_1, Constants.ELEVATOR_LEFT_PORT_2);
+    elevatorRightEnc = new Encoder(Constants.ELEVATOR_RIGHT_PORT_1, Constants.ELEVATOR_RIGHT_PORT_2);
+
+    limitSwitch = new DigitalInput(Constants.ELEVATOR_LIMIT_SWITCH);
+
+    elevator = new Elevator(elevatorLeft, elevatorRight, elevatorLeftEnc, elevatorRightEnc, limitSwitch);
+
 
     //creating a profile
     //COUNTER CLOCKWISE is POSITIVE, CLOCKWISE is NEGATIVE
@@ -265,5 +284,6 @@ public class RobotContainer
   {
     return string;
   }
+  public static Elevator getElevator(){return elevator;}
 
 }

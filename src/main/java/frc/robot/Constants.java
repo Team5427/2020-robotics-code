@@ -73,11 +73,23 @@ public final class Constants
     public static final int PULLEY_MOTOR = 0;
     public static final int COLOR_WHEEL_MOTOR = 0; //need to change
 
-    /*Encoder Ports */
+    //NEED TO CONFIGURE
+    public static final int ELEVATOR_LEFT_MOTOR = 0;
+    public static final int ELEVATOR_RIGHT_MOTOR = 0;
+
+    /*Encoder Ports*/
 	public static final int ENCODER_LEFT_PORT_1 = 3;
 	public static final int ENCODER_LEFT_PORT_2 = 4;
 	public static final int ENCODER_RIGHT_PORT_1 = 6; 
     public static final int ENCODER_RIGHT_PORT_2 = 7;
+
+    public static final int ELEVATOR_LEFT_PORT_1 = 0;
+    public static final int ELEVATOR_LEFT_PORT_2 = 0;
+    public static final int ELEVATOR_RIGHT_PORT_1 = 0;
+    public static final int ELEVATOR_RIGHT_PORT_2 = 0;
+
+    public static final int ELEVATOR_LIMIT_SWITCH = 0;
+    
     
     public static final int INTAKE_PROXIMITY_SENSOR_PORT = 1;
     public static final int TRANSPORT_PROXIMITY_ONE_SENSOR_PORT = 1;
@@ -226,4 +238,14 @@ public final class Constants
 
     /* SPEEDS */
     public static final double COLOR_WHEEL_SPEED = 0.2;
+    /*Elevator System Encoders*/
+    public static final double ENC_TOLERANCE = 0.5;
+
+    public static final double ELEVATOR_UPPER_LIMIT = 15;
+
+    public static final double ELEVATOR_SPEED = 0;
+
+    
+
+	
 }
