@@ -27,15 +27,15 @@ public final class Constants
     //influence of acceleration on velocity, just a bias which can be further tested.
     public static final double KA = 0.0783;
 
-    public static final double KP_left = 0.95;
+    public static final double KP_left = 0.96;
     public static final double KI_left = 0;
-    public static final double KD_left = 0;
+    public static final double KD_left = 0.005;
 
-    public static final double KP_right = 0.9;
+    public static final double KP_right = 0.98;
     public static final double KI_right = 0;
-    public static final double KD_right = 0;
+    public static final double KD_right = 0.005;
 
-    public static final double K_THETA_P = 0;
+    public static final double K_THETA_P = 0.0005;
     public static final double K_THETA_D = 0;
 
     public static final double Z_ROT_DAMPENING = 0.75;
