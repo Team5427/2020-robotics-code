@@ -91,7 +91,6 @@ public class GripPipeline implements VisionPipeline {
 		return filterContoursOutput;
 	}
 
-
 	/**
 	 * Segment an image based on hue, saturation, and luminance ranges.
 	 *
