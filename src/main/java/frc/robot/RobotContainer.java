@@ -54,6 +54,8 @@ public class RobotContainer
   private static Encoder encRight;
   
   private static Command motion;
+  private static boolean TargetCentered = false;
+  private static double distCenter = 0;
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -120,6 +122,14 @@ public class RobotContainer
   public Command getTurn(){
     return new PointTurn(90);
   }
+  public void setCentered(boolean centered)
+  {
+    TargetCentered=centered;
+  }
+    public void setDistanceFromCenter(double distanceFromCenter)
+    {
+      distCenter=distanceFromCenter;
+    }
 
   //just some Accessors that take up space
   public static DriveTrain getDriveTrain(){return driveTrain;}
@@ -130,4 +140,6 @@ public class RobotContainer
   public static Encoder getEncLeft(){return encLeft;}
   public static Encoder getEncRight(){return encRight;}
   public static Joystick getJoy(){return joy;}
+  public static boolean getCentered(){return TargetCentered;}
+  public static double getDistanceFromCenter(){return distCenter;}
 }
