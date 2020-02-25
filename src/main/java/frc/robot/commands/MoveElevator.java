@@ -6,6 +6,11 @@ import frc.robot.RobotContainer;
 
 public class MoveElevator extends CommandBase
 {
+
+    public MoveElevator()
+    {
+        addRequirements(RobotContainer.getElevator());
+    }
     @Override
     public void initialize() 
     {

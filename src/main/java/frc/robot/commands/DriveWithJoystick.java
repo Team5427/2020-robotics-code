@@ -2,15 +2,16 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveTrain;
 
 public class DriveWithJoystick extends CommandBase
 {
 
-    public DriveWithJoystick(DriveTrain driveTrain)
+    public DriveWithJoystick()
     {
-        addRequirements(driveTrain);
+        addRequirements(RobotContainer.getDriveTrain());
     }
 
     @Override

@@ -29,6 +29,7 @@ import edu.wpi.first.wpilibj.geometry.Translation2d;
 import edu.wpi.first.wpilibj.util.Units;
 import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.MotionProfile;
+import frc.robot.commands.MoveElevator;
 import frc.robot.commands.MoveIntake;
 import frc.robot.commands.MovePulley;
 import frc.robot.commands.MoveShooter;
@@ -83,6 +84,8 @@ public class RobotContainer
 
   private static Button rotationControl;
   private static Button positionControl;
+
+  private static Button moveElevator;
 
 
   private final SpeedController frontLeft, rearLeft;
@@ -149,6 +152,7 @@ public class RobotContainer
     drive.setSafetyEnabled(false);
 
     driveTrain = new DriveTrain(leftDrive, rightDrive, drive);
+    driveTrain.setDefaultCommand(new DriveWithJoystick());
 
     //initialize promixity sensor and add as parameter to intake.
 
@@ -163,7 +167,6 @@ public class RobotContainer
     pulleyProximity = new AnalogInput(Constants.PULLEY_PROXIMITY_SENSOR_PORT);
     pulley = new Pulley(pulleyMotor, pulleyProximity);
 
-    driveTrain.setDefaultCommand(new DriveWithJoystick(driveTrain));
     ahrs = new AHRS(SPI.Port.kMXP);
   
     colorMotor = new WPI_VictorSPX(Constants.COLOR_WHEEL_MOTOR);// change port value
@@ -228,6 +231,7 @@ public class RobotContainer
     shooterButton = new JoystickButton(joy, Constants.SHOOTER_BUTTON);
     rotationControl = new JoystickButton(joy, Constants.ROTATION_CONTROL);
     positionControl = new JoystickButton(joy, Constants.POSITION_CONTROL);
+    moveElevator = new JoystickButton(joy, Constants.ELEVATOR_BUTTON);
 
     intakeButton.whenPressed(new MoveIntake(Constants.INTAKE_TELEOP_SPEED));
     transportButton.whenPressed(new MoveTransport(Constants.TRANSPORT_TELEOP_SPEED));
@@ -235,6 +239,7 @@ public class RobotContainer
     shooterButton.whenPressed(new MoveShooter());
     rotationControl.whenPressed(new RotationControl());
     positionControl.whenPressed(new TurnToColor());
+    moveElevator.whenPressed(new MoveElevator());
   }
 
 

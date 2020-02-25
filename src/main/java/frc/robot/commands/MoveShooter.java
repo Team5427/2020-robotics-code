@@ -12,6 +12,11 @@ public class MoveShooter extends CommandBase
     private int loops = 0;
     private double velocity = 0;
 
+    public MoveShooter()
+    {
+        addRequirements(RobotContainer.getShooter(), RobotContainer.getPulley());
+    }
+
     @Override
     public void execute() {
         double motorOutput = RobotContainer.getShooter().getMotorOutputPercent();

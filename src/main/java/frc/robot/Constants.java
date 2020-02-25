@@ -245,6 +245,8 @@ public final class Constants
 
     public static final double ELEVATOR_SPEED = 0;
 
+    public static final int ELEVATOR_BUTTON = 0;
+
     
 
 	
