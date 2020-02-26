@@ -55,6 +55,8 @@ public class RobotContainer
   
   private static Command motion;
   private static boolean TargetCentered = false;
+  private static boolean beginningTargetExists = false;
+
   private static double distCenter = 0;
 
 
@@ -132,6 +134,10 @@ public class RobotContainer
     {
       distCenter=distanceFromCenter;
     }
+    public void setBeginningTargetExists(boolean exists)
+    {
+      beginningTargetExists=exists;
+    }
 
   //just some Accessors that take up space
   public static DriveTrain getDriveTrain(){return driveTrain;}
@@ -144,6 +150,8 @@ public class RobotContainer
   public static Joystick getJoy(){return joy;}
   public static boolean getCentered(){return TargetCentered;}
   public static double getDistanceFromCenter(){return distCenter;}
+  public static boolean getBeginningTargetExists(){return beginningTargetExists;}
+
 
 
 }

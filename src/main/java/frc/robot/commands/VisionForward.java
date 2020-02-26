@@ -15,14 +15,15 @@ import frc.robot.RobotContainer;
 
 import frc.robot.subsystems.DriveTrain;
 
-public class VisionMotionTurn extends CommandBase {
+public class VisionForward extends CommandBase {
 
 
   private DriveTrain driveTrain;
+  private int previousBallCount = 0;
   /**
    * Creates a new MoveStraight.
    */
-  public VisionMotionTurn() {
+  public VisionForward() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.getDriveTrain());
     //initialize();
@@ -38,21 +39,8 @@ public class VisionMotionTurn extends CommandBase {
   @Override
   public void execute() 
   {
-        System.out.println("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP");
+        driveTrain.tankDrive(.3, .3);
 
-    if(RobotContainer.getDistanceFromCenter()>0)
-    {
-        driveTrain.tankDrive(.3, -.3);
-        System.out.println("1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111");
-    }
-    else if(RobotContainer.getDistanceFromCenter()<0)
-    {
-        driveTrain.tankDrive(-.3, .3);
-        System.out.println("2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222");
-    }
-    if(RobotContainer.getCentered())
-        isFinished();
-    
   }
 
   // Called once the command ends or is interrupted.
@@ -66,7 +54,7 @@ public class VisionMotionTurn extends CommandBase {
   @Override
   public boolean isFinished() 
   {
-    if(RobotContainer.getCentered())
+    if(RobotContainer.getBallCount()>previousBallCount)
     {
         end(true);
         return true;

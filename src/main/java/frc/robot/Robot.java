@@ -15,6 +15,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.MoveStraightPID;
 import frc.robot.commands.PointTurn;
 import frc.robot.commands.StraightAndTurn;
+import frc.robot.commands.TurnLeft;
+import frc.robot.commands.VisionForward;
 import frc.robot.commands.VisionMotionTurn;
 
 import java.util.ArrayList;
@@ -64,6 +66,9 @@ public class Robot extends TimedRobot
   private RobotContainer m_robotContainer;
   private int status = 0;
   private boolean targetCentered = true;
+  private boolean firstTime = true;
+  private boolean beginningTargetExists = false;
+
 
   private static CameraServer cameraServer;
   /**
@@ -122,6 +127,8 @@ public class Robot extends TimedRobot
            ArrayList<MatOfPoint> filteredPoints = pipeline.filterContoursOutput();
            ArrayList<Target> validTargets=  new ArrayList<Target>();
            Target leftMostTarget = null;
+           Target beginningLeftMostTarget = null;
+
            Point[] points = null;
    
            Target target;
@@ -142,7 +149,7 @@ public class Robot extends TimedRobot
             
              continue;
              SmartDashboard.putNumber("Target Amounts", validTargets.size());
-
+//if ball is big during beggining its good, later it can be small
           leftMostTarget = validTargets.get(0);
            for(Target t : validTargets)
            {
@@ -151,12 +158,22 @@ public class Robot extends TimedRobot
               if(t.getProportion()>1.4 || t.getInverseProportion()>1.4)
                 continue;
 
-              if( t.getProportion()>.92 && t.getProportion()<1.08)
+              if( t.getProportion()>.92 && t.getProportion()<1.08 && t.getDistanceFromCenter()<leftMostTarget.getDistanceFromCenter())
+              {
                    leftMostTarget=t;
+                   //treat it like a square and check area
+                   if(t.getUprightDiff()*t.getSideDiff()>50)
+                    beginningLeftMostTarget = t;
+              }
+             
            }
            m_robotContainer.setCentered(leftMostTarget.isCentered());
            m_robotContainer.setDistanceFromCenter(leftMostTarget.getDistanceFromCenter());
+           m_robotContainer.setBeginningTargetExists(beginningLeftMostTarget!=null);
+
            setCentered(leftMostTarget.isCentered());
+           setBegginingTargetExists(beginningLeftMostTarget!=null);
+
 
 
            if(m_robotContainer.getAHRS().getAngle()>360)
@@ -167,12 +184,16 @@ public class Robot extends TimedRobot
            {
             m_robotContainer.getAHRS().setAngleAdjustment(m_robotContainer.getAHRS().getAngleAdjustment()+360);
            }
-           if(leftMostTarget.isCentered()== false && leftMostTarget.getDistanceFromCenter()<0)
+          if(leftMostTarget.isCentered()== false && leftMostTarget.getDistanceFromCenter()<0)
              status =1;
           if(leftMostTarget.isCentered()== false && leftMostTarget.getDistanceFromCenter()>0)
              status = 2;
-           if(leftMostTarget.isCentered())
+          if(leftMostTarget.isCentered())
               status = 3;
+          if(beginningLeftMostTarget==null)
+           status = 4;
+
+
 
            SmartDashboard.putNumber("Proportion", leftMostTarget.getProportion());
            SmartDashboard.putNumber("Upright Difference", leftMostTarget.getUprightDiff());
@@ -192,6 +213,7 @@ public class Robot extends TimedRobot
    * <p>This runs after the mode specific periodic functions, but before
    * LiveWindow and SmartDashboard integrated updating.
    */
+
   @Override
   public void robotPeriodic() {
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
@@ -226,8 +248,7 @@ public class Robot extends TimedRobot
     {
       m_autonomousCommand.schedule();
     }
-    
-
+  
     //CommandScheduler.getInstance().schedule(new StraightAndTurn());
   }
 
@@ -237,9 +258,6 @@ public class Robot extends TimedRobot
   @Override
   public void autonomousPeriodic() {
     CommandScheduler.getInstance().run();
-
-   
-
   }
 
   @Override
@@ -324,15 +342,30 @@ public class Robot extends TimedRobot
   //   m_autonomousCommand= new PointTurn(30);
   //   m_autonomousCommand.schedule();
   // }
-  //    }
-      if(m_autonomousCommand!=null && m_autonomousCommand.isFinished())
+  //}
+      if(firstTime)
         m_autonomousCommand=null;
+      else if(m_autonomousCommand==null && m_autonomousCommand.isFinished())
+      {
+        m_autonomousCommand=null;
+      }
+      if(status == 4)
+      {
+        m_autonomousCommand = new TurnLeft();
+        m_autonomousCommand.schedule();
+      }
       if(m_autonomousCommand==null && getCentered()==false)
       {
         System.out.println("UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU");
         m_autonomousCommand = new VisionMotionTurn();
         m_autonomousCommand.schedule();
       }
+      if(getCentered())
+      {
+        m_autonomousCommand = new VisionForward();
+        m_autonomousCommand.schedule();
+      }
+     
 
   }
 
@@ -345,10 +378,19 @@ public class Robot extends TimedRobot
   {
     targetCentered = centered;
   }
+  public void setBegginingTargetExists(boolean exists)
+  {
+    beginningTargetExists = exists;
+  }
   public boolean getCentered()
   {
     return targetCentered;
   }
+  public boolean getBegginingTargetExists()
+  {
+    return beginningTargetExists;
+  }
+
  
 }
 // Make own command for until not in the range, keep changing angle with execute method

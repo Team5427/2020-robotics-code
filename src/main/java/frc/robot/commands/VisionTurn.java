@@ -15,14 +15,14 @@ import frc.robot.RobotContainer;
 
 import frc.robot.subsystems.DriveTrain;
 
-public class VisionMotionTurn extends CommandBase {
+public class VisionTurn extends CommandBase {
 
 
   private DriveTrain driveTrain;
   /**
    * Creates a new MoveStraight.
    */
-  public VisionMotionTurn() {
+  public VisionTurn() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.getDriveTrain());
     //initialize();
@@ -52,7 +52,6 @@ public class VisionMotionTurn extends CommandBase {
     }
     if(RobotContainer.getCentered())
         isFinished();
-    
   }
 
   // Called once the command ends or is interrupted.
