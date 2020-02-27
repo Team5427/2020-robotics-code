@@ -19,6 +19,7 @@ import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -47,6 +48,8 @@ public class Robot extends TimedRobot
   private RobotContainer m_robotContainer;
   private boolean targetCentered = true;
   private static CameraServer cameraServer;
+  private static NetworkTable networkTables;
+
   private static AHRS ahrs;
   private int status = 0;
 
@@ -65,16 +68,16 @@ public class Robot extends TimedRobot
     
     new Thread(() -> {
       // Initializes Camera from RoboRio and starts capture
-       UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-       camera.setResolution(640, 480); // sets resolution
-       System.out.println("agshkahrhresl");
+      // UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+       //camera.setResolution(640, 480); // sets resolution
+       System.out.println("agshkahrhresuhfuidshuifhsduifhsduifhsduifhdsuifhiudshfuisdhfuisdhfuidshfuisdhfuisdhfuisdhfuisdhfuisdhfl");
       // // Gets video from RoboRio CameraServer [accessible via SmrtDshbrd]
-       CvSink cvSink = CameraServer.getInstance().getVideo();
-       CvSource outputStream = CameraServer.getInstance().putVideo("Processed", 640, 480);
+       CvSink cvSink = CameraServer.getInstance().getVideo("rPi Camera 0");
+ //    CvSource outputStream = CameraServer.getInstance().putVideo("Processed", 640, 480);
 
       Mat source = new Mat(); // Mats are essentially video frame Objects
       GripPipeline pipeline = new GripPipeline();
-      camera.setExposureManual(0);
+      //camera.setExposureManual(0);
      
       int timer = 0;
           
@@ -87,7 +90,7 @@ public class Robot extends TimedRobot
           SmartDashboard.putNumber("Angle", ahrs.getAngle());
           System.out.print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
            pipeline.process(source);
-           outputStream.putFrame(pipeline.hslThresholdOutput());
+   //        outputStream.putFrame(pipeline.hslThresholdOutput());
            ArrayList<MatOfPoint> filteredPoints = pipeline.filterContoursOutput();
            ArrayList<Target> validTargets=  new ArrayList<Target>();
            Target biggestTarget = null;
