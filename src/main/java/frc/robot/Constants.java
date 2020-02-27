@@ -61,14 +61,14 @@ public final class Constants
     public static final double DISTANCE_PER_PULSE = (Math.PI * DRIVETRAIN_WHEEL_DIAMETER/1440)/3.68;
 
     /*CAN Port VALUES*/
-	public static final int LEFT_TOP_MOTOR = 10; //? why 10
-	public static final int LEFT_MIDDLE_MOTOR = 10;
-	public static final int LEFT_BOTTOM_MOTOR = 11;
+	public static final int LEFT_TOP_MOTOR = 14; //? why 10
+	public static final int LEFT_MIDDLE_MOTOR = 15;
+	public static final int LEFT_BOTTOM_MOTOR = 15;
 	public static final int RIGHT_TOP_MOTOR = 6;
-	public static final int RIGHT_MIDDLE_MOTOR = 7;
-    public static final int RIGHT_BOTTOM_MOTOR = 8;
+	public static final int RIGHT_MIDDLE_MOTOR = 0;
+    public static final int RIGHT_BOTTOM_MOTOR = 1;
     
-    public static final int INTAKE_MOTOR = 0; //need to configure
+    public static final int INTAKE_MOTOR = 10; //need to configure
     public static final int TRANSPORT_MOTOR = 0;
     public static final int PULLEY_MOTOR = 0;
     public static final int COLOR_WHEEL_MOTOR = 0; //need to change
@@ -103,7 +103,7 @@ public final class Constants
     public static final int PROXIMITY_TOLERANCE = 0;
 
     //Joystick buttons
-    public static final int INTAKE_BUTTON = 0;
+    public static final int INTAKE_BUTTON = 7;
     public static final int TRANSPORT_BUTTON = 0;
     public static final int PULLEY_BUTTON = 0;
     public static final int SHOOTER_BUTTON = 0;
@@ -113,7 +113,7 @@ public final class Constants
 
 
     //Speeds
-    public static final double INTAKE_TELEOP_SPEED = 0;
+    public static final double INTAKE_TELEOP_SPEED = 0.3;
     public static final double TRANSPORT_TELEOP_SPEED = 0;
     public static final double PULLEY_TELEOP_SPEED = 0;
 

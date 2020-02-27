@@ -72,47 +72,47 @@ public class Robot extends TimedRobot
     // SmartDashboard.putNumber("Average RIGHT VELOCITY", RobotContainer.getEncRight().getRate());
     // SmartDashboard.putNumber("AHRS X Speed", RobotContainer.getAHRS().getVelocityX());
     // SmartDashboard.putNumber("AHRS Y Speed", RobotContainer.getAHRS().getVelocityY());
-    SmartDashboard.putNumber("NavX", RobotContainer.getAHRS().getAngle());
-    SmartDashboard.putNumber("Left Encoder Distance", RobotContainer.getEncLeft().getDistance());
-    SmartDashboard.putNumber("Right Encoder Distance", RobotContainer.getEncRight().getDistance());
-    SmartDashboard.putNumber("Average Distance", RobotContainer.getDriveTrain().getAvgDistance());
-    SmartDashboard.putNumber("Velocity", RobotContainer.getDriveTrain().getAvgRate());
+    // SmartDashboard.putNumber("NavX", RobotContainer.getAHRS().getAngle());
+    // SmartDashboard.putNumber("Left Encoder Distance", RobotContainer.getEncLeft().getDistance());
+    // SmartDashboard.putNumber("Right Encoder Distance", RobotContainer.getEncRight().getDistance());
+    // SmartDashboard.putNumber("Average Distance", RobotContainer.getDriveTrain().getAvgDistance());
+    // SmartDashboard.putNumber("Velocity", RobotContainer.getDriveTrain().getAvgRate());
     
-    m_robotContainer.getColorSensor().getProximity();
-    m_robotContainer.getColorSensor().getColor();
+    // m_robotContainer.getColorSensor().getProximity();
+    // m_robotContainer.getColorSensor().getColor();
 
-    gameData = DriverStation.getInstance().getGameSpecificMessage();
+    // gameData = DriverStation.getInstance().getGameSpecificMessage();
 
-    if(gameData.length() > 0)
-    {
-      switch(gameData.charAt(0))
-      {
-        case 'B':
-          SmartDashboard.putString("Received: ", "Blue");
-          SmartDashboard.putString("Go To: ", "Red");
-          m_robotContainer.color = 'R';
-          break;
-        case 'Y':
-          SmartDashboard.putString("Received: ", "Yellow");
-          SmartDashboard.putString("Go To: ", "Green");
-          m_robotContainer.color = 'G';
-          break;
-        case 'R':
-          SmartDashboard.putString("Received: ", "Red");
-          SmartDashboard.putString("Go To: ", "Blue");
-          m_robotContainer.color = 'B';
-          break;
-        case 'G':
-          SmartDashboard.putString("Received: ", "Green");
-          SmartDashboard.putString("Go To: ", "Yellow");
-          m_robotContainer.color = 'Y';
-          break;
-        default:
-          SmartDashboard.putString("Error", "Corrupted data");
-          break;
-      }
-      m_robotContainer.getColorSensor().getColor();
-    }
+    // if(gameData.length() > 0)
+    // {
+    //   switch(gameData.charAt(0))
+    //   {
+    //     case 'B':
+    //       SmartDashboard.putString("Received: ", "Blue");
+    //       SmartDashboard.putString("Go To: ", "Red");
+    //       m_robotContainer.color = 'R';
+    //       break;
+    //     case 'Y':
+    //       SmartDashboard.putString("Received: ", "Yellow");
+    //       SmartDashboard.putString("Go To: ", "Green");
+    //       m_robotContainer.color = 'G';
+    //       break;
+    //     case 'R':
+    //       SmartDashboard.putString("Received: ", "Red");
+    //       SmartDashboard.putString("Go To: ", "Blue");
+    //       m_robotContainer.color = 'B';
+    //       break;
+    //     case 'G':
+    //       SmartDashboard.putString("Received: ", "Green");
+    //       SmartDashboard.putString("Go To: ", "Yellow");
+    //       m_robotContainer.color = 'Y';
+    //       break;
+    //     default:
+    //       SmartDashboard.putString("Error", "Corrupted data");
+    //       break;
+    //   }
+    //   m_robotContainer.getColorSensor().getColor();
+    // }
   }
 
   /**
@@ -165,6 +165,7 @@ public class Robot extends TimedRobot
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    //RobotContainer.getIntake().moveIntake(0.3);
 
     //RobotContainer.getDriveTrain().tankDrive(-0.3, 0.3);
   }

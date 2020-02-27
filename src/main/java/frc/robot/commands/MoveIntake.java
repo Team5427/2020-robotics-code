@@ -21,10 +21,10 @@ public class MoveIntake extends CommandBase
     public void initialize()
     {
         RobotContainer.getIntake().moveIntake(speed);
-        if(Math.abs(RobotContainer.getTransport().getDistance() - Constants.FIRST_PROXIMITY_UNCOVERED) <= Constants.PROXIMITY_TOLERANCE)
-        {
-            RobotContainer.getTransport().moveTransport(Constants.TRANSPORT_INTEGRATED_SPEED);
-        }
+        // if(Math.abs(RobotContainer.getTransport().getDistance() - Constants.FIRST_PROXIMITY_UNCOVERED) <= Constants.PROXIMITY_TOLERANCE)
+        // {
+        //     RobotContainer.getTransport().moveTransport(Constants.TRANSPORT_INTEGRATED_SPEED);
+        // }
     }
 
     @Override
@@ -33,8 +33,14 @@ public class MoveIntake extends CommandBase
     }
 
     @Override
+    public void execute() {
+        RobotContainer.getIntake().moveIntake(speed);
+    }
+
+    @Override
     public boolean isFinished()
     {
-        return !RobotContainer.getJoy().getRawButtonPressed(Constants.INTAKE_BUTTON);
+        System.out.println(RobotContainer.getJoy().getRawButton(Constants.INTAKE_BUTTON));
+        return !RobotContainer.getJoy().getRawButton(Constants.INTAKE_BUTTON);
     }
 }

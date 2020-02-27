@@ -159,41 +159,41 @@ public class RobotContainer
     intakeMotor = new WPI_VictorSPX(Constants.INTAKE_MOTOR);
     intake = new Intake(intakeMotor);
 
-    transportMotor = new WPI_VictorSPX(Constants.TRANSPORT_MOTOR);
-    transportProximity = new AnalogInput(Constants.TRANSPORT_PROXIMITY_ONE_SENSOR_PORT);
-    transport = new Transport(transportMotor, transportProximity, transportProximityTwo);
+    // transportMotor = new WPI_VictorSPX(Constants.TRANSPORT_MOTOR);
+    // transportProximity = new AnalogInput(Constants.TRANSPORT_PROXIMITY_ONE_SENSOR_PORT);
+    // transport = new Transport(transportMotor, transportProximity, transportProximityTwo);
 
-    pulleyMotor = new WPI_VictorSPX(Constants.PULLEY_MOTOR);
-    pulleyProximity = new AnalogInput(Constants.PULLEY_PROXIMITY_SENSOR_PORT);
-    pulley = new Pulley(pulleyMotor, pulleyProximity);
+    // pulleyMotor = new WPI_VictorSPX(Constants.PULLEY_MOTOR);
+    //pulleyProximity = new AnalogInput(Constants.PULLEY_PROXIMITY_SENSOR_PORT);
+    // pulley = new Pulley(pulleyMotor, pulleyProximity);
 
-    ahrs = new AHRS(SPI.Port.kMXP);
+    // ahrs = new AHRS(SPI.Port.kMXP);
   
-    colorMotor = new WPI_VictorSPX(Constants.COLOR_WHEEL_MOTOR);// change port value
+    // colorMotor = new WPI_VictorSPX(Constants.COLOR_WHEEL_MOTOR);// change port value
 
-    i2cport = I2C.Port.kOnboard;
+    // i2cport = I2C.Port.kOnboard;
 
 
     //encoders have 1440 as PPR and 360 CPR
-    encRight = new Encoder(9, 8);
-    encRight.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
-    encRight.setReverseDirection(true);
-    encLeft = new Encoder(4, 3);
-    encLeft.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
-    proximitySensor = new AnalogInput(1);
+    // encRight = new Encoder(9, 8);
+    // encRight.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
+    // encRight.setReverseDirection(true);
+    // encLeft = new Encoder(4, 3);
+    // encLeft.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
+    // proximitySensor = new AnalogInput(1);
    
     ArrayList<Translation2d> waypoints = new ArrayList<Translation2d>();
     waypoints.add(new Translation2d(0, 1));
 
-    elevatorLeft = new WPI_VictorSPX(Constants.ELEVATOR_LEFT_MOTOR);
-    elevatorRight = new WPI_VictorSPX(Constants.ELEVATOR_RIGHT_MOTOR);
+    // elevatorLeft = new WPI_VictorSPX(Constants.ELEVATOR_LEFT_MOTOR);
+    // elevatorRight = new WPI_VictorSPX(Constants.ELEVATOR_RIGHT_MOTOR);
 
-    elevatorLeftEnc = new Encoder(Constants.ELEVATOR_LEFT_PORT_1, Constants.ELEVATOR_LEFT_PORT_2);
-    elevatorRightEnc = new Encoder(Constants.ELEVATOR_RIGHT_PORT_1, Constants.ELEVATOR_RIGHT_PORT_2);
+    // elevatorLeftEnc = new Encoder(Constants.ELEVATOR_LEFT_PORT_1, Constants.ELEVATOR_LEFT_PORT_2);
+    // elevatorRightEnc = new Encoder(Constants.ELEVATOR_RIGHT_PORT_1, Constants.ELEVATOR_RIGHT_PORT_2);
 
-    limitSwitch = new DigitalInput(Constants.ELEVATOR_LIMIT_SWITCH);
+    // limitSwitch = new DigitalInput(Constants.ELEVATOR_LIMIT_SWITCH);
 
-    elevator = new Elevator(elevatorLeft, elevatorRight, elevatorLeftEnc, elevatorRightEnc, limitSwitch);
+    // elevator = new Elevator(elevatorLeft, elevatorRight, elevatorLeftEnc, elevatorRightEnc, limitSwitch);
 
 
     //creating a profile
@@ -201,13 +201,13 @@ public class RobotContainer
     motion = new MotionProfile(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(0, 2, new Rotation2d(45)), new ArrayList<Translation2d>());
     // Configure the button bindings
 
-    shooterMotor = new TalonSRX(Constants.SHOOTER_MOTOR);
-    shooterMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, Constants.K_TIMEOUT_MS);
-    shooterMotor.setSensorPhase(true);
-    shooter = new Shooter(shooterMotor);
+    // shooterMotor = new TalonSRX(Constants.SHOOTER_MOTOR);
+    // shooterMotor.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, Constants.K_TIMEOUT_MS);
+    // shooterMotor.setSensorPhase(true);
+    // shooter = new Shooter(shooterMotor);
     
-    cs = new ColorSensorV3(i2cport);
-    colorSensor = new ColorSensor(colorMotor, cs);
+    // cs = new ColorSensorV3(i2cport);
+    // colorSensor = new ColorSensor(colorMotor, cs);
           
 
 
@@ -226,20 +226,20 @@ public class RobotContainer
     joy = new Joystick(0);
 
     intakeButton = new JoystickButton(joy, Constants.INTAKE_BUTTON);
-    transportButton = new JoystickButton(joy, Constants.TRANSPORT_BUTTON);
-    pulleyButton = new JoystickButton(joy, Constants.PULLEY_BUTTON);
-    shooterButton = new JoystickButton(joy, Constants.SHOOTER_BUTTON);
-    rotationControl = new JoystickButton(joy, Constants.ROTATION_CONTROL);
-    positionControl = new JoystickButton(joy, Constants.POSITION_CONTROL);
-    moveElevator = new JoystickButton(joy, Constants.ELEVATOR_BUTTON);
+    // transportButton = new JoystickButton(joy, Constants.TRANSPORT_BUTTON);
+    // pulleyButton = new JoystickButton(joy, Constants.PULLEY_BUTTON);
+    // shooterButton = new JoystickButton(joy, Constants.SHOOTER_BUTTON);
+    // rotationControl = new JoystickButton(joy, Constants.ROTATION_CONTROL);
+    // positionControl = new JoystickButton(joy, Constants.POSITION_CONTROL);
+    // moveElevator = new JoystickButton(joy, Constants.ELEVATOR_BUTTON);
 
-    intakeButton.whenPressed(new MoveIntake(Constants.INTAKE_TELEOP_SPEED));
-    transportButton.whenPressed(new MoveTransport(Constants.TRANSPORT_TELEOP_SPEED));
-    pulleyButton.whenPressed(new MovePulley(Constants.PULLEY_TELEOP_SPEED));
-    shooterButton.whenPressed(new MoveShooter());
-    rotationControl.whenPressed(new RotationControl());
-    positionControl.whenPressed(new TurnToColor());
-    moveElevator.whenPressed(new MoveElevator());
+    intakeButton.whileHeld(new MoveIntake(Constants.INTAKE_TELEOP_SPEED));
+    // transportButton.whenPressed(new MoveTransport(Constants.TRANSPORT_TELEOP_SPEED));
+    // pulleyButton.whenPressed(new MovePulley(Constants.PULLEY_TELEOP_SPEED));
+    // shooterButton.whenPressed(new MoveShooter());
+    // rotationControl.whenPressed(new RotationControl());
+    // positionControl.whenPressed(new TurnToColor());
+    // moveElevator.whenPressed(new MoveElevator());
   }
 
 
