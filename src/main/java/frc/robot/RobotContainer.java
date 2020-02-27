@@ -63,11 +63,11 @@ public class RobotContainer
    */
   public RobotContainer() 
   {
-    frontLeft = new Talon(2);
-    rearLeft = new Talon(3);
+    frontLeft = new WPI_VictorSPX(14);
+    rearLeft = new WPI_VictorSPX(15);
     leftDrive = new SpeedControllerGroup(frontLeft, rearLeft);
-    middleRight = new Talon(0);
-    rearRight = new Talon(1);
+    middleRight = new WPI_VictorSPX(0);
+    rearRight = new WPI_VictorSPX(1);
     rightDrive = new SpeedControllerGroup(middleRight, rearRight);
 
     drive = new DifferentialDrive(leftDrive, rightDrive);
