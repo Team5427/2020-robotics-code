@@ -116,7 +116,7 @@ public final class Constants
     public static final int COLOR_BUTTON = 0;
     public static final int TILT_BUTTON = 0;
 
-    publc static final int TILT_SPEED = 0;
+    public static final int TILT_SPEED = 0;
 
 
     //Speeds

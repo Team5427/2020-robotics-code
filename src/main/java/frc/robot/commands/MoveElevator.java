@@ -23,7 +23,7 @@ public class MoveElevator extends CommandBase
     @Override
     public boolean isFinished() 
     {
-        return RobotContainer.getElevator().getLimit() || RobotContainer.getJoy().getRawButton(Constants.ELEVATOR_BUTTON);
+        return RobotContainer.getElevator().getLimit() || !RobotContainer.getJoy().getRawButton(Constants.ELEVATOR_BUTTON);
     }
 
     @Override
