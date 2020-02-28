@@ -69,8 +69,8 @@ public final class Constants
     public static final int RIGHT_BOTTOM_MOTOR = 1;
     
     public static final int INTAKE_MOTOR = 10; //need to configure
-    public static final int TRANSPORT_MOTOR = 0;
-    public static final int PULLEY_MOTOR = 0;
+    public static final int TRANSPORT_MOTOR = 12;
+    public static final int PULLEY_MOTOR = 11;
     public static final int COLOR_WHEEL_MOTOR = 0; //need to change
 
     //NEED TO CONFIGURE
@@ -91,10 +91,10 @@ public final class Constants
     public static final int ELEVATOR_LIMIT_SWITCH = 0;
     
     
-    public static final int INTAKE_PROXIMITY_SENSOR_PORT = 1;
+    public static final int INTAKE_PROXIMITY_SENSOR_PORT = 0;
     public static final int TRANSPORT_PROXIMITY_ONE_SENSOR_PORT = 1;
-    public static final int TRANSPORT_PROXIMITY_TWO_SENSOR_PORT = 1;
-    public static final int PULLEY_PROXIMITY_SENSOR_PORT = 1;
+    public static final int TRANSPORT_PROXIMITY_TWO_SENSOR_PORT = 2;
+    public static final int PULLEY_PROXIMITY_SENSOR_PORT = 3;
 
     public static final int INTAKE_PROXIMITY_DIFFERENCE = 8; //arbitrary number for now
 
@@ -104,9 +104,9 @@ public final class Constants
 
     //Joystick buttons
     public static final int INTAKE_BUTTON = 7;
-    public static final int TRANSPORT_BUTTON = 0;
-    public static final int PULLEY_BUTTON = 0;
-    public static final int SHOOTER_BUTTON = 0;
+    public static final int TRANSPORT_BUTTON = 8;
+    public static final int PULLEY_BUTTON = 10;
+    public static final int SHOOTER_BUTTON = 1;
     
     public static final int ROTATION_CONTROL = 0;
     public static final int POSITION_CONTROL = 0;
@@ -116,17 +116,18 @@ public final class Constants
 
     //Speeds
     public static final double INTAKE_TELEOP_SPEED = 0.3;
-    public static final double TRANSPORT_TELEOP_SPEED = 0;
-    public static final double PULLEY_TELEOP_SPEED = 0;
+    public static final double TRANSPORT_TELEOP_SPEED = 0.9;
+    public static final double PULLEY_TELEOP_SPEED = 0.9;
 
-    public static final double INTAKE_INTEGRATED_SPEED = 0;
-    public static final double TRANSPORT_INTEGRATED_SPEED = 0;
+    public static final double INTAKE_INTEGRATED_SPEED = 0.3;
+    public static final double TRANSPORT_INTEGRATED_SPEED = 0.9;
     /*****************Motor ports*****************/
 
     /**
      * CAN port for shooter motor.
      */
-    public static final int SHOOTER_MOTOR = 1;
+    public static final int SHOOTER_MOTOR_TOP = 8;
+    public static final int SHOOTER_MOTOR_BOTTOM = 7;
 
     /*******************Sensors*******************/
 
@@ -245,7 +246,7 @@ public final class Constants
 
     public static final double ELEVATOR_UPPER_LIMIT = 15;
 
-    public static final double ELEVATOR_SPEED = 0;
+    public static final double ELEVATOR_SPEED = 0.2;
 
     public static final int ELEVATOR_BUTTON = 0;
 

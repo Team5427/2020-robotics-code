@@ -13,35 +13,47 @@ import frc.robot.RobotContainer;
 
 public class Shooter extends SubsystemBase
 {
-    private TalonSRX shooterMotor;
+    private TalonSRX shooterMotorTop;
+    private TalonSRX shooterMotorBottom;
     
-    public Shooter(TalonSRX shooterMotor)
+    public Shooter(TalonSRX shooterMotorTop, TalonSRX shooterMotorBottom)
     {
-        this.shooterMotor = shooterMotor;
-        shooterMotor.configNominalOutputForward(0, Constants.K_TIMEOUT_MS);
-        shooterMotor.configNominalOutputReverse(0, Constants.K_TIMEOUT_MS);
-        shooterMotor.configPeakOutputForward(1, Constants.K_TIMEOUT_MS);
-        shooterMotor.configPeakOutputReverse(-1, Constants.K_TIMEOUT_MS);
+        this.shooterMotorTop = shooterMotorTop;
+        this.shooterMotorBottom = shooterMotorBottom;
+        shooterMotorTop.configNominalOutputForward(0, Constants.K_TIMEOUT_MS);
+        shooterMotorTop.configNominalOutputReverse(0, Constants.K_TIMEOUT_MS);
+        shooterMotorTop.configPeakOutputForward(1, Constants.K_TIMEOUT_MS);
+        shooterMotorTop.configPeakOutputReverse(-1, Constants.K_TIMEOUT_MS);
+        
+        shooterMotorBottom.configNominalOutputForward(0, Constants.K_TIMEOUT_MS);
+        shooterMotorBottom.configNominalOutputReverse(0, Constants.K_TIMEOUT_MS);
+        shooterMotorBottom.configPeakOutputForward(1, Constants.K_TIMEOUT_MS);
+        shooterMotorBottom.configPeakOutputReverse(-1, Constants.K_TIMEOUT_MS);
 
-        shooterMotor.config_kF(Constants.SHOOTER_PID_ID, Constants.kF_SHOOTER, Constants.K_TIMEOUT_MS);
-        shooterMotor.config_kP(Constants.SHOOTER_PID_ID, Constants.kP_SHOOTER, Constants.K_TIMEOUT_MS);
-        shooterMotor.config_kI(Constants.SHOOTER_PID_ID, Constants.kI_SHOOTER, Constants.K_TIMEOUT_MS);
-        shooterMotor.config_kD(Constants.SHOOTER_PID_ID, Constants.kD_SHOOTER, Constants.K_TIMEOUT_MS);
+        shooterMotorTop.config_kF(Constants.SHOOTER_PID_ID, Constants.kF_SHOOTER, Constants.K_TIMEOUT_MS);
+        shooterMotorTop.config_kP(Constants.SHOOTER_PID_ID, Constants.kP_SHOOTER, Constants.K_TIMEOUT_MS);
+        shooterMotorTop.config_kI(Constants.SHOOTER_PID_ID, Constants.kI_SHOOTER, Constants.K_TIMEOUT_MS);
+        shooterMotorTop.config_kD(Constants.SHOOTER_PID_ID, Constants.kD_SHOOTER, Constants.K_TIMEOUT_MS);
+        
+        shooterMotorBottom.config_kF(Constants.SHOOTER_PID_ID, Constants.kF_SHOOTER, Constants.K_TIMEOUT_MS);
+        shooterMotorBottom.config_kP(Constants.SHOOTER_PID_ID, Constants.kP_SHOOTER, Constants.K_TIMEOUT_MS);
+        shooterMotorBottom.config_kI(Constants.SHOOTER_PID_ID, Constants.kI_SHOOTER, Constants.K_TIMEOUT_MS);
+        shooterMotorBottom.config_kD(Constants.SHOOTER_PID_ID, Constants.kD_SHOOTER, Constants.K_TIMEOUT_MS);
     }
 
     public double getVelocity()
     {
-        double velocity = shooterMotor.getSelectedSensorVelocity(0)*((double)600/(double)4096);   
+        double velocity = shooterMotorTop.getSelectedSensorVelocity(0)*((double)600/(double)4096);   
         return velocity;
     }
 
     public double getMotorOutputPercent()
     {
-        return shooterMotor.getMotorOutputPercent();
+        return shooterMotorTop.getMotorOutputPercent();
     }
 
     public TalonSRX getShooterMotor()
     {
-        return shooterMotor;
+        return shooterMotorTop;
     }
 }

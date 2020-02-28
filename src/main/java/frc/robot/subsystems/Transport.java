@@ -41,14 +41,16 @@ public class Transport extends SubsystemBase
 
     public double getDistance(){
         
-        double distance = (1/proximitySensor.getVoltage())*6.1111126 * 1/2.54;
-        return distance;
+        return 0;
+        // double distance = (1/proximitySensor.getVoltage())*6.1111126 * 1/2.54;
+        // return distance;
     }
 
     public double getDistanceTwo()
     {
-        double distance = (1/proximitySensorTwo.getVoltage())*6.1111126 * 1/2.54;
-        return distance;
+        return 0;
+        // double distance = (1/proximitySensorTwo.getVoltage())*6.1111126 * 1/2.54;
+        // return distance;
     }
     
     @Override
