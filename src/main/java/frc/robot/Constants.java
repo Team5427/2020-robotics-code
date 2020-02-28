@@ -116,7 +116,11 @@ public final class Constants
     public static final int COLOR_BUTTON = 0;
     public static final int TILT_BUTTON = 0;
 
+    public static final int ELEVATOR_UP_BUTTON = 0;
+    public static final int ELEVATOR_DOWN_BUTTON = 0;
+
     public static final int TILT_SPEED = 0;
+
 
 
     //Speeds
@@ -185,6 +189,14 @@ public final class Constants
      * Feedforward constant for the shooter PID controller with TalonSRX.
      */
     public static final double kF_SHOOTER = 2.407;
+
+    public static final double kP_SHOOTER_BOTTOM = 1.2;
+
+    public static final double kI_SHOOTER_BOTTOM = 0;
+
+    public static final double kD_SHOOTER_BOTTOM = 0;
+
+    public static final double kF_SHOOTER_BOTTOM = 2.407;
 
     /**
      * The period between shooter controller updates in seconds.

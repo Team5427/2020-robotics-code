@@ -35,25 +35,41 @@ public class Shooter extends SubsystemBase
         shooterMotorTop.config_kI(Constants.SHOOTER_PID_ID, Constants.kI_SHOOTER, Constants.K_TIMEOUT_MS);
         shooterMotorTop.config_kD(Constants.SHOOTER_PID_ID, Constants.kD_SHOOTER, Constants.K_TIMEOUT_MS);
         
-        shooterMotorBottom.config_kF(Constants.SHOOTER_PID_ID, Constants.kF_SHOOTER, Constants.K_TIMEOUT_MS);
-        shooterMotorBottom.config_kP(Constants.SHOOTER_PID_ID, Constants.kP_SHOOTER, Constants.K_TIMEOUT_MS);
-        shooterMotorBottom.config_kI(Constants.SHOOTER_PID_ID, Constants.kI_SHOOTER, Constants.K_TIMEOUT_MS);
-        shooterMotorBottom.config_kD(Constants.SHOOTER_PID_ID, Constants.kD_SHOOTER, Constants.K_TIMEOUT_MS);
+        shooterMotorBottom.config_kF(Constants.SHOOTER_PID_ID, Constants.kF_SHOOTER_BOTTOM, Constants.K_TIMEOUT_MS);
+        shooterMotorBottom.config_kP(Constants.SHOOTER_PID_ID, Constants.kP_SHOOTER_BOTTOM, Constants.K_TIMEOUT_MS);
+        shooterMotorBottom.config_kI(Constants.SHOOTER_PID_ID, Constants.kI_SHOOTER_BOTTOM, Constants.K_TIMEOUT_MS);
+        shooterMotorBottom.config_kD(Constants.SHOOTER_PID_ID, Constants.kD_SHOOTER_BOTTOM, Constants.K_TIMEOUT_MS);
     }
 
-    public double getVelocity()
+    public double getVelocityTop()
     {
         double velocity = shooterMotorTop.getSelectedSensorVelocity(0)*((double)600/(double)4096);   
         return velocity;
     }
 
-    public double getMotorOutputPercent()
+    public double getVelocityBottom()
+    {
+        double velocity = shooterMotorBottom.getSelectedSensorVelocity(0)*((double)600/(double)4096);   
+        return velocity;
+    }
+
+    public double getMotorOutputPercentTop()
     {
         return shooterMotorTop.getMotorOutputPercent();
     }
 
-    public TalonSRX getShooterMotor()
+    public double getMotorOutputPercentBottom()
+    {
+        return shooterMotorBottom.getMotorOutputPercent();
+    }
+
+    public TalonSRX getShooterMotorTop()
     {
         return shooterMotorTop;
+    }
+
+    public TalonSRX getShooterMotorBottom()
+    {
+        return shooterMotorBottom;
     }
 }

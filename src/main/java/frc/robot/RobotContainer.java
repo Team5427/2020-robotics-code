@@ -87,7 +87,8 @@ public class RobotContainer
   private static Button rotationControl;
   private static Button positionControl;
 
-  private static Button moveElevator;
+  private static Button moveElevatorUp;
+  private static Button moveElevatorDown;
   private static Button tiltButton;
 
 
@@ -166,18 +167,15 @@ public class RobotContainer
     intakeMotor = new WPI_VictorSPX(Constants.INTAKE_MOTOR);
     intake = new Intake(intakeMotor);
 
-<<<<<<< HEAD
     transportMotor = new WPI_VictorSPX(Constants.TRANSPORT_MOTOR);
     transportProximity = new AnalogInput(Constants.TRANSPORT_PROXIMITY_ONE_SENSOR_PORT);
     transport = new Transport(transportMotor, transportProximity, transportProximityTwo);
-=======
     tiltMotor = new WPI_VictorSPX(Constants.TILT_MOTOR);
     tilt = new Tilt(tiltMotor);
 
     // transportMotor = new WPI_VictorSPX(Constants.TRANSPORT_MOTOR);
     // transportProximity = new AnalogInput(Constants.TRANSPORT_PROXIMITY_ONE_SENSOR_PORT);
     // transport = new Transport(transportMotor, transportProximity, transportProximityTwo);
->>>>>>> ecf4feb133f55da62cdeb9adaf6833ac56825788
 
     pulleyMotor = new WPI_VictorSPX(Constants.PULLEY_MOTOR);
     pulleyProximity = new AnalogInput(Constants.PULLEY_PROXIMITY_SENSOR_PORT);
@@ -246,34 +244,24 @@ public class RobotContainer
     joy = new Joystick(0);
 
     intakeButton = new JoystickButton(joy, Constants.INTAKE_BUTTON);
-<<<<<<< HEAD
     transportButton = new JoystickButton(joy, Constants.TRANSPORT_BUTTON);
     pulleyButton = new JoystickButton(joy, Constants.PULLEY_BUTTON);
     shooterButton = new JoystickButton(joy, Constants.SHOOTER_BUTTON);
-=======
     tiltButton = new JoystickButton(joy, Constants.TILT_BUTTON);
-    // transportButton = new JoystickButton(joy, Constants.TRANSPORT_BUTTON);
-    // pulleyButton = new JoystickButton(joy, Constants.PULLEY_BUTTON);
-    // shooterButton = new JoystickButton(joy, Constants.SHOOTER_BUTTON);
->>>>>>> ecf4feb133f55da62cdeb9adaf6833ac56825788
+    moveElevatorUp = new JoystickButton(joy, Constants.ELEVATOR_UP_BUTTON);
+    moveElevatorDown = new JoystickButton(joy, Constants.ELEVATOR_DOWN_BUTTON);
     // rotationControl = new JoystickButton(joy, Constants.ROTATION_CONTROL);
     // positionControl = new JoystickButton(joy, Constants.POSITION_CONTROL);
-    // moveElevator = new JoystickButton(joy, Constants.ELEVATOR_BUTTON);
 
     intakeButton.whileHeld(new MoveIntake(Constants.INTAKE_TELEOP_SPEED));
-<<<<<<< HEAD
     transportButton.whenPressed(new MoveTransport(Constants.TRANSPORT_TELEOP_SPEED));
     pulleyButton.whenPressed(new MovePulley(Constants.PULLEY_TELEOP_SPEED));
     shooterButton.whenPressed(new MoveShooter());
-=======
     tiltButton.whileHeld(new MoveTilt(Constants.TILT_SPEED));
-    // transportButton.whenPressed(new MoveTransport(Constants.TRANSPORT_TELEOP_SPEED));
-    // pulleyButton.whenPressed(new MovePulley(Constants.PULLEY_TELEOP_SPEED));
-    // shooterButton.whenPressed(new MoveShooter());
->>>>>>> ecf4feb133f55da62cdeb9adaf6833ac56825788
+    moveElevatorUp.whileHeld(new MoveElevator(Constants.ELEVATOR_SPEED));
+    moveElevatorDown.whileHeld(new MoveElevator(-Constants.ELEVATOR_SPEED));
     // rotationControl.whenPressed(new RotationControl());
     // positionControl.whenPressed(new TurnToColor());
-    // moveElevator.whenPressed(new MoveElevator());
   }
 
 

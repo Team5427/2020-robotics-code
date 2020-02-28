@@ -6,17 +6,19 @@ import frc.robot.RobotContainer;
 
 public class MoveElevator extends CommandBase
 {
+    private double speed;
 
-    public MoveElevator()
+    public MoveElevator(double speed)
     {
         addRequirements(RobotContainer.getElevator());
+        this.speed = speed;
     }
     @Override
     public void initialize() 
     {
         // if(!RobotContainer.getElevator().getLimit() || !RobotContainer.getElevator().getLimit())
         // {
-            RobotContainer.getElevator().setSpeed(Constants.ELEVATOR_SPEED);
+            RobotContainer.getElevator().setSpeed(speed);
         // }
     }
 
