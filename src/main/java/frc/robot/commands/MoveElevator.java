@@ -14,16 +14,16 @@ public class MoveElevator extends CommandBase
     @Override
     public void initialize() 
     {
-        if(!RobotContainer.getElevator().getLimit() || !RobotContainer.getElevator().getLimit())
-        {
+        // if(!RobotContainer.getElevator().getLimit() || !RobotContainer.getElevator().getLimit())
+        // {
             RobotContainer.getElevator().setSpeed(Constants.ELEVATOR_SPEED);
-        }
+        // }
     }
 
     @Override
     public boolean isFinished() 
     {
-        return RobotContainer.getElevator().getLimit() || RobotContainer.getElevator().getLimit();
+        return RobotContainer.getElevator().getLimit() || RobotContainer.getJoy().getRawButton(Constants.ELEVATOR_BUTTON);
     }
 
     @Override

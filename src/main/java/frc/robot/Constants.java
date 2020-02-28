@@ -111,6 +111,8 @@ public final class Constants
     public static final int ROTATION_CONTROL = 0;
     public static final int POSITION_CONTROL = 0;
 
+    public static final int COLOR_BUTTON = 0;
+
 
     //Speeds
     public static final double INTAKE_TELEOP_SPEED = 0.3;

@@ -21,6 +21,12 @@ public class MovePulley extends CommandBase
     }
 
     @Override
+    public void execute() 
+    {
+        RobotContainer.getPulley().movePulley(speed);
+    }
+
+    @Override
     public void end(boolean interrupted) 
     {
         RobotContainer.getPulley().stop();
@@ -29,6 +35,6 @@ public class MovePulley extends CommandBase
 	@Override
     public boolean isFinished() 
     {
-        return RobotContainer.getJoy().getRawButtonPressed(Constants.PULLEY_BUTTON);
+        return !RobotContainer.getJoy().getRawButton(Constants.PULLEY_BUTTON);
 	}
 }

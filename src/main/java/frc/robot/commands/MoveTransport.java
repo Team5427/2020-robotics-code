@@ -36,6 +36,6 @@ public class MoveTransport extends CommandBase
     @Override
     public boolean isFinished() 
     {
-        return !RobotContainer.getJoy().getRawButtonPressed(Constants.TRANSPORT_BUTTON);
+        return !RobotContainer.getJoy().getRawButton(Constants.TRANSPORT_BUTTON);
     }
 }
