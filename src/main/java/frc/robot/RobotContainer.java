@@ -36,6 +36,7 @@ import frc.robot.commands.MoveShooter;
 import frc.robot.commands.MoveStraight;
 import frc.robot.commands.MoveTransport;
 import frc.robot.commands.MoveStraightPID;
+import frc.robot.commands.MoveTilt;
 import frc.robot.commands.PointTurn;
 import frc.robot.commands.RotationControl;
 import frc.robot.commands.TurnToColor;
@@ -53,6 +54,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.AnalogInput;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Tilt;
 import edu.wpi.first.wpilibj2.command.Command;
 import com.ctre.phoenix.motorcontrol.can.*;
 import com.ctre.phoenix.motorcontrol.*;
@@ -86,6 +88,7 @@ public class RobotContainer
   private static Button positionControl;
 
   private static Button moveElevator;
+  private static Button tiltButton;
 
 
   private final SpeedController frontLeft, rearLeft;
@@ -135,6 +138,9 @@ public class RobotContainer
   private static DigitalInput limitSwitch;
   private static Elevator elevator;
 
+  private static SpeedController tiltMotor;
+  private static Tilt tilt;
+
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -160,9 +166,18 @@ public class RobotContainer
     intakeMotor = new WPI_VictorSPX(Constants.INTAKE_MOTOR);
     intake = new Intake(intakeMotor);
 
+<<<<<<< HEAD
     transportMotor = new WPI_VictorSPX(Constants.TRANSPORT_MOTOR);
     transportProximity = new AnalogInput(Constants.TRANSPORT_PROXIMITY_ONE_SENSOR_PORT);
     transport = new Transport(transportMotor, transportProximity, transportProximityTwo);
+=======
+    tiltMotor = new WPI_VictorSPX(Constants.TILT_MOTOR);
+    tilt = new Tilt(tiltMotor);
+
+    // transportMotor = new WPI_VictorSPX(Constants.TRANSPORT_MOTOR);
+    // transportProximity = new AnalogInput(Constants.TRANSPORT_PROXIMITY_ONE_SENSOR_PORT);
+    // transport = new Transport(transportMotor, transportProximity, transportProximityTwo);
+>>>>>>> ecf4feb133f55da62cdeb9adaf6833ac56825788
 
     pulleyMotor = new WPI_VictorSPX(Constants.PULLEY_MOTOR);
     pulleyProximity = new AnalogInput(Constants.PULLEY_PROXIMITY_SENSOR_PORT);
@@ -231,17 +246,31 @@ public class RobotContainer
     joy = new Joystick(0);
 
     intakeButton = new JoystickButton(joy, Constants.INTAKE_BUTTON);
+<<<<<<< HEAD
     transportButton = new JoystickButton(joy, Constants.TRANSPORT_BUTTON);
     pulleyButton = new JoystickButton(joy, Constants.PULLEY_BUTTON);
     shooterButton = new JoystickButton(joy, Constants.SHOOTER_BUTTON);
+=======
+    tiltButton = new JoystickButton(joy, Constants.TILT_BUTTON);
+    // transportButton = new JoystickButton(joy, Constants.TRANSPORT_BUTTON);
+    // pulleyButton = new JoystickButton(joy, Constants.PULLEY_BUTTON);
+    // shooterButton = new JoystickButton(joy, Constants.SHOOTER_BUTTON);
+>>>>>>> ecf4feb133f55da62cdeb9adaf6833ac56825788
     // rotationControl = new JoystickButton(joy, Constants.ROTATION_CONTROL);
     // positionControl = new JoystickButton(joy, Constants.POSITION_CONTROL);
     // moveElevator = new JoystickButton(joy, Constants.ELEVATOR_BUTTON);
 
     intakeButton.whileHeld(new MoveIntake(Constants.INTAKE_TELEOP_SPEED));
+<<<<<<< HEAD
     transportButton.whenPressed(new MoveTransport(Constants.TRANSPORT_TELEOP_SPEED));
     pulleyButton.whenPressed(new MovePulley(Constants.PULLEY_TELEOP_SPEED));
     shooterButton.whenPressed(new MoveShooter());
+=======
+    tiltButton.whileHeld(new MoveTilt(Constants.TILT_SPEED));
+    // transportButton.whenPressed(new MoveTransport(Constants.TRANSPORT_TELEOP_SPEED));
+    // pulleyButton.whenPressed(new MovePulley(Constants.PULLEY_TELEOP_SPEED));
+    // shooterButton.whenPressed(new MoveShooter());
+>>>>>>> ecf4feb133f55da62cdeb9adaf6833ac56825788
     // rotationControl.whenPressed(new RotationControl());
     // positionControl.whenPressed(new TurnToColor());
     // moveElevator.whenPressed(new MoveElevator());
@@ -279,6 +308,7 @@ public class RobotContainer
   public static Intake getIntake(){return intake;}
   public static Transport getTransport(){return transport;}
   public static Pulley getPulley(){return pulley;}
+  public static Tilt getTilt(){return tilt;}
   
   public static Shooter getShooter()
   {
