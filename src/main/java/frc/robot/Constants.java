@@ -88,6 +88,8 @@ public final class Constants
     public static final int ELEVATOR_RIGHT_PORT_1 = 0;
     public static final int ELEVATOR_RIGHT_PORT_2 = 0;
 
+    public static final int TILT_MOTOR = 0;
+
     public static final int ELEVATOR_LIMIT_SWITCH = 0;
     
     
@@ -112,6 +114,9 @@ public final class Constants
     public static final int POSITION_CONTROL = 0;
 
     public static final int COLOR_BUTTON = 0;
+    public static final int TILT_BUTTON = 0;
+
+    publc static final int TILT_SPEED = 0;
 
 
     //Speeds
