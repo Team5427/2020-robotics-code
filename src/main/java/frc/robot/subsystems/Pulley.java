@@ -39,13 +39,13 @@ public class Pulley extends SubsystemBase
     @Override
     public void periodic()
     {
-        proximityVoltage = getDistance();
+        // proximityVoltage = getDistance();
 
-        //something leaves
-        if((proximityVoltage - previousVoltage) >= Constants.INTAKE_PROXIMITY_DIFFERENCE)
-        {
-            RobotContainer.getPulley().stop();
-            RobotContainer.loop = 0;
-        }
+        // //something leaves
+        // if((proximityVoltage - previousVoltage) >= Constants.INTAKE_PROXIMITY_DIFFERENCE)
+        // {
+        //     RobotContainer.getPulley().stop();
+        //     RobotContainer.loop = 0;
+        // }
     }
 }

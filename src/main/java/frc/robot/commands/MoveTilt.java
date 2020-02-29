@@ -21,6 +21,7 @@ public class MoveTilt extends CommandBase
     public void initialize()
     {
         RobotContainer.getTilt().moveTilt(speed);
+        System.out.println("initalized");
     }
 
     @Override
@@ -36,6 +37,13 @@ public class MoveTilt extends CommandBase
     @Override
     public boolean isFinished()
     {
-        return !RobotContainer.getJoy().getRawButton(Constants.INTAKE_BUTTON);
+        if(speed > 0)
+        {
+            return !RobotContainer.getJoy().getRawButton(Constants.TILT_BUTTON_UP);
+        }
+        else
+        {
+            return !RobotContainer.getJoy().getRawButton(Constants.TILT_BUTTON_DOWN);
+        }
     }
 }

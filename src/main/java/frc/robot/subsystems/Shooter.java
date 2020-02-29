@@ -72,4 +72,16 @@ public class Shooter extends SubsystemBase
     {
         return shooterMotorBottom;
     }
+
+    public void moveShooter(double speed)
+    {
+        shooterMotorBottom.set(ControlMode.PercentOutput, -speed);
+        shooterMotorTop.set(ControlMode.PercentOutput, speed);
+    }
+
+    public void stop()
+    {
+        shooterMotorBottom.set(ControlMode.PercentOutput, 0);
+        shooterMotorTop.set(ControlMode.PercentOutput, 0);
+    }
 }

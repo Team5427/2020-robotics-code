@@ -32,7 +32,7 @@ import frc.robot.commands.MotionProfile;
 import frc.robot.commands.MoveElevator;
 import frc.robot.commands.MoveIntake;
 import frc.robot.commands.MovePulley;
-import frc.robot.commands.MoveShooter;
+import frc.robot.commands.MoveShooterTeleop;
 import frc.robot.commands.MoveStraight;
 import frc.robot.commands.MoveTransport;
 import frc.robot.commands.MoveStraightPID;
@@ -83,17 +83,19 @@ public class RobotContainer
   private static Button transportButton;
   private static Button pulleyButton;
   private static Button shooterButton;
+  private static Button shooterTeleop;
 
   private static Button rotationControl;
   private static Button positionControl;
 
   private static Button moveElevatorUp;
   private static Button moveElevatorDown;
-  private static Button tiltButton;
+  private static Button tiltButtonUp;
+  private static Button tiltDownButton;
 
 
   private final SpeedController frontLeft, rearLeft;
-  private final SpeedController middleRight,rearRight;
+  private final SpeedController frontRight,rearRight;
   //the color that WE need to detect, not the one sent through game data
   public static char color = '0';
   
@@ -117,15 +119,11 @@ public class RobotContainer
   private static Encoder encRight;
     
   private static Command motion;
-  private static AnalogInput proximitySensor;
   private static AnalogInput transportProximity;
   private static AnalogInput transportProximityTwo;
-  private static Encoder shooterEncoder;
 
   private static TalonSRX shooterMotorTop;
   private static TalonSRX shooterMotorBottom;
-
-  private static StringBuilder string = new StringBuilder();
 
   private static Shooter shooter;
 
@@ -152,9 +150,9 @@ public class RobotContainer
     rearLeft = new WPI_VictorSPX(Constants.LEFT_BOTTOM_MOTOR);
     leftDrive = new SpeedControllerGroup(frontLeft, rearLeft);
     
-    middleRight = new WPI_VictorSPX(Constants.RIGHT_MIDDLE_MOTOR);
+    frontRight = new WPI_VictorSPX(Constants.RIGHT_BOTTOM_MOTOR);
     rearRight = new WPI_VictorSPX(Constants.RIGHT_BOTTOM_MOTOR);
-    rightDrive = new SpeedControllerGroup(middleRight, rearRight);
+    rightDrive = new SpeedControllerGroup(frontRight, rearRight);
 
     drive = new DifferentialDrive(leftDrive, rightDrive);
     drive.setSafetyEnabled(false);
@@ -162,20 +160,16 @@ public class RobotContainer
     driveTrain = new DriveTrain(leftDrive, rightDrive, drive);
     driveTrain.setDefaultCommand(new DriveWithJoystick());
 
-    //initialize promixity sensor and add as parameter to intake.
-
     intakeMotor = new WPI_VictorSPX(Constants.INTAKE_MOTOR);
     intake = new Intake(intakeMotor);
 
     transportMotor = new WPI_VictorSPX(Constants.TRANSPORT_MOTOR);
     transportProximity = new AnalogInput(Constants.TRANSPORT_PROXIMITY_ONE_SENSOR_PORT);
+    transportProximityTwo = new AnalogInput(Constants.TRANSPORT_PROXIMITY_TWO_SENSOR_PORT);
     transport = new Transport(transportMotor, transportProximity, transportProximityTwo);
+
     tiltMotor = new WPI_VictorSPX(Constants.TILT_MOTOR);
     tilt = new Tilt(tiltMotor);
-
-    // transportMotor = new WPI_VictorSPX(Constants.TRANSPORT_MOTOR);
-    // transportProximity = new AnalogInput(Constants.TRANSPORT_PROXIMITY_ONE_SENSOR_PORT);
-    // transport = new Transport(transportMotor, transportProximity, transportProximityTwo);
 
     pulleyMotor = new WPI_VictorSPX(Constants.PULLEY_MOTOR);
     pulleyProximity = new AnalogInput(Constants.PULLEY_PROXIMITY_SENSOR_PORT);
@@ -194,7 +188,6 @@ public class RobotContainer
     // encRight.setReverseDirection(true);
     // encLeft = new Encoder(4, 3);
     // encLeft.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
-    // proximitySensor = new AnalogInput(1);
    
     ArrayList<Translation2d> waypoints = new ArrayList<Translation2d>();
     waypoints.add(new Translation2d(0, 1));
@@ -213,7 +206,6 @@ public class RobotContainer
     //creating a profile
     //COUNTER CLOCKWISE is POSITIVE, CLOCKWISE is NEGATIVE
     motion = new MotionProfile(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(0, 2, new Rotation2d(45)), new ArrayList<Translation2d>());
-    // Configure the button bindings
 
     shooterMotorTop = new TalonSRX(Constants.SHOOTER_MOTOR_TOP);
     shooterMotorTop.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, Constants.K_TIMEOUT_MS);
@@ -246,20 +238,24 @@ public class RobotContainer
     intakeButton = new JoystickButton(joy, Constants.INTAKE_BUTTON);
     transportButton = new JoystickButton(joy, Constants.TRANSPORT_BUTTON);
     pulleyButton = new JoystickButton(joy, Constants.PULLEY_BUTTON);
-    shooterButton = new JoystickButton(joy, Constants.SHOOTER_BUTTON);
-    tiltButton = new JoystickButton(joy, Constants.TILT_BUTTON);
-    moveElevatorUp = new JoystickButton(joy, Constants.ELEVATOR_UP_BUTTON);
-    moveElevatorDown = new JoystickButton(joy, Constants.ELEVATOR_DOWN_BUTTON);
+    // shooterButton = new JoystickButton(joy, Constants.SHOOTER_BUTTON);
+    tiltButtonUp = new JoystickButton(joy, Constants.TILT_BUTTON_UP);
+    // moveElevatorUp = new JoystickButton(joy, Constants.ELEVATOR_UP_BUTTON);
+    // moveElevatorDown = new JoystickButton(joy, Constants.ELEVATOR_DOWN_BUTTON);
+    shooterTeleop = new JoystickButton(joy, Constants.SHOOTER_TELEOP);
+    tiltDownButton = new JoystickButton(joy, Constants.TILT_BUTTON_DOWN);
     // rotationControl = new JoystickButton(joy, Constants.ROTATION_CONTROL);
     // positionControl = new JoystickButton(joy, Constants.POSITION_CONTROL);
 
     intakeButton.whileHeld(new MoveIntake(Constants.INTAKE_TELEOP_SPEED));
     transportButton.whenPressed(new MoveTransport(Constants.TRANSPORT_TELEOP_SPEED));
     pulleyButton.whenPressed(new MovePulley(Constants.PULLEY_TELEOP_SPEED));
-    shooterButton.whenPressed(new MoveShooter());
-    tiltButton.whileHeld(new MoveTilt(Constants.TILT_SPEED));
-    moveElevatorUp.whileHeld(new MoveElevator(Constants.ELEVATOR_SPEED));
-    moveElevatorDown.whileHeld(new MoveElevator(-Constants.ELEVATOR_SPEED));
+    // shooterButton.whenPressed(new MoveShooter());
+    tiltButtonUp.whileHeld(new MoveTilt(0.2));
+    // moveElevatorUp.whileHeld(new MoveElevator(Constants.ELEVATOR_SPEED));
+    // moveElevatorDown.whileHeld(new MoveElevator(-Constants.ELEVATOR_SPEED));
+    shooterTeleop.whileHeld(new MoveShooterTeleop(Constants.SHOOTER_TELEOP_SPEED));
+    tiltDownButton.whileHeld(new MoveTilt(-0.2));
     // rotationControl.whenPressed(new RotationControl());
     // positionControl.whenPressed(new TurnToColor());
   }
@@ -292,7 +288,6 @@ public class RobotContainer
   public static Encoder getEncLeft(){return encLeft;}
   public static Encoder getEncRight(){return encRight;}
   public static Joystick getJoy(){return joy;}
-  public static AnalogInput getProximitySensor(){return proximitySensor;}
   public static Intake getIntake(){return intake;}
   public static Transport getTransport(){return transport;}
   public static Pulley getPulley(){return pulley;}
@@ -308,10 +303,6 @@ public class RobotContainer
     return shooterMotorTop;
   }
 
-  public static StringBuilder getBuilder()
-  {
-    return string;
-  }
   public static Elevator getElevator(){return elevator;}
 
 }

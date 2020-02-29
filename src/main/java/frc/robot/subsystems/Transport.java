@@ -24,7 +24,8 @@ public class Transport extends SubsystemBase
     {
         this.proximitySensor =  proximitySensor;
         this.proximitySensorTwo = proximitySensorTwo;
-        proximityVoltage = previousVoltage = proximityVoltageTwo = previousVoltageTwo = getDistance();
+        proximityVoltage = previousVoltage = getDistance();
+        proximityVoltageTwo = previousVoltageTwo = getDistanceTwo();
         this.transportMotor = transportMotor;
 
     }

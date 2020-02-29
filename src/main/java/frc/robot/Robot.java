@@ -77,6 +77,10 @@ public class Robot extends TimedRobot
     // SmartDashboard.putNumber("Right Encoder Distance", RobotContainer.getEncRight().getDistance());
     // SmartDashboard.putNumber("Average Distance", RobotContainer.getDriveTrain().getAvgDistance());
     // SmartDashboard.putNumber("Velocity", RobotContainer.getDriveTrain().getAvgRate());
+    SmartDashboard.putNumber("Proximity one", RobotContainer.getTransport().getDistance());
+    SmartDashboard.putNumber("Proximity two", RobotContainer.getTransport().getDistanceTwo());
+    SmartDashboard.putNumber("Proximity three", RobotContainer.getPulley().getDistance());
+
     
     // m_robotContainer.getColorSensor().getProximity();
     // m_robotContainer.getColorSensor().getColor();
@@ -166,6 +170,9 @@ public class Robot extends TimedRobot
       m_autonomousCommand.cancel();
     }
     //RobotContainer.getIntake().moveIntake(0.3);
+
+
+    //RobotContainer.getTilt().moveTilt(-0.2);
 
     //RobotContainer.getDriveTrain().tankDrive(-0.3, 0.3);
   }

@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj.util.Color;
  */
 public final class Constants 
 {
+    //****** MOTION PROFILING / DRIVE TRAIN *******/
     //We need to measure these too
     public static final double MAX_VELOCITY = 1.6333;
     public static final double MAX_ACCELERATION = 1.0611;
@@ -32,11 +33,9 @@ public final class Constants
     // (% Voltage [-1,1])/(Speed in meters per second) [basically we have to measure this]
     public static final double KV = 1/MAX_VELOCITY;
 
-    
     //influence of acceleration on velocity, just a bias which can be further tested.
     public static final double KA = 0;
 
-    
     public static final double KP_left = 0.081;
     public static final double KI_left = 0.001352;
     public static final double KD_left = 0.28;
@@ -49,36 +48,73 @@ public final class Constants
     public static final double K_THETA_D = 0;
 
     public static final double Z_ROT_DAMPENING = 0.75;
-
     public static final double TURN_TOLERANCE =  2;
     public static final double DRIVE_TOLERANCE = 0.5;
-    
-    /**
-     * Diameter of the drive wheel in meters. AKA 6 inches.
-     */
     public static final double DRIVETRAIN_WHEEL_DIAMETER = .1524;
-    //public static final double ENCODER_PPR = 691.907;
     public static final double DISTANCE_PER_PULSE = (Math.PI * DRIVETRAIN_WHEEL_DIAMETER/1440)/3.68;
 
-    /*CAN Port VALUES*/
-	public static final int LEFT_TOP_MOTOR = 14; //? why 10
-	public static final int LEFT_MIDDLE_MOTOR = 15;
+    public static final int INTAKE_PROXIMITY_DIFFERENCE = 8;
+
+    public static final int FIRST_PROXIMITY_UNCOVERED = 0;
+
+    public static final int PROXIMITY_TOLERANCE = 0;
+
+    //Joystick buttons
+
+    public static final int INTAKE_BUTTON = 2;
+    public static final int TRANSPORT_BUTTON = 7;
+    public static final int PULLEY_BUTTON = 8;
+    public static final int SHOOTER_BUTTON = 0;
+    
+    public static final int ROTATION_CONTROL = 0;
+    public static final int POSITION_CONTROL = 0;
+
+    public static final int COLOR_BUTTON = 0;
+    public static final int TILT_BUTTON_UP = 6;
+    public static final int TILT_BUTTON_DOWN = 4;
+
+    public static final int ELEVATOR_UP_BUTTON = 5;
+    public static final int ELEVATOR_DOWN_BUTTON = 3;
+
+    public static final int SHOOTER_TELEOP = 1;
+
+
+
+    //Speeds
+    public static final double INTAKE_TELEOP_SPEED = 0.3;
+    public static final double TRANSPORT_TELEOP_SPEED = 0.9;
+    public static final double PULLEY_TELEOP_SPEED = 0.9;
+    public static final double INTAKE_INTEGRATED_SPEED = 0.3;
+    public static final double TRANSPORT_INTEGRATED_SPEED = 0.9;
+    public static final double ELEVATOR_SPEED = 0.2;
+    public static final double TILT_SPEED = 0.2;
+    public static final double SHOOTER_TELEOP_SPEED = 0.2;
+
+
+    /*****************Motor ports*****************/
+
+    public static final int LEFT_TOP_MOTOR = 14; 
 	public static final int LEFT_BOTTOM_MOTOR = 15;
-	public static final int RIGHT_TOP_MOTOR = 6;
-	public static final int RIGHT_MIDDLE_MOTOR = 0;
+	public static final int RIGHT_TOP_MOTOR = 0;
     public static final int RIGHT_BOTTOM_MOTOR = 1;
     
-    public static final int INTAKE_MOTOR = 10; //need to configure
+    public static final int INTAKE_MOTOR = 10; 
     public static final int TRANSPORT_MOTOR = 12;
     public static final int PULLEY_MOTOR = 11;
-    public static final int COLOR_WHEEL_MOTOR = 0; //need to change
 
-    //NEED TO CONFIGURE
+    public static final int COLOR_WHEEL_MOTOR = 0;
+
+    public static final int TILT_MOTOR = 3;
+
     public static final int ELEVATOR_LEFT_MOTOR = 0;
     public static final int ELEVATOR_RIGHT_MOTOR = 0;
 
-    /*Encoder Ports*/
-	public static final int ENCODER_LEFT_PORT_1 = 3;
+    public static final int SHOOTER_MOTOR_TOP = 8;
+    public static final int SHOOTER_MOTOR_BOTTOM = 7;
+
+    /*******************Sensors*******************/
+
+    public static final int ENCODER_LEFT_PORT_1 = 3;
 	public static final int ENCODER_LEFT_PORT_2 = 4;
 	public static final int ENCODER_RIGHT_PORT_1 = 6; 
     public static final int ENCODER_RIGHT_PORT_2 = 7;
@@ -88,57 +124,11 @@ public final class Constants
     public static final int ELEVATOR_RIGHT_PORT_1 = 0;
     public static final int ELEVATOR_RIGHT_PORT_2 = 0;
 
-    public static final int TILT_MOTOR = 0;
-
     public static final int ELEVATOR_LIMIT_SWITCH = 0;
     
-    
-    public static final int INTAKE_PROXIMITY_SENSOR_PORT = 0;
-    public static final int TRANSPORT_PROXIMITY_ONE_SENSOR_PORT = 1;
-    public static final int TRANSPORT_PROXIMITY_TWO_SENSOR_PORT = 2;
-    public static final int PULLEY_PROXIMITY_SENSOR_PORT = 3;
-
-    public static final int INTAKE_PROXIMITY_DIFFERENCE = 8; //arbitrary number for now
-
-    public static final int FIRST_PROXIMITY_UNCOVERED = 0;
-
-    public static final int PROXIMITY_TOLERANCE = 0;
-
-    //Joystick buttons
-    public static final int INTAKE_BUTTON = 7;
-    public static final int TRANSPORT_BUTTON = 8;
-    public static final int PULLEY_BUTTON = 10;
-    public static final int SHOOTER_BUTTON = 1;
-    
-    public static final int ROTATION_CONTROL = 0;
-    public static final int POSITION_CONTROL = 0;
-
-    public static final int COLOR_BUTTON = 0;
-    public static final int TILT_BUTTON = 0;
-
-    public static final int ELEVATOR_UP_BUTTON = 0;
-    public static final int ELEVATOR_DOWN_BUTTON = 0;
-
-    public static final int TILT_SPEED = 0;
-
-
-
-    //Speeds
-    public static final double INTAKE_TELEOP_SPEED = 0.3;
-    public static final double TRANSPORT_TELEOP_SPEED = 0.9;
-    public static final double PULLEY_TELEOP_SPEED = 0.9;
-
-    public static final double INTAKE_INTEGRATED_SPEED = 0.3;
-    public static final double TRANSPORT_INTEGRATED_SPEED = 0.9;
-    /*****************Motor ports*****************/
-
-    /**
-     * CAN port for shooter motor.
-     */
-    public static final int SHOOTER_MOTOR_TOP = 8;
-    public static final int SHOOTER_MOTOR_BOTTOM = 7;
-
-    /*******************Sensors*******************/
+    public static final int TRANSPORT_PROXIMITY_ONE_SENSOR_PORT = 0;
+    public static final int TRANSPORT_PROXIMITY_TWO_SENSOR_PORT = 1;
+    public static final int PULLEY_PROXIMITY_SENSOR_PORT = 2;
 
     /**
      * Distance per pulse of encoder on shooter motor.
@@ -255,19 +245,9 @@ public final class Constants
 
     public static final double COLOR_THRESHOLD = 0.05;
 
-
-    /* SPEEDS */
     public static final double COLOR_WHEEL_SPEED = 0.2;
-    /*Elevator System Encoders*/
+
     public static final double ENC_TOLERANCE = 0.5;
 
     public static final double ELEVATOR_UPPER_LIMIT = 15;
-
-    public static final double ELEVATOR_SPEED = 0.2;
-
-    public static final int ELEVATOR_BUTTON = 0;
-
-    
-
-	
 }
