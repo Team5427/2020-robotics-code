@@ -201,13 +201,13 @@ public class RobotContainer
     elevatorLeft = new WPI_VictorSPX(Constants.ELEVATOR_LEFT_MOTOR);
     elevatorRight = new WPI_VictorSPX(Constants.ELEVATOR_RIGHT_MOTOR);
 
-    // elevatorLeftEnc = new Encoder(Constants.ELEVATOR_LEFT_PORT_1, Constants.ELEVATOR_LEFT_PORT_2);
-    // elevatorRightEnc = new Encoder(Constants.ELEVATOR_RIGHT_PORT_1, Constants.ELEVATOR_RIGHT_PORT_2);
+    elevatorLeftEnc = new Encoder(Constants.ELEVATOR_LEFT_PORT_1, Constants.ELEVATOR_LEFT_PORT_2);
+    elevatorRightEnc = new Encoder(Constants.ELEVATOR_RIGHT_PORT_1, Constants.ELEVATOR_RIGHT_PORT_2);
 
     limitSwitchLeft = new DigitalInput(Constants.ELEVATOR_LIMIT_LEFT);
     limitSwitchRight = new DigitalInput(Constants.ELEVATOR_LIMIT_RIGHT);
 
-    elevator = new Elevator(elevatorLeft, elevatorRight, limitSwitchLeft, limitSwitchRight);
+    elevator = new Elevator(elevatorLeft, elevatorRight, limitSwitchLeft, limitSwitchRight, elevatorLeftEnc, elevatorRightEnc);
 
 
     //creating a profile
