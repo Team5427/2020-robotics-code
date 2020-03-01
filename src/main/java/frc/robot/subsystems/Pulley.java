@@ -66,8 +66,6 @@ public class Pulley extends SubsystemBase
         //something leaves
         if(sensorThree && proximityVoltagePulley >= Constants.PROXIMITY_UNCOVERED)
         {
-            thirdCount++;
-            RobotContainer.ballsOut++;
             startTime = currTime = Timer.getFPGATimestamp();
             timerStarted = true;
             sensorThree = false;
@@ -76,8 +74,9 @@ public class Pulley extends SubsystemBase
         if(timerStarted)
         {
             currTime = Timer.getFPGATimestamp();
-            if(currTime - startTime >= 0.8)
+            if(currTime - startTime >= 0.7)
             {
+                RobotContainer.ballsOut++;
                 RobotContainer.getPulley().stop();
                 startTime = currTime = Timer.getFPGATimestamp();
                 timerStarted = false;

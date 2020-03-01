@@ -32,7 +32,6 @@ public class MoveShooter extends CommandBase
         Transport.shooterPressed = true;
         if(Transport.proximityVoltageTwo >= Constants.PROXIMITY_UNCOVERED)
         {
-            System.out.println("*************************************************************");
             RobotContainer.getTransport().moveTransport(Constants.TRANSPORT_INTEGRATED_SPEED);
         }
     }
@@ -75,7 +74,7 @@ public class MoveShooter extends CommandBase
 
     @Override
     public void end(boolean interrupted) {
-        //RobotContainer.getShooter().stop();
+        RobotContainer.getShooter().stop();
         RobotContainer.getTransport().stop();
     }
 }

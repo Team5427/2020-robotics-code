@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -143,6 +144,8 @@ public class RobotContainer
   private static SpeedController tiltMotor;
   private static Tilt tilt;
 
+  private static Ultrasonic ultra;
+
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -209,7 +212,7 @@ public class RobotContainer
 
     //creating a profile
     //COUNTER CLOCKWISE is POSITIVE, CLOCKWISE is NEGATIVE
-    motion = new MotionProfile(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(0, 2, new Rotation2d(45)), new ArrayList<Translation2d>());
+    // motion = new MotionProfile(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(0, 2, new Rotation2d(45)), new ArrayList<Translation2d>());
 
     shooterMotorTop = new TalonSRX(Constants.SHOOTER_MOTOR_TOP);
     shooterMotorTop.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, Constants.K_TIMEOUT_MS);
@@ -255,11 +258,11 @@ public class RobotContainer
     transportButton.whenPressed(new MoveTransport(Constants.TRANSPORT_TELEOP_SPEED));
     pulleyButton.whenPressed(new MovePulley(Constants.PULLEY_TELEOP_SPEED));
     shooterButton.whenPressed(new MoveShooter());
-    tiltButtonUp.whileHeld(new MoveTilt(0.8));
+    tiltButtonUp.whileHeld(new MoveTilt(Constants.TILT_SPEED));
     moveElevatorUp.whileHeld(new MoveElevator(Constants.ELEVATOR_SPEED));
     moveElevatorDown.whileHeld(new MoveElevator(-Constants.ELEVATOR_SPEED));
     shooterTeleop.whileHeld(new MoveShooterTeleop(Constants.SHOOTER_TELEOP_SPEED));
-    tiltDownButton.whileHeld(new MoveTilt(-0.8));
+    tiltDownButton.whileHeld(new MoveTilt(-Constants.TILT_SPEED));
     // rotationControl.whenPressed(new RotationControl());
     // positionControl.whenPressed(new TurnToColor());
   }
@@ -272,10 +275,11 @@ public class RobotContainer
    */
   public Command getAutonomousCommand() 
   {
-    return motion;
+    return null;
   }
 
-  public Command getTurn(){
+  public Command getTurn()
+  {
     return new PointTurn(90);
   }
   public static ColorSensor getColorSensor()
@@ -283,7 +287,7 @@ public class RobotContainer
     return colorSensor;
   }
 
-  //just some Accessors that take up space
+  //just some accessors that take up space
   public static DriveTrain getDriveTrain(){return driveTrain;}
   public static SpeedControllerGroup getLeftSCG(){return leftDrive;}
   public static SpeedControllerGroup getRightSCG(){return rightDrive;}
@@ -296,17 +300,7 @@ public class RobotContainer
   public static Transport getTransport(){return transport;}
   public static Pulley getPulley(){return pulley;}
   public static Tilt getTilt(){return tilt;}
-  
-  public static Shooter getShooter()
-  {
-    return shooter;
-  }
-
-  public static TalonSRX getShooterMotor()
-  {
-    return shooterMotorTop;
-  }
-
+  public static Shooter getShooter(){return shooter;}
+  public static TalonSRX getShooterMotor(){return shooterMotorTop;}
   public static Elevator getElevator(){return elevator;}
-
 }

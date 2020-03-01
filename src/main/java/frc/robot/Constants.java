@@ -90,7 +90,7 @@ public final class Constants
     public static final double INTAKE_INTEGRATED_SPEED = 0.7;
     public static final double TRANSPORT_INTEGRATED_SPEED = 0.9;
     public static final double ELEVATOR_SPEED = 0.1;
-    public static final double TILT_SPEED = 0.5;
+    public static final double TILT_SPEED = 1.0;
     public static final double SHOOTER_TELEOP_SPEED = 0.2;
 
 

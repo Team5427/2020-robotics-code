@@ -85,6 +85,8 @@ public class Robot extends TimedRobot
     SmartDashboard.putNumber("Balls In", RobotContainer.ballsIn);
     SmartDashboard.putNumber("Balls Out", RobotContainer.ballsOut);
     SmartDashboard.putBoolean("First Sensor", Transport.firstSensor);
+    SmartDashboard.putBoolean("Second Sensor", Transport.secondSensor);
+    SmartDashboard.putBoolean("Third Sensor", Pulley.sensorThree);
 
 
     
@@ -175,12 +177,6 @@ public class Robot extends TimedRobot
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    //RobotContainer.getIntake().moveIntake(0.3);
-
-
-    //RobotContainer.getTilt().moveTilt(-0.2);
-
-    //RobotContainer.getDriveTrain().tankDrive(-0.3, 0.3);
   }
 
   /**
