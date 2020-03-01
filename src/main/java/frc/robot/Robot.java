@@ -65,103 +65,6 @@ public class Robot extends TimedRobot
     System.out.println("kuykfwegteiyge wkwytriweutwuguy");
     ahrs = new AHRS(SPI.Port.kMXP);
     ahrs.setAngleAdjustment(0);
-    
-    new Thread(() -> {
-      // Initializes Camera from RoboRio and starts capture
-      // UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
-       //camera.setResolution(640, 480); // sets resolution
-       System.out.println("agshkahrhresuhfuidshuifhsduifhsduifhsduifhdsuifhiudshfuisdhfuisdhfuidshfuisdhfuisdhfuisdhfuisdhfuisdhfl");
-      // // Gets video from RoboRio CameraServer [accessible via SmrtDshbrd]
-       CvSink cvSink = CameraServer.getInstance().getVideo("rPi Camera 0");
- //    CvSource outputStream = CameraServer.getInstance().putVideo("Processed", 640, 480);
-
-      Mat source = new Mat(); // Mats are essentially video frame Objects
-      GripPipeline pipeline = new GripPipeline();
-      //camera.setExposureManual(0);
-     
-      int timer = 0;
-          
-      while (!Thread.interrupted()) 
-      {
-        if (cvSink.grabFrame(source) == 0)
-          System.out.print("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE");
-        else 
-        {
-          SmartDashboard.putNumber("Angle", ahrs.getAngle());
-          System.out.print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-           pipeline.process(source);
-   //        outputStream.putFrame(pipeline.hslThresholdOutput());
-           ArrayList<MatOfPoint> filteredPoints = pipeline.filterContoursOutput();
-           ArrayList<Target> validTargets=  new ArrayList<Target>();
-           Target biggestTarget = null;
-           Point[] points = null;
-   
-           Target target;
-           for(MatOfPoint currentMat : filteredPoints)
-           {
-              points = ((MatOfPoint)currentMat).toArray();
-              target = new Target(points, source);
-
-              validTargets.add(target);
-           }
-   
-           if(validTargets.isEmpty())
-           {
-              SmartDashboard.putBoolean("Target Exists?", false);
-           }
-           else{
-            SmartDashboard.putBoolean("Target Exists?", true);
-            if(validTargets.isEmpty())
-             continue;
-             SmartDashboard.putNumber("Target Amounts", validTargets.size());
-
-          biggestTarget = validTargets.get(0);
-           for(Target t : validTargets)
-           {
-               if(t.getLeftValDiff()>biggestTarget.getLeftValDiff())
-                   biggestTarget=t;
-           }
-           m_robotContainer.setCentered(biggestTarget.isCentered());
-           m_robotContainer.setDistanceFromCenter(biggestTarget.getDistanceFromCenter());
-           setCentered(biggestTarget.isCentered());
-          //  if(biggestTarget.getProportion()>.9 && biggestTarget.getProportion()<1.1 && timer ==0)
-          //  {
-          //   ahrs.reset();
-          //   timer = 25;
-          //  }
-          //  if(timer !=0)
-          //   timer--;
-           if(ahrs.getAngle()>360)
-           {
-              ahrs.setAngleAdjustment(ahrs.getAngleAdjustment()+-360);
-           }
-           if(ahrs.getAngle()<-360)
-           {
-              ahrs.setAngleAdjustment(ahrs.getAngleAdjustment()+360);
-           }
-           if(biggestTarget.isCentered()== false && biggestTarget.getDistanceFromCenter()<0)
-             status =1;
-          if(biggestTarget.isCentered()== false && biggestTarget.getDistanceFromCenter()>0)
-             status = 2;
-           if(biggestTarget.isCentered())
-              status = 3;
-           SmartDashboard.putNumber("Proportion", biggestTarget.getProportion());
-           SmartDashboard.putNumber("LeftValDiff", biggestTarget.getLeftValDiff());
-           SmartDashboard.putNumber("RightvalDiff", biggestTarget.getRightValDiff());
-           SmartDashboard.putNumber("Size", biggestTarget.getSize());
-           SmartDashboard.putNumber("Distance", biggestTarget.getDistance());
-           SmartDashboard.putNumber("DistanceFromCenter", biggestTarget.getDistanceFromCenter());
-           SmartDashboard.putBoolean("isCentered", biggestTarget.isCentered());
-
-           //System.out.println(ahrs.getAngle() + "IIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII");
-          //  ahrs.reset();
-           //System.out.println(ahrs.getAngle() + "**************************************************");
-          }
-   //        vp.setPoints(points);
-   //        vp.imageToContours();
-        }
-      }
-     }).start();
   }
 
   /**
@@ -234,9 +137,7 @@ public class Robot extends TimedRobot
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
-    }
+    new VisionTurn().schedule();
   }
 
   /**
@@ -244,14 +145,14 @@ public class Robot extends TimedRobot
    */
   @Override
   public void teleopPeriodic() {
-    if(m_autonomousCommand!=null && m_autonomousCommand.isFinished())
-    m_autonomousCommand=null;
-  if(m_autonomousCommand==null && getCentered()==false)
-  {
-    System.out.println("UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU");
-    m_autonomousCommand = new VisionTurn();
-    m_autonomousCommand.schedule();
-  }
+  //   if(m_autonomousCommand!=null && m_autonomousCommand.isFinished())
+  //   m_autonomousCommand=null;
+  // if(m_autonomousCommand==null && getCentered()==false)
+  // {
+  //   System.out.println("UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU");
+  //   m_autonomousCommand = new VisionTurn();
+  //   m_autonomousCommand.schedule();
+  // }
   }
 
   @Override
