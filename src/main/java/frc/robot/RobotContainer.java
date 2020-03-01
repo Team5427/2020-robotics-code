@@ -32,6 +32,7 @@ import frc.robot.commands.MotionProfile;
 import frc.robot.commands.MoveElevator;
 import frc.robot.commands.MoveIntake;
 import frc.robot.commands.MovePulley;
+import frc.robot.commands.MoveShooter;
 import frc.robot.commands.MoveShooterTeleop;
 import frc.robot.commands.MoveStraight;
 import frc.robot.commands.MoveTransport;
@@ -74,7 +75,8 @@ public class RobotContainer
   // The robot's subsystems and commands are defined here...
 
   //we will increment this in our commands. 
-  public static int ballCount = 0;
+  public static int ballsIn = 0;
+  public static int ballsOut = 0;
   public static int loop = 0;
   public static boolean canShoot = false;
 
@@ -134,7 +136,8 @@ public class RobotContainer
    
   private static SpeedController elevatorLeft, elevatorRight;
   private static Encoder elevatorLeftEnc, elevatorRightEnc;
-  private static DigitalInput limitSwitch;
+  private static DigitalInput limitSwitchLeft;
+  private static DigitalInput limitSwitchRight;
   private static Elevator elevator;
 
   private static SpeedController tiltMotor;
@@ -192,15 +195,16 @@ public class RobotContainer
     ArrayList<Translation2d> waypoints = new ArrayList<Translation2d>();
     waypoints.add(new Translation2d(0, 1));
 
-    // elevatorLeft = new WPI_VictorSPX(Constants.ELEVATOR_LEFT_MOTOR);
-    // elevatorRight = new WPI_VictorSPX(Constants.ELEVATOR_RIGHT_MOTOR);
+    elevatorLeft = new WPI_VictorSPX(Constants.ELEVATOR_LEFT_MOTOR);
+    elevatorRight = new WPI_VictorSPX(Constants.ELEVATOR_RIGHT_MOTOR);
 
     // elevatorLeftEnc = new Encoder(Constants.ELEVATOR_LEFT_PORT_1, Constants.ELEVATOR_LEFT_PORT_2);
     // elevatorRightEnc = new Encoder(Constants.ELEVATOR_RIGHT_PORT_1, Constants.ELEVATOR_RIGHT_PORT_2);
 
-    // limitSwitch = new DigitalInput(Constants.ELEVATOR_LIMIT_SWITCH);
+    limitSwitchLeft = new DigitalInput(Constants.ELEVATOR_LIMIT_LEFT);
+    limitSwitchRight = new DigitalInput(Constants.ELEVATOR_LIMIT_RIGHT);
 
-    // elevator = new Elevator(elevatorLeft, elevatorRight, elevatorLeftEnc, elevatorRightEnc, limitSwitch);
+    elevator = new Elevator(elevatorLeft, elevatorRight, limitSwitchLeft, limitSwitchRight);
 
 
     //creating a profile
@@ -238,10 +242,10 @@ public class RobotContainer
     intakeButton = new JoystickButton(joy, Constants.INTAKE_BUTTON);
     transportButton = new JoystickButton(joy, Constants.TRANSPORT_BUTTON);
     pulleyButton = new JoystickButton(joy, Constants.PULLEY_BUTTON);
-    // shooterButton = new JoystickButton(joy, Constants.SHOOTER_BUTTON);
+    shooterButton = new JoystickButton(joy, Constants.SHOOTER_BUTTON);
     tiltButtonUp = new JoystickButton(joy, Constants.TILT_BUTTON_UP);
-    // moveElevatorUp = new JoystickButton(joy, Constants.ELEVATOR_UP_BUTTON);
-    // moveElevatorDown = new JoystickButton(joy, Constants.ELEVATOR_DOWN_BUTTON);
+    moveElevatorUp = new JoystickButton(joy, Constants.ELEVATOR_UP_BUTTON);
+    moveElevatorDown = new JoystickButton(joy, Constants.ELEVATOR_DOWN_BUTTON);
     shooterTeleop = new JoystickButton(joy, Constants.SHOOTER_TELEOP);
     tiltDownButton = new JoystickButton(joy, Constants.TILT_BUTTON_DOWN);
     // rotationControl = new JoystickButton(joy, Constants.ROTATION_CONTROL);
@@ -250,12 +254,12 @@ public class RobotContainer
     intakeButton.whileHeld(new MoveIntake(Constants.INTAKE_TELEOP_SPEED));
     transportButton.whenPressed(new MoveTransport(Constants.TRANSPORT_TELEOP_SPEED));
     pulleyButton.whenPressed(new MovePulley(Constants.PULLEY_TELEOP_SPEED));
-    // shooterButton.whenPressed(new MoveShooter());
-    tiltButtonUp.whileHeld(new MoveTilt(0.2));
-    // moveElevatorUp.whileHeld(new MoveElevator(Constants.ELEVATOR_SPEED));
-    // moveElevatorDown.whileHeld(new MoveElevator(-Constants.ELEVATOR_SPEED));
+    shooterButton.whenPressed(new MoveShooter());
+    tiltButtonUp.whileHeld(new MoveTilt(0.8));
+    moveElevatorUp.whileHeld(new MoveElevator(Constants.ELEVATOR_SPEED));
+    moveElevatorDown.whileHeld(new MoveElevator(-Constants.ELEVATOR_SPEED));
     shooterTeleop.whileHeld(new MoveShooterTeleop(Constants.SHOOTER_TELEOP_SPEED));
-    tiltDownButton.whileHeld(new MoveTilt(-0.2));
+    tiltDownButton.whileHeld(new MoveTilt(-0.8));
     // rotationControl.whenPressed(new RotationControl());
     // positionControl.whenPressed(new TurnToColor());
   }

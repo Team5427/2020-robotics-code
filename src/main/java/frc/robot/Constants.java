@@ -53,7 +53,10 @@ public final class Constants
     public static final double DRIVETRAIN_WHEEL_DIAMETER = .1524;
     public static final double DISTANCE_PER_PULSE = (Math.PI * DRIVETRAIN_WHEEL_DIAMETER/1440)/3.68;
 
-    public static final int INTAKE_PROXIMITY_DIFFERENCE = 8;
+    public static final double INTAKE_PROXIMITY_DIFFERENCE = 2.0;
+
+    public static final double PROXIMITY_COVERED = 2.7;
+    public static final double PROXIMITY_UNCOVERED = 3.7;
 
     public static final int FIRST_PROXIMITY_UNCOVERED = 0;
 
@@ -64,7 +67,7 @@ public final class Constants
     public static final int INTAKE_BUTTON = 2;
     public static final int TRANSPORT_BUTTON = 7;
     public static final int PULLEY_BUTTON = 8;
-    public static final int SHOOTER_BUTTON = 0;
+    public static final int SHOOTER_BUTTON = 11;
     
     public static final int ROTATION_CONTROL = 0;
     public static final int POSITION_CONTROL = 0;
@@ -84,10 +87,10 @@ public final class Constants
     public static final double INTAKE_TELEOP_SPEED = 0.3;
     public static final double TRANSPORT_TELEOP_SPEED = 0.9;
     public static final double PULLEY_TELEOP_SPEED = 0.9;
-    public static final double INTAKE_INTEGRATED_SPEED = 0.3;
+    public static final double INTAKE_INTEGRATED_SPEED = 0.7;
     public static final double TRANSPORT_INTEGRATED_SPEED = 0.9;
-    public static final double ELEVATOR_SPEED = 0.2;
-    public static final double TILT_SPEED = 0.2;
+    public static final double ELEVATOR_SPEED = 0.1;
+    public static final double TILT_SPEED = 0.5;
     public static final double SHOOTER_TELEOP_SPEED = 0.2;
 
 
@@ -106,29 +109,30 @@ public final class Constants
 
     public static final int TILT_MOTOR = 3;
 
-    public static final int ELEVATOR_LEFT_MOTOR = 0;
-    public static final int ELEVATOR_RIGHT_MOTOR = 0;
+    public static final int ELEVATOR_LEFT_MOTOR = 13;
+    public static final int ELEVATOR_RIGHT_MOTOR = 2;
 
     public static final int SHOOTER_MOTOR_TOP = 8;
     public static final int SHOOTER_MOTOR_BOTTOM = 7;
 
     /*******************Sensors*******************/
 
-    public static final int ENCODER_LEFT_PORT_1 = 3;
-	public static final int ENCODER_LEFT_PORT_2 = 4;
-	public static final int ENCODER_RIGHT_PORT_1 = 6; 
-    public static final int ENCODER_RIGHT_PORT_2 = 7;
+    public static final int ENCODER_LEFT_PORT_1 = 6;
+	public static final int ENCODER_LEFT_PORT_2 = 7;
+	public static final int ENCODER_RIGHT_PORT_1 = 4; 
+    public static final int ENCODER_RIGHT_PORT_2 = 5;
 
     public static final int ELEVATOR_LEFT_PORT_1 = 0;
-    public static final int ELEVATOR_LEFT_PORT_2 = 0;
-    public static final int ELEVATOR_RIGHT_PORT_1 = 0;
-    public static final int ELEVATOR_RIGHT_PORT_2 = 0;
+    public static final int ELEVATOR_LEFT_PORT_2 = 1;
+    public static final int ELEVATOR_RIGHT_PORT_1 = 2;
+    public static final int ELEVATOR_RIGHT_PORT_2 = 3;
 
-    public static final int ELEVATOR_LIMIT_SWITCH = 0;
+    public static final int ELEVATOR_LIMIT_RIGHT = 8;
+    public static final int ELEVATOR_LIMIT_LEFT = 9;
     
     public static final int TRANSPORT_PROXIMITY_ONE_SENSOR_PORT = 0;
-    public static final int TRANSPORT_PROXIMITY_TWO_SENSOR_PORT = 1;
-    public static final int PULLEY_PROXIMITY_SENSOR_PORT = 2;
+    public static final int TRANSPORT_PROXIMITY_TWO_SENSOR_PORT = 2;
+    public static final int PULLEY_PROXIMITY_SENSOR_PORT = 1;
 
     /**
      * Distance per pulse of encoder on shooter motor.

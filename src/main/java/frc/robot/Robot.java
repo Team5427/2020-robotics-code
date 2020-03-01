@@ -24,6 +24,8 @@ import frc.robot.commands.PointTurn;
 import frc.robot.commands.StraightAndTurn;
 import frc.robot.commands.MoveStraight;
 import frc.robot.subsystems.ColorSensor;
+import frc.robot.subsystems.Pulley;
+import frc.robot.subsystems.Transport;
 import edu.wpi.first.wpilibj.I2C;
 import com.revrobotics.ColorSensorV3;
 
@@ -80,6 +82,10 @@ public class Robot extends TimedRobot
     SmartDashboard.putNumber("Proximity one", RobotContainer.getTransport().getDistance());
     SmartDashboard.putNumber("Proximity two", RobotContainer.getTransport().getDistanceTwo());
     SmartDashboard.putNumber("Proximity three", RobotContainer.getPulley().getDistance());
+    SmartDashboard.putNumber("Balls In", RobotContainer.ballsIn);
+    SmartDashboard.putNumber("Balls Out", RobotContainer.ballsOut);
+    SmartDashboard.putBoolean("First Sensor", Transport.firstSensor);
+
 
     
     // m_robotContainer.getColorSensor().getProximity();
