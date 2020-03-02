@@ -9,7 +9,7 @@ public class DriveWithJoystick extends CommandBase
     @Override
     public void initialize()
     {
-
+        addRequirements(RobotContainer.getDriveTrain());
     }
 
     @Override

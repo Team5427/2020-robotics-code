@@ -92,6 +92,7 @@ public class MotionProfile extends CommandBase
 
         //System.out.println("D: "+ currentDistance+" "+ cummulativeDistance);
         System.out.println("V: "+ encLeft.getRate()+" "+ currentState.velocityMetersPerSecond);
+        System.out.println("A: "+ ahrs.getAngle()+" "+ currentState.poseMeters.getRotation().getDegrees());
 
         //finds error in robot distance for PD controller
         positionError = cummulativeDistance - currentDistance;

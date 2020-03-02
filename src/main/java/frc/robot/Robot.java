@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Vision.GripPipeline;
 import frc.robot.Vision.Target;
+import frc.robot.commands.MotionVision;
 import frc.robot.commands.MoveStraightPID;
 import frc.robot.commands.PointTurn;
 import frc.robot.commands.StraightAndTurn;
@@ -137,6 +138,7 @@ public class Robot extends TimedRobot
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
+    //new VisionTurn().schedule();
     new VisionTurn().schedule();
   }
 

@@ -31,6 +31,9 @@ public class VisionTurn extends CommandBase {
   private double constant = .0125;
   double dist;
   double bsd;
+  boolean angledCentered = false;
+  double newDistFromCenter;
+  double newCenter;
   /**
    * Creates a new MoveStraight.
    */
@@ -55,21 +58,39 @@ public class VisionTurn extends CommandBase {
   {
    dist = table.getEntry("targetDistanceFromCenter").getDouble(999999);
     bsd = table.getEntry("biggestSideDifference").getDouble(999999);
+    // double centerX = table.getEntry("centerX").getDouble(0);
+    // double bottomPointX = table.getEntry("bottomPointX").getDouble(0);
+    // double matWH = table.getEntry("matWH").getDouble(0);
 
 
 
     //    System.out.println("PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPP");
       if(dist==999999)
         ;
-      if(bsd<25)
+      // if(attempt==1)
+      // {
+      //   newCenter = centerX - (2* centerX - bottomPointX);
+      //   newDistFromCenter = newCenter-matWH;
+      //   if(newDistFromCenter>0)
+      //   {
+      //     driveTrain.tankDrive(-.14, .14);
+      //   }
+      //   if(newDistFromCenter<0)
+      //   {
+      //     driveTrain.tankDrive(.14, -.14);
+      //   }
+      //   if(newDistFromCenter>-3 && newDistFromCenter<3)
+      //     end(true);
+      // }
+      else if(bsd<25)
       {
         if(dist>0)
         {
  
             if(dist>55)
-              driveTrain.tankDrive(-.23, .23);
+              driveTrain.tankDrive(-.18, .18);
             else
-              driveTrain.tankDrive(-.15, .15);
+              driveTrain.tankDrive(-.14, .14);
   
           
         }
@@ -77,32 +98,32 @@ public class VisionTurn extends CommandBase {
         {
        
           if(dist<-55)
-              driveTrain.tankDrive(.23, -.23);
+              driveTrain.tankDrive(.18, -.18);
             else
             
-              driveTrain.tankDrive(.15, -.15);
+              driveTrain.tankDrive(.14, -.14);
         }
       }
       else if(dist>0)
       {
           if(dist<25)
-          driveTrain.tankDrive(-.14, .14);
+          driveTrain.tankDrive(-.15, .15);
 
           if(dist>60)
-            driveTrain.tankDrive(-.25, .25);
+            driveTrain.tankDrive(-.20, .20);
           else
-            driveTrain.tankDrive(-.15, .15);
+            driveTrain.tankDrive(-.17, .17);
 
         
       }
       else if(dist<0)
       {
         if(dist>-25)
-        driveTrain.tankDrive(.14,- .14);
+        driveTrain.tankDrive(.15,- .15);
         if(dist<-60)
-            driveTrain.tankDrive(.25, -.25);
+            driveTrain.tankDrive(.20, -.20);
           else
-            driveTrain.tankDrive(.15, -.15);
+            driveTrain.tankDrive(.17, -.17);
       }
      
     // else if(attempt>0)
@@ -131,13 +152,12 @@ public class VisionTurn extends CommandBase {
   {
     SmartDashboard.putNumber("attempt", attempt);
     boolean centered = table.getEntry("isTargetCentered").getBoolean(false);
-    
+    double proportion = table.getEntry("proportion").getDouble(1);
 
     if(centered)
     {
       // if(Math.abs(dist)<3)
       // {
-      //   end(true);
       //   return true;
       // }
     //   if(Math.abs(dist)<3)
@@ -150,11 +170,22 @@ public class VisionTurn extends CommandBase {
     //       attempt++;
     //       return false;
     //     }
-     
-         end(true);
+        // if(attempt ==0 && (proportion<.85 || proportion >1.15 ))
+        // {
+
+        //   attempt =1;
+        // }
+        // else if(attempt==0)
+        // {
          return true;
+ //       }
     // } 
     }
+    // if(attempt==1 && angledCentered==true)
+    // {
+    //     end(true);
+    //     return true;
+    // }
  return false;
 }
 }

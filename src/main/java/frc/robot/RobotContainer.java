@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
+import frc.robot.commands.DriveWithJoystick;
 import frc.robot.commands.MotionProfile;
 import frc.robot.commands.MoveStraight;
 import frc.robot.commands.MoveStraightPID;
@@ -81,6 +82,7 @@ public class RobotContainer
 
     driveTrain = new DriveTrain(leftDrive, rightDrive, drive);
     ahrs = new AHRS(SPI.Port.kMXP);
+   // driveTrain.setDefaultCommand(new DriveWithJoystick());
 
     //encoders have 1440 as PPR and 360 CPR
     encRight = new Encoder(4,5);
