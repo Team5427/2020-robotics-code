@@ -31,6 +31,7 @@ import frc.robot.commands.MotionVision;
 import frc.robot.commands.MoveStraightPID;
 import frc.robot.commands.PointTurn;
 import frc.robot.commands.StraightAndTurn;
+import frc.robot.commands.VisionMove;
 import frc.robot.commands.VisionTurn;
 import edu.wpi.first.wpilibj.SPI;
 
@@ -139,7 +140,7 @@ public class Robot extends TimedRobot
     // continue until interrupted by another command, remove
     // this line or comment it out.
     //new VisionTurn().schedule();
-    new VisionTurn().schedule();
+    new MotionVision().schedule();
   }
 
   /**

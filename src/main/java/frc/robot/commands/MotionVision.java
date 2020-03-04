@@ -25,6 +25,6 @@ public class MotionVision extends SequentialCommandGroup {
     // super(new FooCommand(), new BarCommand());
     //super( new VisionTurn(), new PointTurn(10),new MoveStraightPID(-2), new VisionTurn());
     
-    super(new VisionTurn(), new MotionProfile(new Pose2d(new Translation2d(0, 0), new Rotation2d(0)), new Pose2d(new Translation2d(2, 0), new Rotation2d(.58)), new ArrayList<Translation2d>()),new VisionTurn());
+    super(new VisionTurn(0), new VisionMove(), new VisionTurn(-140));
   }
 }

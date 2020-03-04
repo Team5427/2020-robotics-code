@@ -28,19 +28,21 @@ public class VisionTurn extends CommandBase {
   NetworkTableInstance inst;
   NetworkTable table;
   private int attempt =0;
-  private double constant = .0125;
   double dist;
   double bsd;
   boolean angledCentered = false;
   double newDistFromCenter;
   double newCenter;
+  double bias;
   /**
    * Creates a new MoveStraight.
    */
-  public VisionTurn() {
+  //bias based on distance model
+  public VisionTurn(double bias) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.getDriveTrain());
     //initialize();
+    this.bias = bias;
   }
 
   // Called when the command is initially scheduled.
@@ -57,7 +59,10 @@ public class VisionTurn extends CommandBase {
   public void execute() 
   {
    dist = table.getEntry("targetDistanceFromCenter").getDouble(999999);
+   dist -=bias;
+
     bsd = table.getEntry("biggestSideDifference").getDouble(999999);
+   // dist +=bias;
     // double centerX = table.getEntry("centerX").getDouble(0);
     // double bottomPointX = table.getEntry("bottomPointX").getDouble(0);
     // double matWH = table.getEntry("matWH").getDouble(0);
@@ -88,7 +93,7 @@ public class VisionTurn extends CommandBase {
         {
  
             if(dist>55)
-              driveTrain.tankDrive(-.18, .18);
+              driveTrain.tankDrive(-.16, .16);
             else
               driveTrain.tankDrive(-.14, .14);
   
@@ -98,9 +103,8 @@ public class VisionTurn extends CommandBase {
         {
        
           if(dist<-55)
-              driveTrain.tankDrive(.18, -.18);
+              driveTrain.tankDrive(.16, -.16);
             else
-            
               driveTrain.tankDrive(.14, -.14);
         }
       }
@@ -110,9 +114,9 @@ public class VisionTurn extends CommandBase {
           driveTrain.tankDrive(-.15, .15);
 
           if(dist>60)
-            driveTrain.tankDrive(-.20, .20);
-          else
             driveTrain.tankDrive(-.17, .17);
+          else
+            driveTrain.tankDrive(-.16, .16);
 
         
       }
@@ -121,9 +125,9 @@ public class VisionTurn extends CommandBase {
         if(dist>-25)
         driveTrain.tankDrive(.15,- .15);
         if(dist<-60)
-            driveTrain.tankDrive(.20, -.20);
-          else
             driveTrain.tankDrive(.17, -.17);
+          else
+            driveTrain.tankDrive(.16, -.16);
       }
      
     // else if(attempt>0)
@@ -153,30 +157,18 @@ public class VisionTurn extends CommandBase {
     SmartDashboard.putNumber("attempt", attempt);
     boolean centered = table.getEntry("isTargetCentered").getBoolean(false);
     double proportion = table.getEntry("proportion").getDouble(1);
+    dist = table.getEntry("targetDistanceFromCenter").getDouble(999999);
+    System.out.println("BEFORE BIAS:" +dist);
+    dist -=bias;
+    dist= Math.abs(dist);
 
-    if(centered)
+    System.out.println("dist:"+dist);
+
+
+
+    if(dist<4)
     {
-      // if(Math.abs(dist)<3)
-      // {
-      //   return true;
-      // }
-    //   if(Math.abs(dist)<3)
-    //   {
-    //     end(true);
-    //     return true;
-    //   }
-    //   if(attempt<5)
-    //     {
-    //       attempt++;
-    //       return false;
-    //     }
-        // if(attempt ==0 && (proportion<.85 || proportion >1.15 ))
-        // {
-
-        //   attempt =1;
-        // }
-        // else if(attempt==0)
-        // {
+   
          return true;
  //       }
     // } 
