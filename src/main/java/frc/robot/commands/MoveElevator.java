@@ -35,7 +35,7 @@ public class MoveElevator extends CommandBase
     {
         //right: -5383.0
         //left: 5390.5
-        if(speed <0)
+        if(speed < 0)
         {
             if(RobotContainer.getElevator().getLimitLeft())
             {

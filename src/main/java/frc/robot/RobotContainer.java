@@ -142,6 +142,7 @@ public class RobotContainer
   private static Elevator elevator;
 
   private static SpeedController tiltMotor;
+  private static DigitalInput tiltSwitch;
   private static Tilt tilt;
 
   private static Ultrasonic ultra;
@@ -175,7 +176,8 @@ public class RobotContainer
     transport = new Transport(transportMotor, transportProximity, transportProximityTwo);
 
     tiltMotor = new WPI_VictorSPX(Constants.TILT_MOTOR);
-    tilt = new Tilt(tiltMotor);
+    tiltSwitch = new DigitalInput(Constants.LIMIT_SWITCH_TILT);
+    tilt = new Tilt(tiltMotor, tiltSwitch);
 
     pulleyMotor = new WPI_VictorSPX(Constants.PULLEY_MOTOR);
     pulleyProximity = new AnalogInput(Constants.PULLEY_PROXIMITY_SENSOR_PORT);
@@ -245,7 +247,7 @@ public class RobotContainer
     intakeButton = new JoystickButton(joy, Constants.INTAKE_BUTTON);
     transportButton = new JoystickButton(joy, Constants.TRANSPORT_BUTTON);
     pulleyButton = new JoystickButton(joy, Constants.PULLEY_BUTTON);
-    shooterButton = new JoystickButton(joy, Constants.SHOOTER_BUTTON);
+    // shooterButton = new JoystickButton(joy, Constants.SHOOTER_BUTTON);
     tiltButtonUp = new JoystickButton(joy, Constants.TILT_BUTTON_UP);
     moveElevatorUp = new JoystickButton(joy, Constants.ELEVATOR_UP_BUTTON);
     moveElevatorDown = new JoystickButton(joy, Constants.ELEVATOR_DOWN_BUTTON);
@@ -257,17 +259,18 @@ public class RobotContainer
     intakeButton.whileHeld(new MoveIntake(Constants.INTAKE_TELEOP_SPEED));
     transportButton.whenPressed(new MoveTransport(Constants.TRANSPORT_TELEOP_SPEED));
     pulleyButton.whenPressed(new MovePulley(Constants.PULLEY_TELEOP_SPEED));
-    shooterButton.whenPressed(new MoveShooter());
-    tiltButtonUp.whileHeld(new MoveTilt(Constants.TILT_SPEED));
+    // shooterButton.whileHeld(new MoveShooter());
+    tiltButtonUp.whileHeld(new MoveTilt(Constants.TILT_SPEED).withTimeout(0.5)); //change this timeout number
     moveElevatorUp.whileHeld(new MoveElevator(Constants.ELEVATOR_SPEED));
     moveElevatorDown.whileHeld(new MoveElevator(-Constants.ELEVATOR_SPEED));
-    shooterTeleop.whileHeld(new MoveShooterTeleop(Constants.SHOOTER_TELEOP_SPEED));
+    shooterTeleop.whileHeld(new MoveShooter());
     tiltDownButton.whileHeld(new MoveTilt(-Constants.TILT_SPEED));
     // rotationControl.whenPressed(new RotationControl());
     // positionControl.whenPressed(new TurnToColor());
   }
 
 
+  //accessors that take up space
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
@@ -277,17 +280,6 @@ public class RobotContainer
   {
     return null;
   }
-
-  public Command getTurn()
-  {
-    return new PointTurn(90);
-  }
-  public static ColorSensor getColorSensor()
-  {
-    return colorSensor;
-  }
-
-  //just some accessors that take up space
   public static DriveTrain getDriveTrain(){return driveTrain;}
   public static SpeedControllerGroup getLeftSCG(){return leftDrive;}
   public static SpeedControllerGroup getRightSCG(){return rightDrive;}
@@ -303,4 +295,6 @@ public class RobotContainer
   public static Shooter getShooter(){return shooter;}
   public static TalonSRX getShooterMotor(){return shooterMotorTop;}
   public static Elevator getElevator(){return elevator;}
+  public static ColorSensor getColorSensor(){return colorSensor;}
+  public Command getTurn(){ return new PointTurn(90);}
 }

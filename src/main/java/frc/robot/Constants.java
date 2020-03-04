@@ -84,14 +84,14 @@ public final class Constants
 
 
     //Speeds
-    public static final double INTAKE_TELEOP_SPEED = 0.3;
+    public static final double INTAKE_TELEOP_SPEED = 0.5;
     public static final double TRANSPORT_TELEOP_SPEED = 0.9;
     public static final double PULLEY_TELEOP_SPEED = 0.9;
-    public static final double INTAKE_INTEGRATED_SPEED = 0.7;
+    public static final double INTAKE_INTEGRATED_SPEED = 0.9;
     public static final double TRANSPORT_INTEGRATED_SPEED = 0.9;
     public static final double ELEVATOR_SPEED = 0.6;
     public static final double TILT_SPEED = 1.0;
-    public static final double SHOOTER_TELEOP_SPEED = 0.2;
+    public static final double SHOOTER_TELEOP_SPEED = 0.8;
     //1106.0 :: 1037.25
 
 
@@ -130,6 +130,8 @@ public final class Constants
 
     public static final int ELEVATOR_LIMIT_RIGHT = 8;
     public static final int ELEVATOR_LIMIT_LEFT = 9;
+
+    public static final int LIMIT_SWITCH_TILT = 0;
     
     public static final int TRANSPORT_PROXIMITY_ONE_SENSOR_PORT = 0;
     public static final int TRANSPORT_PROXIMITY_TWO_SENSOR_PORT = 2;

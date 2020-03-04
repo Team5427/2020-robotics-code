@@ -10,17 +10,26 @@ import frc.robot.subsystems.Intake;
 public class MoveTilt extends CommandBase
 {
     private double speed;
+    private double tilt_time_out;
 
     public MoveTilt(double speed)
     {
         addRequirements(RobotContainer.getTilt());
         this.speed = speed;
+        tilt_time_out = 0.5;
     }
 
     @Override
     public void initialize()
     {
-        RobotContainer.getTilt().moveTilt(speed);
+        if(speed < 0 && !RobotContainer.getTilt().getLimit())
+        {
+            RobotContainer.getTilt().moveTilt(speed);
+        }
+        else if(speed > 0)
+        {
+            RobotContainer.getTilt().moveTilt(speed);
+        }
         System.out.println("initalized");
     }
 
@@ -30,8 +39,19 @@ public class MoveTilt extends CommandBase
     }
 
     @Override
-    public void execute() {
-        RobotContainer.getTilt().moveTilt(speed);
+    public void execute() 
+    {
+        if(speed > 0)
+        {
+            if(RobotContainer.getTilt().getLimit())
+            {
+                RobotContainer.getTilt().moveTilt(0);
+            }
+        }
+        if(speed < 0)
+        {
+            
+        }
     }
 
     @Override
@@ -43,7 +63,7 @@ public class MoveTilt extends CommandBase
         }
         else
         {
-            return !RobotContainer.getJoy().getRawButton(Constants.TILT_BUTTON_DOWN);
+            return !RobotContainer.getTilt().getLimit() || !RobotContainer.getJoy().getRawButton(Constants.TILT_BUTTON_DOWN);
         }
     }
 }

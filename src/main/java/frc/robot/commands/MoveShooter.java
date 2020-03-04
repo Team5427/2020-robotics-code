@@ -29,26 +29,35 @@ public class MoveShooter extends CommandBase
     @Override
     public void initialize() 
     {
-        Transport.shooterPressed = true;
-        if(Transport.proximityVoltageTwo >= Constants.PROXIMITY_UNCOVERED)
-        {
-            RobotContainer.getTransport().moveTransport(Constants.TRANSPORT_INTEGRATED_SPEED);
-        }
+        RobotContainer.getTransport().moveTransport(Constants.TRANSPORT_INTEGRATED_SPEED);
+        RobotContainer.getPulley().movePulley(Constants.PULLEY_TELEOP_SPEED);
+        RobotContainer.getShooter().getShooterMotorTop().set(ControlMode.PercentOutput, -Constants.SHOOTER_TELEOP_SPEED);
+        RobotContainer.getShooter().getShooterMotorBottom().set(ControlMode.PercentOutput, -Constants.SHOOTER_TELEOP_SPEED);
+        // Transport.shooterPressed = true;
+        // if(Transport.proximityVoltageTwo >= Constants.PROXIMITY_UNCOVERED)
+        // {
+        //     RobotContainer.getTransport().moveTransport(Constants.TRANSPORT_INTEGRATED_SPEED);
+        // }
     }
 
     @Override
-    public void execute() {
-        motorOutputTop = RobotContainer.getShooter().getMotorOutputPercentTop();
-        SmartDashboard.putNumber("Velocity Top", RobotContainer.getShooter().getVelocityTop());
-        SmartDashboard.putNumber("Velocity Bottom", RobotContainer.getShooter().getVelocityBottom());
+    public void execute()
+    {
+        RobotContainer.getTransport().moveTransport(Constants.TRANSPORT_INTEGRATED_SPEED);
+        RobotContainer.getPulley().movePulley(Constants.PULLEY_TELEOP_SPEED);
+        RobotContainer.getShooter().getShooterMotorTop().set(ControlMode.PercentOutput, -Constants.SHOOTER_TELEOP_SPEED);
+        RobotContainer.getShooter().getShooterMotorBottom().set(ControlMode.PercentOutput, -Constants.SHOOTER_TELEOP_SPEED);
+        // motorOutputTop = RobotContainer.getShooter().getMotorOutputPercentTop();
+        // SmartDashboard.putNumber("Velocity Top", RobotContainer.getShooter().getVelocityTop());
+        // SmartDashboard.putNumber("Velocity Bottom", RobotContainer.getShooter().getVelocityBottom());
 
-        RobotContainer.getShooter().getShooterMotorTop().set(ControlMode.Velocity, targetVelocityTop*((double)4096/(double)600));
-        RobotContainer.getShooter().getShooterMotorBottom().set(ControlMode.Velocity, targetVelocityBottom*((double)4096/(double)600));
+        // RobotContainer.getShooter().getShooterMotorTop().set(ControlMode.Velocity, targetVelocityTop*((double)4096/(double)600));
+        // RobotContainer.getShooter().getShooterMotorBottom().set(ControlMode.Velocity, targetVelocityBottom*((double)4096/(double)600));
 
-        topError = RobotContainer.getShooter().getShooterMotorTop().getClosedLoopError(Constants.SHOOTER_PID_ID)*((double)600/(double)4096);
-        bottomError = RobotContainer.getShooter().getShooterMotorBottom().getClosedLoopError(Constants.SHOOTER_PID_ID)*((double)600/(double)4096);
-        SmartDashboard.putNumber("Error Top", topError);
-        SmartDashboard.putNumber("Error Bottom", bottomError);
+        // topError = RobotContainer.getShooter().getShooterMotorTop().getClosedLoopError(Constants.SHOOTER_PID_ID)*((double)600/(double)4096);
+        // bottomError = RobotContainer.getShooter().getShooterMotorBottom().getClosedLoopError(Constants.SHOOTER_PID_ID)*((double)600/(double)4096);
+        // SmartDashboard.putNumber("Error Top", topError);
+        // SmartDashboard.putNumber("Error Bottom", bottomError);
 
 
         // if(topError <= Constants.SHOOTER_ERROR_TOLERANCE && bottomError <= Constants.SHOOTER_ERROR_TOLERANCE)
@@ -69,12 +78,14 @@ public class MoveShooter extends CommandBase
 
     @Override
     public boolean isFinished() {
-        return RobotContainer.ballsOut == RobotContainer.ballsIn;
+        // return RobotContainer.ballsOut == RobotContainer.ballsIn;
+        return !RobotContainer.getJoy().getRawButton(Constants.SHOOTER_TELEOP);
     }
 
     @Override
     public void end(boolean interrupted) {
         RobotContainer.getShooter().stop();
         RobotContainer.getTransport().stop();
+        RobotContainer.getPulley().stop();
     }
 }
