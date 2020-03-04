@@ -20,11 +20,11 @@ public class MoveTilt extends CommandBase
     @Override
     public void initialize()
     {
-        if(speed < 0 && !RobotContainer.getTilt().getLimit())
+        if(speed > 0 && !RobotContainer.getTilt().getLimit())
         {
             RobotContainer.getTilt().moveTilt(speed);
         }
-        else if(speed > 0)
+        else if(speed < 0)
         {
             RobotContainer.getTilt().moveTilt(speed);
         }
@@ -39,11 +39,12 @@ public class MoveTilt extends CommandBase
     @Override
     public void execute() 
     {
+        System.out.println(RobotContainer.getTilt().getLimit());
         if(speed > 0)
         {
             if(RobotContainer.getTilt().getLimit())
             {
-                RobotContainer.getTilt().moveTilt(0);
+               RobotContainer.getTilt().moveTilt(0);
             }
         }
         if(speed < 0)
@@ -57,11 +58,11 @@ public class MoveTilt extends CommandBase
     {
         if(speed > 0)
         {
-            return !RobotContainer.getJoy().getRawButton(Constants.TILT_BUTTON_UP);
+            return RobotContainer.getTilt().getLimit() || !RobotContainer.getJoy().getRawButton(Constants.TILT_BUTTON_UP);
         }
         else
         {
-            return !RobotContainer.getTilt().getLimit() || !RobotContainer.getJoy().getRawButton(Constants.TILT_BUTTON_DOWN);
+            return !RobotContainer.getJoy().getRawButton(Constants.TILT_BUTTON_DOWN);
         }
     }
 }

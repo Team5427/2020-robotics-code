@@ -80,9 +80,9 @@ public class Elevator extends SubsystemBase
     public void periodic() {
         //6379.0::-6361.25
         // SmartDashboard.putBoolean("Limit Left", !limitLeft.get());
-        System.out.println(!limitLeft.get() + "::" + !limitRight.get());
+        // System.out.println(!limitLeft.get() + "::" + !limitRight.get());
         // SmartDashboard.putBoolean("Limit Right", !limitRight.get());
-        System.out.println(leftEnc.getDistance() + "::" + rightEnc.getDistance());
+        // System.out.println(leftEnc.getDistance() + "::" + rightEnc.getDistance());
 
         if(getLimitLeft())
             {

@@ -42,6 +42,7 @@ import frc.robot.commands.MoveTilt;
 import frc.robot.commands.PointTurn;
 import frc.robot.commands.RotationControl;
 import frc.robot.commands.TurnToColor;
+import frc.robot.commands.VisionMotion;
 import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.DriveTrain;
@@ -95,6 +96,8 @@ public class RobotContainer
   private static Button moveElevatorDown;
   private static Button tiltButtonUp;
   private static Button tiltDownButton;
+  private static Button AimbotAndMove;
+
 
 
   private final SpeedController frontLeft, rearLeft;
@@ -253,6 +256,8 @@ public class RobotContainer
     moveElevatorDown = new JoystickButton(joy, Constants.ELEVATOR_DOWN_BUTTON);
     shooterTeleop = new JoystickButton(joy, Constants.SHOOTER_TELEOP);
     tiltDownButton = new JoystickButton(joy, Constants.TILT_BUTTON_DOWN);
+    AimbotAndMove = new JoystickButton(joy, 11);
+
     // rotationControl = new JoystickButton(joy, Constants.ROTATION_CONTROL);
     // positionControl = new JoystickButton(joy, Constants.POSITION_CONTROL);
 
@@ -260,11 +265,13 @@ public class RobotContainer
     transportButton.whenPressed(new MoveTransport(Constants.TRANSPORT_TELEOP_SPEED));
     pulleyButton.whenPressed(new MovePulley(Constants.PULLEY_TELEOP_SPEED));
     // shooterButton.whileHeld(new MoveShooter());
-    tiltButtonUp.whileHeld(new MoveTilt(Constants.TILT_SPEED).withTimeout(Constants.TILT_UP_TIMEOUT)); //change this timeout number
+    tiltButtonUp.whileHeld(new MoveTilt(Constants.TILT_SPEED)); //change this timeout number
     moveElevatorUp.whileHeld(new MoveElevator(Constants.ELEVATOR_SPEED));
     moveElevatorDown.whileHeld(new MoveElevator(-Constants.ELEVATOR_SPEED));
     shooterTeleop.whileHeld(new MoveShooter());
     tiltDownButton.whileHeld(new MoveTilt(-Constants.TILT_SPEED));
+    AimbotAndMove.whenPressed(new VisionMotion());
+    
     // rotationControl.whenPressed(new RotationControl());
     // positionControl.whenPressed(new TurnToColor());
   }

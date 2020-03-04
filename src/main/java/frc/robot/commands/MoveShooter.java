@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
@@ -29,10 +30,15 @@ public class MoveShooter extends CommandBase
     @Override
     public void initialize() 
     {
-        RobotContainer.getTransport().moveTransport(Constants.TRANSPORT_INTEGRATED_SPEED);
-        RobotContainer.getPulley().movePulley(Constants.PULLEY_TELEOP_SPEED);
-        RobotContainer.getShooter().getShooterMotorTop().set(ControlMode.PercentOutput, -Constants.SHOOTER_TELEOP_SPEED);
-        RobotContainer.getShooter().getShooterMotorBottom().set(ControlMode.PercentOutput, -Constants.SHOOTER_TELEOP_SPEED);
+        RobotContainer.getShooter().getShooterMotorTop().set(ControlMode.PercentOutput, -Constants.SHOOTER_UP_SPEED);
+        RobotContainer.getShooter().getShooterMotorBottom().set(ControlMode.PercentOutput, -Constants.SHOOTER_DOWN_SPEED);
+        double seconds = 0.2;
+        double start = Timer.getFPGATimestamp();
+        while(Timer.getFPGATimestamp()-start < seconds)
+        {
+        }
+        RobotContainer.getTransport().moveTransport(Constants.TRANSPORT_SHOOTING_SPEED);
+        RobotContainer.getPulley().movePulley(Constants.PULLEY_SHOOTING_SPEED);
         // Transport.shooterPressed = true;
         // if(Transport.proximityVoltageTwo >= Constants.PROXIMITY_UNCOVERED)
         // {
@@ -43,10 +49,10 @@ public class MoveShooter extends CommandBase
     @Override
     public void execute()
     {
-        RobotContainer.getTransport().moveTransport(Constants.TRANSPORT_INTEGRATED_SPEED);
-        RobotContainer.getPulley().movePulley(Constants.PULLEY_TELEOP_SPEED);
-        RobotContainer.getShooter().getShooterMotorTop().set(ControlMode.PercentOutput, -Constants.SHOOTER_TELEOP_SPEED);
-        RobotContainer.getShooter().getShooterMotorBottom().set(ControlMode.PercentOutput, -Constants.SHOOTER_TELEOP_SPEED);
+        RobotContainer.getTransport().moveTransport(Constants.TRANSPORT_SHOOTING_SPEED);
+        RobotContainer.getPulley().movePulley(Constants.PULLEY_SHOOTING_SPEED);
+        RobotContainer.getShooter().getShooterMotorTop().set(ControlMode.PercentOutput, -Constants.SHOOTER_UP_SPEED);
+        RobotContainer.getShooter().getShooterMotorBottom().set(ControlMode.PercentOutput, -Constants.SHOOTER_DOWN_SPEED);
         // motorOutputTop = RobotContainer.getShooter().getMotorOutputPercentTop();
         // SmartDashboard.putNumber("Velocity Top", RobotContainer.getShooter().getVelocityTop());
         // SmartDashboard.putNumber("Velocity Bottom", RobotContainer.getShooter().getVelocityBottom());

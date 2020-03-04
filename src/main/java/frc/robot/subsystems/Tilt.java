@@ -37,5 +37,6 @@ public class Tilt extends SubsystemBase
     @Override
     public void periodic() 
     {
+        System.out.println(getLimit());
     }
 }
