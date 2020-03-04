@@ -10,13 +10,11 @@ import frc.robot.subsystems.Intake;
 public class MoveTilt extends CommandBase
 {
     private double speed;
-    private double tilt_time_out;
 
     public MoveTilt(double speed)
     {
         addRequirements(RobotContainer.getTilt());
         this.speed = speed;
-        tilt_time_out = 0.5;
     }
 
     @Override

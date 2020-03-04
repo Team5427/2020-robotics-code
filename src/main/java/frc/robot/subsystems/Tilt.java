@@ -14,8 +14,6 @@ public class Tilt extends SubsystemBase
 { 
     private SpeedController tiltMotor;  
     private DigitalInput tiltLimit;
-    public static double startTime = 0;
-    public static double currTime = 0;
 
     public Tilt(SpeedController tiltMotor, DigitalInput tiltLimit) 
     {

@@ -260,7 +260,7 @@ public class RobotContainer
     transportButton.whenPressed(new MoveTransport(Constants.TRANSPORT_TELEOP_SPEED));
     pulleyButton.whenPressed(new MovePulley(Constants.PULLEY_TELEOP_SPEED));
     // shooterButton.whileHeld(new MoveShooter());
-    tiltButtonUp.whileHeld(new MoveTilt(Constants.TILT_SPEED).withTimeout(0.5)); //change this timeout number
+    tiltButtonUp.whileHeld(new MoveTilt(Constants.TILT_SPEED).withTimeout(Constants.TILT_UP_TIMEOUT)); //change this timeout number
     moveElevatorUp.whileHeld(new MoveElevator(Constants.ELEVATOR_SPEED));
     moveElevatorDown.whileHeld(new MoveElevator(-Constants.ELEVATOR_SPEED));
     shooterTeleop.whileHeld(new MoveShooter());

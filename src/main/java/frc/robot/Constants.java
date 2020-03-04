@@ -92,6 +92,8 @@ public final class Constants
     public static final double ELEVATOR_SPEED = 0.6;
     public static final double TILT_SPEED = 1.0;
     public static final double SHOOTER_TELEOP_SPEED = 0.8;
+
+    public static final double TILT_UP_TIMEOUT = 0.5;
     //1106.0 :: 1037.25
 
 
