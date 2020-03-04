@@ -27,8 +27,6 @@ public class VisionMove extends CommandBase {
   private DriveTrain driveTrain;
   NetworkTableInstance inst;
   NetworkTable table;
-  private int attempt =0;
-  private double constant = .0125;
   double dist;
   double bsd;
   boolean angledCentered = false;
@@ -39,22 +37,24 @@ public class VisionMove extends CommandBase {
   /**
    * Creates a new MoveStraight.
    */
-  public VisionMove() {
-    // Use addRequirements() here to declare subsystem dependencies.
+  public VisionMove() 
+  {
     addRequirements(RobotContainer.getDriveTrain());
-    //initialize();
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
+  public void initialize() 
+  {
     driveTrain = RobotContainer.getDriveTrain();
     inst = NetworkTableInstance.getDefault();
     table = inst.getTable("vision");
     double seconds = .25;
     driveTrain.stop();
     double start = Timer.getFPGATimestamp();
-    while(Timer.getFPGATimestamp()-start<seconds){
+
+    while(Timer.getFPGATimestamp()-start<seconds)
+    {
 
     }
   }
@@ -64,13 +64,13 @@ public class VisionMove extends CommandBase {
   @Override
   public void execute() 
   {
-   double size = table.getEntry("size").getDouble(999999);
+    double size = table.getEntry("size").getDouble(999999);
 
     if(size<minSize)
-    driveTrain.tankDrive(-.35,-.35);
+      driveTrain.tankDrive(-.35,-.35);
 
     else if(size>maxSize)
-    driveTrain.tankDrive(.35,.35);
+      driveTrain.tankDrive(.35,.35);
   }
 
   // Called once the command ends or is interrupted.
@@ -80,7 +80,8 @@ public class VisionMove extends CommandBase {
     double seconds = 1;
     driveTrain.stop();
     double start = Timer.getFPGATimestamp();
-    while(Timer.getFPGATimestamp()-start<seconds){
+    while(Timer.getFPGATimestamp()-start<seconds)
+    {
 
     }
   }
@@ -91,12 +92,11 @@ public class VisionMove extends CommandBase {
   {
     double size = table.getEntry("size").getDouble(999999);
 
-
     if(size>minSize && size<maxSize)
     {
-         return true;
+      return true;
     }
     
- return false;
-}
+    return false;
+  }
 }
