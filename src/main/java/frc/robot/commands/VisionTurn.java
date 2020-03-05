@@ -33,7 +33,9 @@ public class VisionTurn extends CommandBase {
   boolean angledCentered = false;
   double newDistFromCenter;
   double newCenter;
-  double bias;
+  double bias = 2;
+  double constant = 0;
+
   /**
    * Creates a new MoveStraight.
    */
@@ -52,6 +54,7 @@ public class VisionTurn extends CommandBase {
     driveTrain = RobotContainer.getDriveTrain();
     inst = NetworkTableInstance.getDefault();
     table = inst.getTable("vision");
+
   }
 
   @Override
@@ -125,13 +128,15 @@ public class VisionTurn extends CommandBase {
     System.out.println("BEFORE BIAS:" +dist);
     dist -=bias;
     dist= Math.abs(dist);
-    System.out.println("dist:"+dist);
 
-    if(dist<3)
+    if(proportion>.9)
+      bias = constant * proportion;
+    System.out.println("dist:"+dist);
+    dist +=bias;
+    if(dist<3+ constant)
     {
       return true;
     }
-
     return false;
   }
 }

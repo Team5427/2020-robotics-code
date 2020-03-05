@@ -215,7 +215,6 @@ public class RobotContainer
 
     elevator = new Elevator(elevatorLeft, elevatorRight, limitSwitchLeft, limitSwitchRight, elevatorLeftEnc, elevatorRightEnc);
 
-
     //creating a profile
     //COUNTER CLOCKWISE is POSITIVE, CLOCKWISE is NEGATIVE
     // motion = new MotionProfile(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(0, 2, new Rotation2d(45)), new ArrayList<Translation2d>());
@@ -228,11 +227,11 @@ public class RobotContainer
     shooterMotorBottom.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, Constants.K_TIMEOUT_MS);
     shooterMotorBottom.setSensorPhase(true);
     shooter = new Shooter(shooterMotorTop, shooterMotorBottom);
+
+    
     
     // cs = new ColorSensorV3(i2cport);
     // colorSensor = new ColorSensor(colorMotor, cs);
-          
-
 
     // Configure the button bindings
     configureButtonBindings();
@@ -271,7 +270,7 @@ public class RobotContainer
     moveElevatorDown.whileHeld(new MoveElevator(-Constants.ELEVATOR_SPEED));
     shooterTeleop.whileHeld(new MoveShooter());
     tiltDownButton.whileHeld(new MoveTilt(-Constants.TILT_SPEED));
-    aimbot.whenPressed(new VisionTurn(0));
+    aimbot.whenPressed(new VisionTurn(0),true);
     
     // rotationControl.whenPressed(new RotationControl());
     // positionControl.whenPressed(new TurnToColor());
