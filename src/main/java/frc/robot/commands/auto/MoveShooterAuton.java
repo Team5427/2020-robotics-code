@@ -35,6 +35,7 @@ public class MoveShooterAuton extends CommandBase
         RobotContainer.getShooter().getShooterMotorTop().set(ControlMode.PercentOutput, -Constants.SHOOTER_UP_SPEED);
         RobotContainer.getShooter().getShooterMotorBottom().set(ControlMode.PercentOutput, -Constants.SHOOTER_DOWN_SPEED);
     }
+    
 
     @Override
     public void end(boolean interrupted) {

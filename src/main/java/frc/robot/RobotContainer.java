@@ -58,6 +58,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.AnalogInput;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Throttle;
 import frc.robot.subsystems.Tilt;
 import edu.wpi.first.wpilibj2.command.Command;
 import com.ctre.phoenix.motorcontrol.can.*;
@@ -149,6 +150,9 @@ public class RobotContainer
   private static DigitalInput tiltSwitch;
   private static Tilt tilt;
 
+  private static SpeedController throttleMotor;
+  private static Throttle throttle;
+
   private static Ultrasonic ultra;
 
   /**
@@ -195,11 +199,11 @@ public class RobotContainer
 
 
     //encoders have 1440 as PPR and 360 CPR
-    // encRight = new Encoder(9, 8);
-    // encRight.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
-    // encRight.setReverseDirection(true);
-    // encLeft = new Encoder(4, 3);
-    // encLeft.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
+    encRight = new Encoder(4, 5);
+    encRight.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
+    encRight.setReverseDirection(true);
+    encLeft = new Encoder(6, 7);
+    encLeft.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
    
     ArrayList<Translation2d> waypoints = new ArrayList<Translation2d>();
     waypoints.add(new Translation2d(0, 1));
@@ -227,6 +231,10 @@ public class RobotContainer
     shooterMotorBottom.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, Constants.K_TIMEOUT_MS);
     shooterMotorBottom.setSensorPhase(true);
     shooter = new Shooter(shooterMotorTop, shooterMotorBottom);
+
+    throttleMotor = new WPI_VictorSPX(Constants.CLIMB_MANIPULATOR);
+    throttle = new Throttle(throttleMotor);
+    ultra = new Ultrasonic(22, 23);
 
     
     
