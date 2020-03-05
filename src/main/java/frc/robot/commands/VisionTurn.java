@@ -60,9 +60,9 @@ public class VisionTurn extends CommandBase {
   @Override
   public void execute() 
   {
-    dist = table.getEntry("targetDistanceFromCenter").getDouble(999999);
+    dist = table.getEntry("targetDistanceFromCenter").getDouble(-999999);
     dist -=bias;
-    bsd = table.getEntry("biggestSideDifference").getDouble(999999);
+    bsd = table.getEntry("biggestSideDifference").getDouble(0);
   
     if(dist==999999)
       ;
@@ -124,16 +124,17 @@ public class VisionTurn extends CommandBase {
     SmartDashboard.putNumber("attempt", attempt);
     boolean centered = table.getEntry("isTargetCentered").getBoolean(false);
     double proportion = table.getEntry("proportion").getDouble(1);
-    dist = table.getEntry("targetDistanceFromCenter").getDouble(999999);
+    dist = table.getEntry("targetDistanceFromCenter").getDouble(0);
     System.out.println("BEFORE BIAS:" +dist);
     dist -=bias;
     dist= Math.abs(dist);
 
     if(proportion>.9)
       bias = constant * proportion;
+
     System.out.println("dist:"+dist);
-    dist +=bias;
-    if(dist<3+ constant)
+    
+    if(dist<3+ bias)
     {
       return true;
     }

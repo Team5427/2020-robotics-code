@@ -42,8 +42,7 @@ public class StopVision extends CommandBase {
   @Override
   public void initialize() 
   {
-
-
+    driveTrain.stop();
   }
 
   @Override

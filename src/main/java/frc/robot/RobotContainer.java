@@ -283,7 +283,7 @@ public class RobotContainer
     shooterTeleop.whileHeld(new MoveShooter());
     tiltDownButton.whileHeld(new MoveTilt(-Constants.TILT_SPEED));
     aimbot.whenPressed(new VisionTurn(0),true);
-    aimbot.whenPressed(new StopVision());
+    stopAimbot.whenPressed(new StopVision());
     
     // rotationControl.whenPressed(new RotationControl());
     // positionControl.whenPressed(new TurnToColor());

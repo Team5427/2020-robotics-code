@@ -91,6 +91,13 @@ public class VisionMove extends CommandBase {
   public boolean isFinished()
   {
     double size = table.getEntry("size").getDouble(999999);
+    boolean targetExists = table.getEntry("targetExists").getBoolean(false);
+
+    if(RobotContainer.getJoy().getRawButtonPressed(9))
+      return true;
+      
+    if(!targetExists)
+      return true;
 
     if(size>minSize && size<maxSize)
     {
