@@ -12,16 +12,6 @@ import frc.robot.subsystems.Transport;
 
 public class MoveShooter extends CommandBase
 {
-    private int loops = 0;
-    private double velocity = 0;
-    private double targetVelocityTop = -20;
-    private double targetVelocityBottom = -20;
-    private double motorOutputTop = 0;
-    private double motorOutputBottom = 0;
-
-    private double topError = 0;
-    private double bottomError = 0;
-
     public MoveShooter()
     {
         addRequirements(RobotContainer.getShooter(), RobotContainer.getPulley());
@@ -30,20 +20,9 @@ public class MoveShooter extends CommandBase
     @Override
     public void initialize() 
     {
-        RobotContainer.getShooter().getShooterMotorTop().set(ControlMode.PercentOutput, -Constants.SHOOTER_UP_SPEED);
-        RobotContainer.getShooter().getShooterMotorBottom().set(ControlMode.PercentOutput, -Constants.SHOOTER_DOWN_SPEED);
-        double seconds = 0.2;
-        double start = Timer.getFPGATimestamp();
-        while(Timer.getFPGATimestamp()-start < seconds)
-        {
-        }
+        RobotContainer.getShooter().getShooterMotorTop().set(-Constants.SHOOTER_UP_SPEED);
         RobotContainer.getTransport().moveTransport(Constants.TRANSPORT_SHOOTING_SPEED);
         RobotContainer.getPulley().movePulley(Constants.PULLEY_SHOOTING_SPEED);
-        // Transport.shooterPressed = true;
-        // if(Transport.proximityVoltageTwo >= Constants.PROXIMITY_UNCOVERED)
-        // {
-        //     RobotContainer.getTransport().moveTransport(Constants.TRANSPORT_INTEGRATED_SPEED);
-        // }
     }
 
     @Override
@@ -51,35 +30,6 @@ public class MoveShooter extends CommandBase
     {
         RobotContainer.getTransport().moveTransport(Constants.TRANSPORT_SHOOTING_SPEED);
         RobotContainer.getPulley().movePulley(Constants.PULLEY_SHOOTING_SPEED);
-        RobotContainer.getShooter().getShooterMotorTop().set(ControlMode.PercentOutput, -Constants.SHOOTER_UP_SPEED);
-        RobotContainer.getShooter().getShooterMotorBottom().set(ControlMode.PercentOutput, -Constants.SHOOTER_DOWN_SPEED);
-        // motorOutputTop = RobotContainer.getShooter().getMotorOutputPercentTop();
-        // SmartDashboard.putNumber("Velocity Top", RobotContainer.getShooter().getVelocityTop());
-        // SmartDashboard.putNumber("Velocity Bottom", RobotContainer.getShooter().getVelocityBottom());
-
-        // RobotContainer.getShooter().getShooterMotorTop().set(ControlMode.Velocity, targetVelocityTop*((double)4096/(double)600));
-        // RobotContainer.getShooter().getShooterMotorBottom().set(ControlMode.Velocity, targetVelocityBottom*((double)4096/(double)600));
-
-        // topError = RobotContainer.getShooter().getShooterMotorTop().getClosedLoopError(Constants.SHOOTER_PID_ID)*((double)600/(double)4096);
-        // bottomError = RobotContainer.getShooter().getShooterMotorBottom().getClosedLoopError(Constants.SHOOTER_PID_ID)*((double)600/(double)4096);
-        // SmartDashboard.putNumber("Error Top", topError);
-        // SmartDashboard.putNumber("Error Bottom", bottomError);
-
-
-        // if(topError <= Constants.SHOOTER_ERROR_TOLERANCE && bottomError <= Constants.SHOOTER_ERROR_TOLERANCE)
-        // {
-        //     RobotContainer.loop++;
-        // }
-        // else
-        // {
-        //     RobotContainer.loop = 0;
-        // }
-
-        // if(RobotContainer.loop >= 2)
-        // {
-        //     RobotContainer.getPulley().movePulley(Constants.PULLEY_TELEOP_SPEED);
-        //     RobotContainer.loop = 0;
-        // }
     }
 
     @Override

@@ -130,8 +130,8 @@ public class RobotContainer
   private static AnalogInput transportProximity;
   private static AnalogInput transportProximityTwo;
 
-  private static TalonSRX shooterMotorTop;
-  private static TalonSRX shooterMotorBottom;
+  private static SpeedController shooterMotorTop;
+  private static SpeedController shooterMotorBottom;
 
   private static Shooter shooter;
 
@@ -223,13 +223,13 @@ public class RobotContainer
     //COUNTER CLOCKWISE is POSITIVE, CLOCKWISE is NEGATIVE
     // motion = new MotionProfile(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(0, 2, new Rotation2d(45)), new ArrayList<Translation2d>());
 
-    shooterMotorTop = new TalonSRX(Constants.SHOOTER_MOTOR_TOP);
-    shooterMotorTop.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, Constants.K_TIMEOUT_MS);
-    shooterMotorTop.setSensorPhase(true);
+    shooterMotorTop = new WPI_VictorSPX(Constants.SHOOTER_MOTOR_TOP);
+    // shooterMotorTop.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, Constants.K_TIMEOUT_MS);
+    // shooterMotorTop.setSensorPhase(true);
 
-    shooterMotorBottom = new TalonSRX(Constants.SHOOTER_MOTOR_BOTTOM);
-    shooterMotorBottom.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, Constants.K_TIMEOUT_MS);
-    shooterMotorBottom.setSensorPhase(true);
+    shooterMotorBottom = new WPI_VictorSPX(Constants.SHOOTER_MOTOR_BOTTOM);
+    // shooterMotorBottom.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, Constants.K_TIMEOUT_MS);
+    // shooterMotorBottom.setSensorPhase(true);
     shooter = new Shooter(shooterMotorTop, shooterMotorBottom);
 
     throttleMotor = new WPI_VictorSPX(Constants.CLIMB_MANIPULATOR);
@@ -308,7 +308,6 @@ public class RobotContainer
   public static Pulley getPulley(){return pulley;}
   public static Tilt getTilt(){return tilt;}
   public static Shooter getShooter(){return shooter;}
-  public static TalonSRX getShooterMotor(){return shooterMotorTop;}
   public static Elevator getElevator(){return elevator;}
   public static ColorSensor getColorSensor(){return colorSensor;}
   public Command getTurn(){ return new PointTurn(90);}
