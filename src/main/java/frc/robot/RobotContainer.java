@@ -41,6 +41,7 @@ import frc.robot.commands.MoveStraightPID;
 import frc.robot.commands.MoveTilt;
 import frc.robot.commands.PointTurn;
 import frc.robot.commands.RotationControl;
+import frc.robot.commands.StopVision;
 import frc.robot.commands.TurnToColor;
 import frc.robot.commands.VisionMotion;
 import frc.robot.commands.VisionTurn;
@@ -99,6 +100,8 @@ public class RobotContainer
   private static Button tiltButtonUp;
   private static Button tiltDownButton;
   private static Button aimbot;
+  private static Button stopAimbot;
+
 
 
 
@@ -265,6 +268,7 @@ public class RobotContainer
     shooterTeleop = new JoystickButton(joy, Constants.SHOOTER_TELEOP);
     tiltDownButton = new JoystickButton(joy, Constants.TILT_BUTTON_DOWN);
     aimbot = new JoystickButton(joy, 11);
+    stopAimbot = new JoystickButton(joy, 9);
 
     // rotationControl = new JoystickButton(joy, Constants.ROTATION_CONTROL);
     // positionControl = new JoystickButton(joy, Constants.POSITION_CONTROL);
@@ -279,6 +283,7 @@ public class RobotContainer
     shooterTeleop.whileHeld(new MoveShooter());
     tiltDownButton.whileHeld(new MoveTilt(-Constants.TILT_SPEED));
     aimbot.whenPressed(new VisionTurn(0),true);
+    aimbot.whenPressed(new StopVision());
     
     // rotationControl.whenPressed(new RotationControl());
     // positionControl.whenPressed(new TurnToColor());
