@@ -58,7 +58,7 @@ public class Transport extends SubsystemBase
     public void periodic()
     {
         proximityVoltage = getDistance();
-        proximityVoltageTwo = getDistanceTwo();
+        // proximityVoltageTwo = getDistanceTwo();
 
         //something enters the first sensor
         if(proximityVoltage <= Constants.PROXIMITY_COVERED)
@@ -88,39 +88,39 @@ public class Transport extends SubsystemBase
             RobotContainer.getTransport().stop();
         }
 
-        //something enters the second sensor
-        if(proximityVoltageTwo <= Constants.PROXIMITY_COVERED)
-        {
-            secondCount++;
+        // //something enters the second sensor
+        // if(proximityVoltageTwo <= Constants.PROXIMITY_COVERED)
+        // {
+        //     secondCount++;
 
-            if(secondCount >= 3)
-            {
-                // if(RobotContainer.getShooter().getShooterMotorBottom().getClosedLoopError() >= Constants.SHOOTER_ERROR_TOLERANCE ||
-                // RobotContainer.getShooter().getShooterMotorTop().getClosedLoopError() >= Constants.SHOOTER_ERROR_TOLERANCE)
-                // {
-                //     RobotContainer.getTransport().stop();
-                //     RobotContainer.getPulley().stop();
-                // }
-                // else
-                // {
-                    secondSensor = true;
-                    RobotContainer.getTransport().moveTransport(Constants.TRANSPORT_INTEGRATED_SPEED);
-                    RobotContainer.getPulley().movePulley(Constants.PULLEY_TELEOP_SPEED);
-                    secondCount = 0;
-                // }
-            }
-        }
-        else
-        {
-            secondCount = 0;
-        }
+        //     if(secondCount >= 3)
+        //     {
+        //         // if(RobotContainer.getShooter().getShooterMotorBottom().getClosedLoopError() >= Constants.SHOOTER_ERROR_TOLERANCE ||
+        //         // RobotContainer.getShooter().getShooterMotorTop().getClosedLoopError() >= Constants.SHOOTER_ERROR_TOLERANCE)
+        //         // {
+        //         //     RobotContainer.getTransport().stop();
+        //         //     RobotContainer.getPulley().stop();
+        //         // }
+        //         // else
+        //         // {
+        //             secondSensor = true;
+        //             RobotContainer.getTransport().moveTransport(Constants.TRANSPORT_INTEGRATED_SPEED);
+        //             RobotContainer.getPulley().movePulley(Constants.PULLEY_TELEOP_SPEED);
+        //             secondCount = 0;
+        //         // }
+        //     }
+        // }
+        // else
+        // {
+        //     secondCount = 0;
+        // }
 
-        if(secondSensor && proximityVoltageTwo >= Constants.PROXIMITY_COVERED && RobotContainer.ballsOut == RobotContainer.ballsIn)
-        {
-            RobotContainer.getTransport().stop();
-            secondSensor = false;
-            shooterPressed = false;
-        }
+        // if(secondSensor && proximityVoltageTwo >= Constants.PROXIMITY_COVERED && RobotContainer.ballsOut == RobotContainer.ballsIn)
+        // {
+        //     RobotContainer.getTransport().stop();
+        //     secondSensor = false;
+        //     shooterPressed = false;
+        // }
     }
 
 }

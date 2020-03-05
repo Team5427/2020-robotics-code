@@ -282,7 +282,7 @@ public class RobotContainer
     moveElevatorDown.whileHeld(new MoveElevator(-Constants.ELEVATOR_SPEED));
     shooterTeleop.whileHeld(new MoveShooter());
     tiltDownButton.whileHeld(new MoveTilt(-Constants.TILT_SPEED));
-    aimbot.whenPressed(new VisionTurn(0),true);
+    aimbot.whenPressed(new VisionTurn(0), true);
     stopAimbot.whenPressed(new StopVision());
     
     // rotationControl.whenPressed(new RotationControl());
@@ -298,7 +298,7 @@ public class RobotContainer
    */
   public Command getAutonomousCommand() 
   {
-    return null;
+    return new MotionProfile(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(-2, 0, new Rotation2d(0)), new ArrayList<Translation2d>());
   }
   public static DriveTrain getDriveTrain(){return driveTrain;}
   public static SpeedControllerGroup getLeftSCG(){return leftDrive;}

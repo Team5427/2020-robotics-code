@@ -155,8 +155,6 @@ public class Robot extends TimedRobot
     {
       m_autonomousCommand.schedule();
     }
-
-    //CommandScheduler.getInstance().schedule(new StraightAndTurn());
   }
 
   /**
