@@ -33,8 +33,8 @@ public class VisionTurn extends CommandBase {
   boolean angledCentered = false;
   double newDistFromCenter;
   double newCenter;
-  double bias = 2;
-  double constant = 0;
+  double bias = 0;
+  double constant = 2;
 
   /**
    * Creates a new MoveStraight.
