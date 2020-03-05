@@ -204,7 +204,7 @@ public class RobotContainer
     //encoders have 1440 as PPR and 360 CPR
     encRight = new Encoder(4, 5);
     encRight.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
-    encRight.setReverseDirection(true);
+    //encRight.setReverseDirection(true);
     encLeft = new Encoder(6, 7);
     encLeft.setDistancePerPulse(Constants.DISTANCE_PER_PULSE); // cicrumference divided by 1440 (feet)
    
