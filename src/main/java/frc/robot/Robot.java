@@ -27,6 +27,8 @@ import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.Pulley;
 import frc.robot.subsystems.Transport;
 import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
+
 import com.revrobotics.ColorSensorV3;
 
 /**
@@ -42,6 +44,7 @@ public class Robot extends TimedRobot
 
   private RobotContainer m_robotContainer;
   private static double proximityVoltage;
+  PowerDistributionPanel pdp = new PowerDistributionPanel(0);
 
   
   /**
@@ -87,6 +90,7 @@ public class Robot extends TimedRobot
     SmartDashboard.putBoolean("First Sensor", Transport.firstSensor);
     SmartDashboard.putBoolean("Second Sensor", Transport.secondSensor);
     SmartDashboard.putBoolean("Third Sensor", Pulley.sensorThree);
+    System.out.println(pdp.getCurrent(2) + ": current :" + pdp.getCurrent(13));
 
 
     

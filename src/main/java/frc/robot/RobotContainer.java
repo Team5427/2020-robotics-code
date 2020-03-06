@@ -281,7 +281,7 @@ public class RobotContainer
     tiltButtonUp.whileHeld(new MoveTilt(Constants.TILT_SPEED)); //change this timeout number
     moveElevatorUp.whileHeld(new MoveElevator(Constants.ELEVATOR_SPEED));
     moveElevatorDown.whileHeld(new MoveElevator(-Constants.ELEVATOR_SPEED));
-    shooterTeleop.whileHeld(new MoveShooterTransport());
+    shooterTeleop.whileHeld(new MoveShooterTeleop(0.9));
     tiltDownButton.whileHeld(new MoveTilt(-Constants.TILT_SPEED));
     aimbot.whenPressed(new VisionTurn(0), true);
     stopAimbot.whenPressed(new StopVision());

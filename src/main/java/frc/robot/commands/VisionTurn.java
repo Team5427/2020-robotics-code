@@ -63,6 +63,7 @@ public class VisionTurn extends CommandBase {
     dist = table.getEntry("targetDistanceFromCenter").getDouble(-999999);
     dist -=bias;
     bsd = table.getEntry("biggestSideDifference").getDouble(0);
+    
   
     if(dist==999999)
       ;
@@ -133,7 +134,7 @@ public class VisionTurn extends CommandBase {
     {
       return true;
     }
-    
+
     if(proportion>.9)
       bias = constant * proportion;
 
