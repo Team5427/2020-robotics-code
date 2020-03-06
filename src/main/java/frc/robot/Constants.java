@@ -118,8 +118,8 @@ public final class Constants
     public static final int ELEVATOR_LEFT_MOTOR = 13;
     public static final int ELEVATOR_RIGHT_MOTOR = 2;
 
-    public static final int SHOOTER_MOTOR_TOP = 8;
-    public static final int SHOOTER_MOTOR_BOTTOM = 7;
+    public static final int SHOOTER_MOTOR_TOP = 9;
+    public static final int SHOOTER_MOTOR_BOTTOM = 6;
 
     public static final int CLIMB_MANIPULATOR = 4;
 

@@ -129,6 +129,11 @@ public class VisionTurn extends CommandBase {
     dist -=bias;
     dist= Math.abs(dist);
 
+    if(RobotContainer.getJoy().getY() != 0 || RobotContainer.getJoy().getZ() != 0)
+    {
+      return true;
+    }
+    
     if(proportion>.9)
       bias = constant * proportion;
 
