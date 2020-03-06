@@ -20,11 +20,6 @@ public class MoveShooterAuton extends CommandBase
     @Override
     public void initialize() {
         RobotContainer.getShooter().moveShooter(Constants.SHOOTER_UP_SPEED);
-        double seconds = 0.2;
-        double start = Timer.getFPGATimestamp();
-        while(Timer.getFPGATimestamp()-start < seconds)
-        {
-        }
         RobotContainer.getTransport().moveTransport(Constants.TRANSPORT_SHOOTING_SPEED);
         RobotContainer.getPulley().movePulley(Constants.PULLEY_SHOOTING_SPEED);
         startTime = currTime = Timer.getFPGATimestamp();
@@ -50,6 +45,6 @@ public class MoveShooterAuton extends CommandBase
     @Override
     public boolean isFinished() 
     {
-        return currTime - startTime >= 8.0;
+        return currTime - startTime >= 6.0;
     }
 }

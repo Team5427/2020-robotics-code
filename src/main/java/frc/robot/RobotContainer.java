@@ -40,12 +40,14 @@ import frc.robot.commands.MoveStraight;
 import frc.robot.commands.MoveTransport;
 import frc.robot.commands.MoveStraightPID;
 import frc.robot.commands.MoveTilt;
+import frc.robot.commands.MoveTiltAuto;
 import frc.robot.commands.PointTurn;
 import frc.robot.commands.RotationControl;
 import frc.robot.commands.StopVision;
 import frc.robot.commands.TurnToColor;
 import frc.robot.commands.VisionMotion;
 import frc.robot.commands.VisionTurn;
+import frc.robot.commands.auto.ShooterAuton;
 import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.DriveTrain;
@@ -102,6 +104,7 @@ public class RobotContainer
   private static Button tiltDownButton;
   private static Button aimbot;
   private static Button stopAimbot;
+  private static Button tiltAuto;
 
 
 
@@ -271,6 +274,7 @@ public class RobotContainer
     tiltDownButton = new JoystickButton(joy, Constants.TILT_BUTTON_DOWN);
     aimbot = new JoystickButton(joy, 11);
     stopAimbot = new JoystickButton(joy, 9);
+    tiltAuto = new JoystickButton(joy, 10);
 
     // rotationControl = new JoystickButton(joy, Constants.ROTATION_CONTROL);
     // positionControl = new JoystickButton(joy, Constants.POSITION_CONTROL);
@@ -282,10 +286,11 @@ public class RobotContainer
     tiltButtonUp.whileHeld(new MoveTilt(Constants.TILT_SPEED)); //change this timeout number
     moveElevatorUp.whileHeld(new MoveElevator(Constants.ELEVATOR_SPEED));
     moveElevatorDown.whileHeld(new MoveElevator(-Constants.ELEVATOR_SPEED));
-    shooterTeleop.whileHeld(new MoveShooterTeleop(0.9));
+    shooterTeleop.whileHeld(new MoveShooterTeleop(1.0));
     tiltDownButton.whileHeld(new MoveTilt(-Constants.TILT_SPEED));
-    aimbot.whenPressed(new VisionTurn(0), true);
+    aimbot.whenPressed(new VisionTurn(0));
     stopAimbot.whenPressed(new StopVision(),true);
+    tiltAuto.whenPressed(new MoveTiltAuto(Constants.TILT_SPEED));
     
     // rotationControl.whenPressed(new RotationControl());
     // positionControl.whenPressed(new TurnToColor());
@@ -300,7 +305,7 @@ public class RobotContainer
    */
   public Command getAutonomousCommand() 
   {
-    return new MotionProfile(new Pose2d(0, 0, new Rotation2d(0)), new Pose2d(-2, 0, new Rotation2d(0)), new ArrayList<Translation2d>());
+    return new ShooterAuton();
   }
   public static DriveTrain getDriveTrain(){return driveTrain;}
   public static SpeedControllerGroup getLeftSCG(){return leftDrive;}

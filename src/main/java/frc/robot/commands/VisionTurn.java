@@ -34,7 +34,7 @@ public class VisionTurn extends CommandBase {
   double newDistFromCenter;
   double newCenter;
   double bias = 0;
-  double constant = 2;
+  double constant = 4;
 
   private double startTime;
   private double currTime;
@@ -76,6 +76,7 @@ public class VisionTurn extends CommandBase {
     bsd = table.getEntry("biggestSideDifference").getDouble(0);
     System.out.println(dist);
     boolean targetExists = table.getEntry("targetExists").getBoolean(false);
+    dist -=4;
 
     
     if(!targetExists)
@@ -139,23 +140,24 @@ public class VisionTurn extends CommandBase {
     boolean centered = table.getEntry("isTargetCentered").getBoolean(false);
     double proportion = table.getEntry("proportion").getDouble(1);
     dist = table.getEntry("targetDistanceFromCenter").getDouble(0);
+    dist-=4;
     //System.out.println("BEFORE BIAS:" +dist);
     dist -=bias;
     dist= Math.abs(dist);
+   
 
-    if(RobotContainer.getJoy().getY() != 0 || RobotContainer.getJoy().getZ() != 0)
-    {
-      return true;
-    }
+    // if(RobotContainer.getJoy().getY() != 0 || RobotContainer.getJoy().getZ() != 0)
+    //   {return true;}
 
-    System.out.println("dist:"+dist);
-    if( currTime - startTime >= 8.0)
-      {return true;}
+    // System.out.println("dist:"+dist);
+    
+    // if( currTime - startTime >= 8.0)
+    //   {return true;}
 
     if(proportion>.9 && dist<3+ (constant*proportion))
-      {return true;}
+       {return true;}
 
-    else if(dist<3)
+    if(dist<3)
       {return true;}
 
     return false;

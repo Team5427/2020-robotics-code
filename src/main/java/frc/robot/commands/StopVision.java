@@ -42,13 +42,13 @@ public class StopVision extends CommandBase {
   @Override
   public void initialize() 
   {
-    driveTrain.stop();
+    RobotContainer.getDriveTrain().stop();
   }
 
   @Override
   public void execute() 
   {
-    driveTrain.stop();
+    RobotContainer.getDriveTrain().stop();
 
      
   }
@@ -57,7 +57,7 @@ public class StopVision extends CommandBase {
   @Override
   public void end(boolean interrupted)
   {
-    driveTrain.stop();
+    RobotContainer.getDriveTrain().stop();
   }
 
   // Returns true when the command should end.
