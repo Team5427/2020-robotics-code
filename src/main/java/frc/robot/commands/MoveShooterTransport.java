@@ -27,6 +27,7 @@ public class MoveShooterTransport extends ParallelCommandGroup {
     // super(new FooCommand(), new BarCommand());
     //super( new VisionTurn(), new PointTurn(10),new MoveStraightPID(-2), new VisionTurn());
     
-    super(new MoveTransport(Constants.TRANSPORT_INTEGRATED_SPEED));
+    super(new MoveShooterTeleop(Constants.SHOOTER_UP_SPEED), new MovePulley(Constants.PULLEY_SHOOTING_SPEED), new MoveTransport(Constants.TRANSPORT_SHOOTING_SPEED));
+
   }
 }

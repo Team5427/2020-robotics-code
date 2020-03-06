@@ -35,6 +35,7 @@ import frc.robot.commands.MoveIntake;
 import frc.robot.commands.MovePulley;
 import frc.robot.commands.MoveShooter;
 import frc.robot.commands.MoveShooterTeleop;
+import frc.robot.commands.MoveShooterTransport;
 import frc.robot.commands.MoveStraight;
 import frc.robot.commands.MoveTransport;
 import frc.robot.commands.MoveStraightPID;
@@ -280,7 +281,7 @@ public class RobotContainer
     tiltButtonUp.whileHeld(new MoveTilt(Constants.TILT_SPEED)); //change this timeout number
     moveElevatorUp.whileHeld(new MoveElevator(Constants.ELEVATOR_SPEED));
     moveElevatorDown.whileHeld(new MoveElevator(-Constants.ELEVATOR_SPEED));
-    shooterTeleop.whileHeld(new MoveShooter());
+    shooterTeleop.whileHeld(new MoveShooterTransport());
     tiltDownButton.whileHeld(new MoveTilt(-Constants.TILT_SPEED));
     aimbot.whenPressed(new VisionTurn(0), true);
     stopAimbot.whenPressed(new StopVision());
