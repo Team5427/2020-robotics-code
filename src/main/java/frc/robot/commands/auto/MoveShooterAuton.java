@@ -38,7 +38,6 @@ public class MoveShooterAuton extends CommandBase
         RobotContainer.getPulley().movePulley(Constants.PULLEY_SHOOTING_SPEED);
         RobotContainer.getShooter().moveShooter(Constants.SHOOTER_UP_SPEED);
     }
-    
 
     @Override
     public void end(boolean interrupted) 
@@ -51,6 +50,6 @@ public class MoveShooterAuton extends CommandBase
     @Override
     public boolean isFinished() 
     {
-        return currTime - startTime >= 5.0;
+        return currTime - startTime >= 8.0;
     }
 }

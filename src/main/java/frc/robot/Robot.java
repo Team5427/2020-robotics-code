@@ -44,7 +44,7 @@ public class Robot extends TimedRobot
 
   private RobotContainer m_robotContainer;
   private static double proximityVoltage;
-  PowerDistributionPanel pdp = new PowerDistributionPanel(0);
+  PowerDistributionPanel pdp = new PowerDistributionPanel(16);
 
   
   /**
@@ -90,10 +90,11 @@ public class Robot extends TimedRobot
     SmartDashboard.putBoolean("First Sensor", Transport.firstSensor);
     SmartDashboard.putBoolean("Second Sensor", Transport.secondSensor);
     SmartDashboard.putBoolean("Third Sensor", Pulley.sensorThree);
-    System.out.println(pdp.getCurrent(2) + ": current :" + pdp.getCurrent(13));
+    //System.out.println(pdp.getCurrent(2) + ": current :" + pdp.getCurrent(13));
 
 
-    
+    SmartDashboard.putNumber("Ultrasonic", RobotContainer.getUltrasonic().getRangeInches());
+
     // m_robotContainer.getColorSensor().getProximity();
     // m_robotContainer.getColorSensor().getColor();
 

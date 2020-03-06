@@ -239,6 +239,7 @@ public class RobotContainer
     throttleMotor = new WPI_VictorSPX(Constants.CLIMB_MANIPULATOR);
     throttle = new Throttle(throttleMotor);
     ultra = new Ultrasonic(22, 23);
+    ultra.setAutomaticMode(true);
 
     
     
@@ -284,7 +285,7 @@ public class RobotContainer
     shooterTeleop.whileHeld(new MoveShooterTeleop(0.9));
     tiltDownButton.whileHeld(new MoveTilt(-Constants.TILT_SPEED));
     aimbot.whenPressed(new VisionTurn(0), true);
-    stopAimbot.whenPressed(new StopVision());
+    stopAimbot.whenPressed(new StopVision(),true);
     
     // rotationControl.whenPressed(new RotationControl());
     // positionControl.whenPressed(new TurnToColor());
@@ -316,5 +317,6 @@ public class RobotContainer
   public static Shooter getShooter(){return shooter;}
   public static Elevator getElevator(){return elevator;}
   public static ColorSensor getColorSensor(){return colorSensor;}
+  public static Ultrasonic getUltrasonic(){return ultra;}
   public Command getTurn(){ return new PointTurn(90);}
 }

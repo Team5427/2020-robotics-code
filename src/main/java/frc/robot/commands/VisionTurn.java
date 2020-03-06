@@ -36,6 +36,8 @@ public class VisionTurn extends CommandBase {
   double bias = 0;
   double constant = 2;
 
+  private double startTime;
+  private double currTime;
   /**
    * Creates a new MoveStraight.
    */
@@ -45,6 +47,8 @@ public class VisionTurn extends CommandBase {
   {
     addRequirements(RobotContainer.getDriveTrain());
     this.bias = bias;
+    startTime = currTime = 0;
+
   }
 
   // Called when the command is initially scheduled.
@@ -55,18 +59,27 @@ public class VisionTurn extends CommandBase {
     inst = NetworkTableInstance.getDefault();
     table = inst.getTable("vision");
 
+    double seconds = 0.2;
+    double start = Timer.getFPGATimestamp();
+    while(Timer.getFPGATimestamp()-start < seconds)
+    {
+    }
+    startTime = currTime = Timer.getFPGATimestamp();
   }
 
   @Override
   public void execute() 
   {
-    dist = table.getEntry("targetDistanceFromCenter").getDouble(-999999);
+    currTime = Timer.getFPGATimestamp();
+    dist = table.getEntry("targetDistanceFromCenter").getDouble(0);
     dist -=bias;
     bsd = table.getEntry("biggestSideDifference").getDouble(0);
+    System.out.println(dist);
+    boolean targetExists = table.getEntry("targetExists").getBoolean(false);
+
     
-  
-    if(dist==999999)
-      ;
+    if(!targetExists)
+    driveTrain.stop();
  
     else if(bsd<25)
     {
@@ -126,7 +139,7 @@ public class VisionTurn extends CommandBase {
     boolean centered = table.getEntry("isTargetCentered").getBoolean(false);
     double proportion = table.getEntry("proportion").getDouble(1);
     dist = table.getEntry("targetDistanceFromCenter").getDouble(0);
-    System.out.println("BEFORE BIAS:" +dist);
+    //System.out.println("BEFORE BIAS:" +dist);
     dist -=bias;
     dist= Math.abs(dist);
 
@@ -135,15 +148,17 @@ public class VisionTurn extends CommandBase {
       return true;
     }
 
-    if(proportion>.9)
-      bias = constant * proportion;
-
     System.out.println("dist:"+dist);
-    
-    if(dist<3+ bias)
-    {
-      return true;
-    }
+    if( currTime - startTime >= 8.0)
+      {return true;}
+
+    if(proportion>.9 && dist<3+ (constant*proportion))
+      {return true;}
+
+    else if(dist<3)
+      {return true;}
+
     return false;
   }
+
 }
