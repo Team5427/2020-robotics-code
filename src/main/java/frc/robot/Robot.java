@@ -7,12 +7,29 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+
+import com.revrobotics.ColorMatch;
+
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.MoveStraightPID;
+import frc.robot.commands.PointTurn;
+import frc.robot.commands.StraightAndTurn;
 import frc.robot.commands.MoveStraight;
-import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.ColorSensor;
+import frc.robot.subsystems.Pulley;
+import frc.robot.subsystems.Transport;
+import edu.wpi.first.wpilibj.I2C;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
+
+import com.revrobotics.ColorSensorV3;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -22,22 +39,22 @@ import frc.robot.subsystems.DriveTrain;
  */
 public class Robot extends TimedRobot 
 {
-  //created dev branch 
   
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
   private static double proximityVoltage;
+  PowerDistributionPanel pdp = new PowerDistributionPanel(16);
 
   
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
+  private String gameData;
+
   @Override
   public void robotInit() {
-    // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
-    // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
   }
 
@@ -60,13 +77,59 @@ public class Robot extends TimedRobot
     // SmartDashboard.putNumber("Average RIGHT VELOCITY", RobotContainer.getEncRight().getRate());
     // SmartDashboard.putNumber("AHRS X Speed", RobotContainer.getAHRS().getVelocityX());
     // SmartDashboard.putNumber("AHRS Y Speed", RobotContainer.getAHRS().getVelocityY());
-    SmartDashboard.putNumber("NavX", RobotContainer.getAHRS().getAngle());
-    SmartDashboard.putNumber("Left Encoder Distance", RobotContainer.getEncLeft().getDistance());
-    SmartDashboard.putNumber("Right Encoder Distance", RobotContainer.getEncRight().getDistance());
-    SmartDashboard.putNumber("Average Distance", RobotContainer.getDriveTrain().getAvgDistance());
-    proximityVoltage = (1/m_robotContainer.getProximitySensor().getVoltage())*6.1111126 * 1/2.54;
-    SmartDashboard.putNumber("Proximity Distance", proximityVoltage);
+    // SmartDashboard.putNumber("NavX", RobotContainer.getAHRS().getAngle());
+    // SmartDashboard.putNumber("Left Encoder Distance", RobotContainer.getEncLeft().getDistance());
+    // SmartDashboard.putNumber("Right Encoder Distance", RobotContainer.getEncRight().getDistance());
+    // SmartDashboard.putNumber("Average Distance", RobotContainer.getDriveTrain().getAvgDistance());
+    // SmartDashboard.putNumber("Velocity", RobotContainer.getDriveTrain().getAvgRate());
+    SmartDashboard.putNumber("Proximity one", RobotContainer.getTransport().getDistance());
+    SmartDashboard.putNumber("Proximity two", RobotContainer.getTransport().getDistanceTwo());
+    SmartDashboard.putNumber("Proximity three", RobotContainer.getPulley().getDistance());
+    SmartDashboard.putNumber("Balls In", RobotContainer.ballsIn);
+    SmartDashboard.putNumber("Balls Out", RobotContainer.ballsOut);
+    SmartDashboard.putBoolean("First Sensor", Transport.firstSensor);
+    SmartDashboard.putBoolean("Second Sensor", Transport.secondSensor);
+    SmartDashboard.putBoolean("Third Sensor", Pulley.sensorThree);
+    //System.out.println(pdp.getCurrent(2) + ": current :" + pdp.getCurrent(13));
 
+
+    SmartDashboard.putNumber("Ultrasonic", RobotContainer.getUltrasonic().getRangeInches());
+
+    // m_robotContainer.getColorSensor().getProximity();
+    // m_robotContainer.getColorSensor().getColor();
+
+    // gameData = DriverStation.getInstance().getGameSpecificMessage();
+
+    // if(gameData.length() > 0)
+    // {
+    //   switch(gameData.charAt(0))
+    //   {
+    //     case 'B':
+    //       SmartDashboard.putString("Received: ", "Blue");
+    //       SmartDashboard.putString("Go To: ", "Red");
+    //       m_robotContainer.color = 'R';
+    //       break;
+    //     case 'Y':
+    //       SmartDashboard.putString("Received: ", "Yellow");
+    //       SmartDashboard.putString("Go To: ", "Green");
+    //       m_robotContainer.color = 'G';
+    //       break;
+    //     case 'R':
+    //       SmartDashboard.putString("Received: ", "Red");
+    //       SmartDashboard.putString("Go To: ", "Blue");
+    //       m_robotContainer.color = 'B';
+    //       break;
+    //     case 'G':
+    //       SmartDashboard.putString("Received: ", "Green");
+    //       SmartDashboard.putString("Go To: ", "Yellow");
+    //       m_robotContainer.color = 'Y';
+    //       break;
+    //     default:
+    //       SmartDashboard.putString("Error", "Corrupted data");
+    //       break;
+    //   }
+    //   m_robotContainer.getColorSensor().getColor();
+    // }
   }
 
   /**
@@ -76,32 +139,27 @@ public class Robot extends TimedRobot
   public void disabledInit() {
   }
 
-   /**
-   * @return the proximityVoltage
-   */
-  public static double getProximityVoltage() {
-    return proximityVoltage;
-  }
-
   @Override
   public void disabledPeriodic() {
+    
   }
 
   /**
    * This autonomous runs the autonomous command selected by your {@link RobotContainer} class.
    */
   @Override
-  public void autonomousInit() {
-    RobotContainer.getAHRS().reset();
+  public void autonomousInit() 
+  {
+    // RobotContainer.getAHRS().reset();
+    // RobotContainer.getEncLeft().reset();
+    // RobotContainer.getEncRight().reset();
+
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
-    // schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
+    if(m_autonomousCommand != null)
+    {
       m_autonomousCommand.schedule();
     }
-
-    
-
   }
 
   /**
@@ -122,25 +180,21 @@ public class Robot extends TimedRobot
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    // RobotContainer.getShooter().getShooterMotorTop().set(0.4);
   }
 
   /**
    * This function is called periodically during operator control.
    */
   @Override
-  public void teleopPeriodic() {
+  public void teleopPeriodic() 
+  {
+    
   }
 
   @Override
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
-  }
-
-  /**
-   * This function is called periodically during test mode.
-   */
-  @Override
-  public void testPeriodic() {
   }
 }

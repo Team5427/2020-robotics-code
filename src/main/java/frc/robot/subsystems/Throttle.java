@@ -9,33 +9,33 @@ import frc.robot.RobotContainer;
 public class Throttle extends SubsystemBase {
  
 	
-	private final WPI_TalonSRX wheel;
+	private SpeedController motorController;
 
 
-    public Throttle(WPI_TalonSRX wheel) 
+    public Throttle(SpeedController motorController) 
     {
-        this.wheel = wheel;
-    }
-    
-
-    public void updateSpeed() 
-    {
-        double pos = throttlePos();
-
-        if(pos<-.2 || pos >.2)
-            wheel.set(pos);
-        else
-            wheel.set(0);
-    
-    }
- 
-    public double throttlePos()
-    {
-        return RobotContainer.getJoy().getThrottle();
+        this.motorController = motorController;
     }
 
-    public WPI_TalonSRX getMotor()
+    @Override
+    public void periodic() 
     {
-        return wheel;
+        if(RobotContainer.getJoy().getPOV() >= 225 && RobotContainer.getJoy().getPOV() <= 315)
+        {
+            motorController.set(1.0);
+        }
+        if(RobotContainer.getJoy().getPOV() >= 45 && RobotContainer.getJoy().getPOV() <= 135)
+        {
+            motorController.set(-1.0);
+        }
+        if(RobotContainer.getJoy().getPOV() == -1)
+        {
+            motorController.set(0);
+        }
+    }
+
+    public SpeedController getMotor()
+    {
+        return motorController;
     }
 }
