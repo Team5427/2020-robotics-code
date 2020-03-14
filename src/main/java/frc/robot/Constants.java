@@ -216,7 +216,6 @@ public final class Constants
      * Desired rotations per second of the shooter.
      */
     public static final double TARGET_SHOOTER_RPM = 4.0;
-
     /**
      * Static gain value for feedforward control with the shooter motor.
      */
