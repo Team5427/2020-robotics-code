@@ -52,6 +52,7 @@ public class Robot extends TimedRobot
    * initialization code.
    */
   private String gameData;
+  //competition code
 
   @Override
   public void robotInit() {
