@@ -64,7 +64,6 @@ public class Robot extends TimedRobot
   @Override
   public void robotInit() {
     m_robotContainer = new RobotContainer();
-    System.out.println("kuykfwegteiyge wkwytriweutwuguy");
     ahrs = new AHRS(SPI.Port.kMXP);
     ahrs.setAngleAdjustment(0);
   }
@@ -92,6 +91,8 @@ public class Robot extends TimedRobot
     SmartDashboard.putNumber("Left Encoder Distance", RobotContainer.getEncLeft().getDistance());
     SmartDashboard.putNumber("Right Encoder Distance", RobotContainer.getEncRight().getDistance());
     SmartDashboard.putNumber("Average Distance", RobotContainer.getDriveTrain().getAvgDistance());
+
+    
   }
 
   /**

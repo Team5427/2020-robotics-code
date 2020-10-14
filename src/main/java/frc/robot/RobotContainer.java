@@ -12,6 +12,10 @@ import java.util.ArrayList;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.CvSource;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
@@ -69,6 +73,10 @@ public class RobotContainer
     frontLeft = new WPI_VictorSPX(10);
     rearLeft = new WPI_VictorSPX(11);
     leftDrive = new SpeedControllerGroup(frontLeft, rearLeft);
+    UsbCamera camera = CameraServer.getInstance().startAutomaticCapture();
+    camera.setResolution(640, 480);
+    CvSink cvSink = CameraServer.getInstance().getVideo();
+    CvSource outputStream = CameraServer.getInstance().putVideo("Camera", 640, 480);
     
     //frontRight = new WPI_VictorSPX(Constants.RIGHT_TOP_MOTOR);
     //middleRight = new WPI_VictorSPX(Constants.RIGHT_MIDDLE_MOTOR);
