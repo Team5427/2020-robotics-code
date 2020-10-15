@@ -82,7 +82,7 @@ public class Robot extends TimedRobot
     // SmartDashboard.putNumber("Right Encoder Distance", RobotContainer.getEncRight().getDistance());
     // SmartDashboard.putNumber("Average Distance", RobotContainer.getDriveTrain().getAvgDistance());
     // SmartDashboard.putNumber("Velocity", RobotContainer.getDriveTrain().getAvgRate());
-    SmartDashboard.putNumber("Proximity one", RobotContainer.getTransport().getDistance());
+    SmartDashboard.putNumber("Proximity one", RobotContainer.getTransport().getDistanceIntake());
     SmartDashboard.putNumber("Proximity two", RobotContainer.getTransport().getDistanceTwo());
     SmartDashboard.putNumber("Proximity three", RobotContainer.getPulley().getDistance());
     SmartDashboard.putNumber("Balls In", RobotContainer.ballsIn);

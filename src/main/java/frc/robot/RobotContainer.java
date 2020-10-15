@@ -88,6 +88,8 @@ public class RobotContainer
   public static int loop = 0;
   public static boolean canShoot = false;
 
+  public static int ballCount = 0;
+
   private static Joystick joy;
   private static Button intakeButton;
   private static Button transportButton;
