@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
-import frc.robot.commands.IntakeBall;
+import frc.robot.commands.auto.IntakeBall;
 import edu.wpi.first.wpilibj.AnalogInput;
 
 public class Transport extends SubsystemBase
@@ -59,6 +59,7 @@ public class Transport extends SubsystemBase
         if(RobotContainer.ballCount < 5 && RobotContainer.getTransport().getDistanceIntake() < 2.7)
         {
             new IntakeBall();
+            firstSensor = true;
         }
         
     }
