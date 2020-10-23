@@ -56,7 +56,7 @@ public class Transport extends SubsystemBase
     @Override
     public void periodic()
     {
-        if(RobotContainer.ballCount < 5 && RobotContainer.getTransport().getDistanceIntake() < 2.7)
+        if(!firstSensor && RobotContainer.ballCount < 5 && RobotContainer.getTransport().getDistanceIntake() < 2.7)
         {
             new IntakeBall();
             firstSensor = true;
