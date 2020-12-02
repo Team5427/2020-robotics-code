@@ -88,9 +88,8 @@ public class Robot extends TimedRobot
     SmartDashboard.putNumber("Proximity three", RobotContainer.getPulley().getDistance());
     SmartDashboard.putNumber("Balls In", RobotContainer.ballsIn);
     SmartDashboard.putNumber("Balls Out", RobotContainer.ballsOut);
-    SmartDashboard.putBoolean("First Sensor", Transport.firstSensor);
-    SmartDashboard.putBoolean("Second Sensor", Transport.secondSensor);
-    SmartDashboard.putBoolean("Third Sensor", Pulley.sensorThree);
+    SmartDashboard.putNumber("Left encoder", RobotContainer.getElevator().getLeftEnc().getRaw());
+    SmartDashboard.putNumber("Right encoder", RobotContainer.getElevator().getRightEnc().getRaw());
     //System.out.println(pdp.getCurrent(2) + ": current :" + pdp.getCurrent(13));
 
 
