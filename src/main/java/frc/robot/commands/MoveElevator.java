@@ -9,8 +9,8 @@ public class MoveElevator extends CommandBase
 {
     private double speed;
     private int leftCount, rightCount;
-    public static double leftLimit = 6284.875;
-    public static double rightLimit = -6267.125;
+    public static double leftLimit = 6259.75;
+    public static double rightLimit = -6264.0;
 
     public MoveElevator(double speed)
     {

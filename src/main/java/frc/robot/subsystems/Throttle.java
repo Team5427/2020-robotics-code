@@ -22,11 +22,11 @@ public class Throttle extends SubsystemBase {
     {
         if(RobotContainer.getJoy().getPOV() >= 225 && RobotContainer.getJoy().getPOV() <= 315)
         {
-            motorController.set(1.0);
+            motorController.set(-1.0);
         }
         if(RobotContainer.getJoy().getPOV() >= 45 && RobotContainer.getJoy().getPOV() <= 135)
         {
-            motorController.set(-1.0);
+            motorController.set(1.0);
         }
         if(RobotContainer.getJoy().getPOV() == -1)
         {
